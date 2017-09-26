@@ -3,8 +3,31 @@
 	padding: 0;
 }
 
-#main-carousel img {
+/*#main-carousel img {
   min-width: 100%;
   height: 500px;
   max-width: none;
+}*/
+
+/* about */
+#main-content-about .page-header {
+	padding-top: 50px;
+}
+
+#main-content-about .about-person {
+	text-align: center;
+	margin: 20px;
+}
+
+#main-content-about .about-person-img {
+	width: 200px;
+	height: 200px;
+}
+
+#main-content-about .about-person-name {
+	font-weight: bold;
+}
+
+#main-content-about .about-person-detail {
+	text-align: left;
 }

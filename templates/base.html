@@ -31,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="main-navbar">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="/">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Games</a>
@@ -46,7 +46,7 @@
                             <a class="nav-link" href="#">Mechanics</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="/about">About</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
@@ -62,7 +62,7 @@
                 </div>
             </nav>
 
-            <div id="main-content" class="container-fluid">
+            <div id="main-content-{% block page_id %}{% endblock %}" class="container">
                 {% block content %}{% endblock %}
             </div>
         </div>
