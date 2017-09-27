@@ -1,13 +1,45 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: http://boardgamedb.me/
 
 # boardgamedb
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+This API will display general info about a collection of board games such as their publisher, genre, and the mechanics they have.
 
-## Questions Collection [/questions]
+## Games [/games]
 
-### List All Questions [GET]
+This call provides a list of all the games in our database. 
+
+### List All Games [GET] 
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+        
+### Show a Game in Detail [GET /games/{id}]
+
++ Parameters
+    + id (required, int, `1`) ... Game ID
+
 
 + Response 200 (application/json)
 
@@ -33,48 +65,184 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             }
         ]
 
-### Create a New Question [POST]
+## Publishers [/publishers]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+This call provides a list of the publishers in our database. 
 
-+ Request (application/json)
+### List All Publishers [GET] 
 
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
++ Response 200 (application/json)
 
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
+        [
             {
                 "question": "Favourite programming language?",
                 "published_at": "2015-08-05T08:40:51.620Z",
                 "choices": [
                     {
                         "choice": "Swift",
-                        "votes": 0
+                        "votes": 2048
                     }, {
                         "choice": "Python",
-                        "votes": 0
+                        "votes": 1024
                     }, {
                         "choice": "Objective-C",
-                        "votes": 0
+                        "votes": 512
                     }, {
                         "choice": "Ruby",
-                        "votes": 0
+                        "votes": 256
                     }
                 ]
             }
+        ]
+        
+### Show a Publisher in Detail [GET /publishers/{id}]
+
++ Parameters
+    + id (required, int, `1`) ... Publisher ID
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+
+## Genres [/genres]
+
+This call provides a list of all the genres that our games fall under. 
+
+### List All Genres [GET] 
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+### Show a Genre in Detail [GET /genres/{id}]
+
++ Parameters
+    + id (required, int, `1`) ... Genre ID
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+
+## Mechanics [/mechanics]
+
+This call provides a list of the mechanics that the games in our database employ. 
+
+### List All Mechanics [GET] 
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+        
+### Show a Mechanic in Detail [GET /mechanics/{id}]
+
++ Parameters
+    + id (required, int, `1`) ... Mechanic ID
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
