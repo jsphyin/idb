@@ -32,4 +32,4 @@ def mechanics():
 
 if __name__ == '__main__':
     # Run locally in debug mode (gunicorn runs the app in production)
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='127.0.0.1', port=8080, debug=True, threaded=True)
