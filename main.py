@@ -14,6 +14,21 @@ def index():
 def about():
     return render_template('about.html')
 
+@app.route('/games')
+def games():
+    return render_template('games.html')
+
+@app.route('/publishers')
+def publishers():
+    return render_template('publishers.html')
+
+@app.route('/genres')
+def genres():
+    return render_template('genres.html')
+
+@app.route('/mechanics')
+def mechanics():
+    return render_template('mechanics.html')
 
 if __name__ == '__main__':
     # Run locally in debug mode (gunicorn runs the app in production)
