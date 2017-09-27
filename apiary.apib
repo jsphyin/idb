@@ -5,7 +5,7 @@ HOST: http://boardgamedb.me/
 
 This API will display general info about a collection of board games such as their publisher, genre, and the mechanics they have.
 
-## Games [/games]
+## Games [/api/games]
 
 This call provides a list of all the games in our database. 
 
@@ -35,7 +35,7 @@ This call provides a list of all the games in our database.
             }
         ]
         
-### Show a Game in Detail [GET /games/{id}]
+### Show a Game in Detail [GET /api/games/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Game ID
@@ -65,7 +65,7 @@ This call provides a list of all the games in our database.
             }
         ]
 
-## Publishers [/publishers]
+## Publishers [/api/publishers]
 
 This call provides a list of the publishers in our database. 
 
@@ -95,7 +95,7 @@ This call provides a list of the publishers in our database.
             }
         ]
         
-### Show a Publisher in Detail [GET /publishers/{id}]
+### Show a Publisher in Detail [GET /api/publishers/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Publisher ID
@@ -126,7 +126,7 @@ This call provides a list of the publishers in our database.
         ]
 
 
-## Genres [/genres]
+## Genres [/api/genres]
 
 This call provides a list of all the genres that our games fall under. 
 
@@ -156,7 +156,7 @@ This call provides a list of all the genres that our games fall under.
             }
         ]
 
-### Show a Genre in Detail [GET /genres/{id}]
+### Show a Genre in Detail [GET /api/genres/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Genre ID
@@ -187,11 +187,11 @@ This call provides a list of all the genres that our games fall under.
         ]
 
 
-## Mechanics [/mechanics]
+## Events [/api/events]
 
-This call provides a list of the mechanics that the games in our database employ. 
+This call provides a list of the events past and present.
 
-### List All Mechanics [GET] 
+### List All Events [GET] 
 
 + Response 200 (application/json)
 
@@ -217,10 +217,10 @@ This call provides a list of the mechanics that the games in our database employ
             }
         ]
         
-### Show a Mechanic in Detail [GET /mechanics/{id}]
+### Show an Event in Detail [GET /api/events/{id}]
 
 + Parameters
-    + id (required, int, `1`) ... Mechanic ID
+    + id (required, int, `1`) ... Event ID
 
 
 + Response 200 (application/json)
