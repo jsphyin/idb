@@ -26,9 +26,9 @@ def publishers():
 def genres():
     return render_template('genres.html')
 
-@app.route('/mechanics')
+@app.route('/events')
 def mechanics():
-    return render_template('mechanics.html')
+    return render_template('events.html')
 
 if __name__ == '__main__':
     # Run locally in debug mode (gunicorn runs the app in production)

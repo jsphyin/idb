@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "grid.html" %}
 
-</body>
-</html>
+{% block model_name %}Publishers{% endblock %}
+{% block title %}Publishers{% endblock %}
+{% block page_id %}publishers{% endblock %}
+
+{% block model_description %}A listing of all the current available publishers{% endblock %}
+
+{% block model_1_name %}Settlers of Catan{% endblock %}
+{% block model_1_img %}http://www.erzo.org/shannon/images-rpg/catan5-1.jpg{% endblock %}
+{% block model_1_attribute %}
+<li>A</li>
+<li>B</li>
+<li>C</li>
+{% endblock %}
+
+
+{% block model_2_name %}Monopoly{% endblock %}
+{% block model_2_img %}https://i5.walmartimages.ca/images/Large/313/221/1313221.jpg?odnBound=460{% endblock %}
+{% block model_2_attribute %}
+<li>A</li>
+<li>B</li>
+<li>C</li>
+{% endblock %}
+
+{% block model_3_name %}Clue{% endblock %}
+{% block model_3_img %}https://fthmb.tqn.com/gPrPIWmEiMGtka1e1NjW9PFUN_M=/960x0/filters:no_upscale()/about/clue-58a6f5775f9b58a3c91a4cc5.jpg{% endblock %}
+{% block model_3_attribute %}
+<li>A</li>
+<li>B</li>
+<li>C</li>
+{% endblock %}

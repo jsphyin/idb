@@ -31,3 +31,25 @@
 #main-content-about .about-person-detail {
 	text-align: left;
 }
+
+.grid-header {
+    padding-top: 50px;
+}
+
+.grid-model {
+    text-align: center;
+    margin: 20px;
+}
+
+.grid-model-img {
+    width: 200px;
+    height: 200px;
+}
+
+.grid-model-name {
+    font-weight: bold;
+}
+
+.grid-model-attribute {
+    text-align: left;
+}
