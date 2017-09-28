@@ -1,0 +1,11 @@
+Estimated time (hours), Actual time (hours), Story
+2, 3, A user can view a list of all board games.
+3, 3.5, A user can view a single game in more detail.
+1, 1.5, A user can view a list of all developers.
+1.5, 2, A user can view a single developer in more detail.
+1, 1.5, A user can view a list of all genres.
+1.5, 2, A user can view a single genre in more detail.
+1, 1.5, A user can view a list of all events.
+1.5, 2, A user can view a single event in more detail.
+0.5, 0.5, A user can navigate to a game's developer through the game's detail page.
+0.5, 0.5, A user can navigate to a game's genre through the game's detail page.
