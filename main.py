@@ -49,6 +49,18 @@ def pratt():
 @app.route('/genres')
 def genres():
     return render_template('genres.html')
+    
+@app.route('/genres/negotiation')
+def negotiation():
+    return render_template('genre_models/negotiation.html')
+    
+@app.route('/genres/economic')
+def economic():
+    return render_template('genre_models/economic.html')
+    
+@app.route('/genres/deduction')
+def deduction():
+    return render_template('genre_models/deduction.html')
 
 @app.route('/events')
 def events():
