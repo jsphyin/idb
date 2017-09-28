@@ -9,10 +9,11 @@
   max-width: none;
 }*/
 
-/* about */
-#main-content-about .page-header {
-	padding-top: 50px;
+.page-header {
+  padding-top: 20px;
 }
+
+/* about */
 
 #main-content-about .about-person {
 	text-align: center;
