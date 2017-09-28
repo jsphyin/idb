@@ -51,8 +51,20 @@ def genres():
     return render_template('genres.html')
 
 @app.route('/events')
-def mechanics():
+def events():
     return render_template('events.html')
+
+@app.route('/events/cwc')
+def cwc():
+    return render_template('event_models/cwc.html')
+
+@app.route('/events/cec')
+def cec():
+    return render_template('event_models/cec.html')
+
+@app.route('/events/mwc')
+def mwc():
+    return render_template('event_models/mwc.html')
 
 if __name__ == '__main__':
     # Run locally in debug mode (gunicorn runs the app in production)
