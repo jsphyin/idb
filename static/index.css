@@ -47,6 +47,10 @@
     height: 200px;
 }
 
+#instance .grid-model-attribute {
+    margin-left: 16px;
+}
+
 .grid-model-name {
     font-weight: bold;
 }
@@ -54,3 +58,4 @@
 .grid-model-attribute {
     text-align: left;
 }
+
