@@ -3,7 +3,7 @@ HOST: http://boardgamedb.me/
 
 # boardgamedb
 
-This API will display general info about a collection of board games such as their publisher, genre, and the mechanics they have.
+This API will display general info about a collection of board games such as their developer(s), genre, and the mechanics they have as well as events for players to meet up and enjoy board games.
 
 ## Games [/api/games]
 
@@ -65,11 +65,11 @@ This call provides a list of all the games in our database.
             }
         ]
 
-## Publishers [/api/publishers]
+## Developers [/api/developers]
 
-This call provides a list of the publishers in our database. 
+This call provides a list of the developers in our database. 
 
-### List All Publishers [GET] 
+### List All Developers [GET] 
 
 + Response 200 (application/json)
 
@@ -95,10 +95,10 @@ This call provides a list of the publishers in our database.
             }
         ]
         
-### Show a Publisher in Detail [GET /api/publishers/{id}]
+### Show a Developer in Detail [GET /api/developers/{id}]
 
 + Parameters
-    + id (required, int, `1`) ... Publisher ID
+    + id (required, int, `1`) ... Developer ID
 
 
 + Response 200 (application/json)

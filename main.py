@@ -18,9 +18,9 @@ def about():
 def games():
     return render_template('games.html')
 
-@app.route('/publishers')
-def publishers():
-    return render_template('publishers.html')
+@app.route('/developers')
+def developers():
+    return render_template('developers.html')
 
 @app.route('/genres')
 def genres():
