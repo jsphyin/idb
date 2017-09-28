@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="grid-header" class="page-header">
+    <div class="page-header">
+        <h2>{% block model_name %}{% endblock %}</h2>
+    </div>
+    <section id="model-picture">
+         <img class="d-block w-300" src="{% block model_img %} {% endblock %}" height=300px>
+    </section>
+</div>
+
+
+
+<div id="grid-header" class="page-header">
+    <div class="page-header">
+        <h2>Description</h2>
+    </div>
+    <section class="grid-content">
+        <div class="row">
+            <section id="grid-model-name">
+                {% block model_desc_attribute %}{% endblock %}
+            </section>
+        </div>
+    </section>
+</div>
+
+<div id="grid-header" class="page-header">
+    <div class="page-header">
+        <h2>Date of First Game</h2>
+    </div>
+    <section class="grid-content">
+        <div class="row">
+            <section id="grid-model-name">
+                {% block model_date_attribute %}{% endblock %}
+            </section>
+        </div>
+    </section>
+</div>
+
+<div id="grid-header" class="page-header">
+    <div class="page-header">
+        <h2>Games Released</h2>
+    </div>
+    <section class="grid-content">
+        <div class="row">
+            <section id="grid-model-name">
+                {% block model_games_attribute %}{% endblock %}
+            </section>
+        </div>
+    </section>
+</div>
+
+
+<div id="grid-header" class="page-header">
+    <div class="page-header">
+        <h2>Artists the Developer has worked with </h2>
+    </div>
+    <section class="grid-content">
+        <div class="row">
+            <section id="grid-model-name">
+                {% block model_artists_attribute %}{% endblock %}
+            </section>
+        </div>
+    </section>
+</div>
+
+<div id="grid-header" class="page-header">
+    <div class="page-header">
+        <h2>Publishers the Developer has worked with</h2>
+    </div>
+    <section class="grid-content">
+        <div class="row">
+            <section id="grid-model-name">
+                    {% block model_publishers_attribute %}{% endblock %}
+            </section>
+        </div>
+    </section>
+</div>
+
+
+{% endblock %}

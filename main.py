@@ -34,6 +34,18 @@ def clue():
 def developers():
     return render_template('developers.html')
 
+@app.route('/developers/teuber')
+def teuber():
+    return render_template('dev_models/teuber.html')
+
+@app.route('/developers/magie')
+def magie():
+    return render_template('dev_models/magie.html')
+
+@app.route('/developers/pratt')
+def pratt():
+    return render_template('dev_models/pratt.html')
+
 @app.route('/genres')
 def genres():
     return render_template('genres.html')
