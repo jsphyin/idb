@@ -18,6 +18,18 @@ def about():
 def games():
     return render_template('games.html')
 
+@app.route('/games/catan')
+def catan():
+    return render_template('game_models/catan.html')
+
+@app.route('/games/monopoly')
+def monopoly():
+    return render_template('game_models/monopoly.html')
+
+@app.route('/games/clue')
+def clue():
+    return render_template('game_models/clue.html')
+
 @app.route('/publishers')
 def publishers():
     return render_template('publishers.html')
