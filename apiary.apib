@@ -7,35 +7,24 @@ This API will display general info about a collection of board games such as the
 
 ## Games [/api/games]
 
-This call provides a list of all the games in our database. 
+These call provide information for the specific games in our database. 
 
-### List All Games [GET] 
+### List All Board Games [GET] 
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+    
+        {
+            “games”: [{
+                    “id”: 1, 
+                    “name”: “Catan”
+                },
+                ...
+            ]
+        }
+
         
-### Show a Game in Detail [GET /api/games/{id}]
+### Show Data for One Game [GET /api/games/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Game ID
@@ -43,59 +32,47 @@ This call provides a list of all the games in our database.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            “id”: 1,
+            “name”: “Catan”,
+            “alternate_names”: [“Catane”, ...],
+            “type”: “Board Game”,
+            “desc”: “A 3-4 player game that...”,
+            “family”: “Catan”,
+            “genre”: [“Negotiation”, ...],
+            “year”: 1995,
+            “publishers”: [“KOSMOS”, ...],
+            “developers”: [“Klaus Teuber”],
+            “artists”: [“Volkan Baga”, ...],
+            “mechanics”: [“Trading”, ...],
+            “min_players”: 3,
+            “max_players”: 4,
+            “suggested_players”: [100, 450],
+            “suggested_age”: [0,0,100, ...],
+            “price”: 49.00,
+            “rating”: 7.25022
+        }
+
 
 ## Developers [/api/developers]
 
-This call provides a list of the developers in our database. 
+These callsprovide information about the board game developers in our database.
 
 ### List All Developers [GET] 
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            “developers”: [{
+                    “id”: 1, 
+                    “name”: “Klaus Teuber”
+                },
+                ...
+            ]
+        }
+
         
-### Show a Developer in Detail [GET /api/developers/{id}]
+### Show Data for One Developer [GET /api/developers/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Developer ID
@@ -103,60 +80,41 @@ This call provides a list of the developers in our database.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            “id”: 1,
+            “name”: “Klaus Teuber”,
+            “desc”: “A famous German game designer ...”,
+            “date_birth”: “June 25, 1952”,
+            “date_death”: “”,
+            “date_created”: “1995”
+            “artists”: [“Volkan Baga”, ...],
+            “games”: [“Catan”],
+            “genres”: [“Negotiation”, ...],
+            “awards”: [“2003 Origins Awards Hall of Fame Inductee”, ...],
+            “website”: “http://www.klausteuber.de/”
+        }   
+
 
 
 ## Genres [/api/genres]
 
-This call provides a list of all the genres that our games fall under. 
+These calls provide data of all the genres that our games fall under. 
 
 ### List All Genres [GET] 
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            “genres”: [{
+                    “id”: 1, 
+                    “name”: “Negotiation”
+                },
+                ...
+            ]
+        }
 
-### Show a Genre in Detail [GET /api/genres/{id}]
+
+### Show Data for One Genre [GET /api/genres/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Genre ID
@@ -164,60 +122,37 @@ This call provides a list of all the genres that our games fall under.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            “id”: 1,
+            “name”: “Negotiation”,
+            “desc”: “A game category that requires player to ...”,
+            “mechanics”: [“Trading”, ...],
+            “type”: “Mainstream”,
+            “games”: [“Catan”, “Monopoly”, ...],
+            “developers”: [“Klaus Teuber”, ...],
+            “popularity”: 46
+        }
 
 
 ## Events [/api/events]
 
-This call provides a list of the events past and present.
+These calls provide information about the board game events in our database.
 
 ### List All Events [GET] 
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            “events”: [{
+                    “id”: 1, 
+                    “name”: “Catan World Championship”
+                },
+                ...
+            ]
+        }
         
-### Show an Event in Detail [GET /api/events/{id}]
+        
+### Show Data for One Event [GET /api/events/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Event ID
@@ -225,24 +160,43 @@ This call provides a list of the events past and present.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+        {
+            “id”: 1,
+            “name”: “Catan World Championship”,
+            “desc”: “A tournament to decide the best Settlers of ...”,
+            “type”: “Tournament/Competition”,
+            “date”: [“September 23 - 26, 2016”, “October 2018”],
+            “locations”: [“Durango, USA”, “Germany”, ...],
+            “winners”: [“William Cavaretta (USA)”],
+            “games”: [“Catan”],
+            “reward”: “trophy”
+        }
+        
+## Search [/api/search/{attribute1}={val1}&{attribute2}={val2}...]
+
+This call provides search functionality to our website.
+
+### Search Model Instance by Attribute [GET]
+
++ Parameters
+    + attribute1 (required, string, `popularity`) ... Attribute to search
+    + val1 (required, string, `1`) ... Value of attribute
+    + attribute2 (required, string, `rating`) ... Attribute to search
+    + val2 (required, string, `5`) ... Value of attribute
+    
++ Response 200 (application/json)
+
+        {
+            “results”: [{
+                    “id”: 1,
+                    “model”: “Board Game”,
+                    “name”: “Catan”
+                },
+                {
+                    “id”: 1,
+                    “model”: “Casual Meet-up”,
+                    “name”: “Catan and Ticket to Ride Crew”
+                }
+                ...
+            ]
+        }
