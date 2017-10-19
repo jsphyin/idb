@@ -219,3 +219,6 @@ venv.bak/
 .mypy_cache/
 
 # End of https://www.gitignore.io/api/node,linux,macos,python,django,appengine
+
+# scraped data
+scrapefiles/
