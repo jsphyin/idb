@@ -9,3 +9,14 @@ Estimated time (hours), Actual time (hours), Story
 1.5, 2, A user can view a single event in more detail.
 0.5, 0.5, A user can navigate to a game's developer through the game's detail page.
 0.5, 0.5, A user can navigate to a game's genre through the game's detail page.
+0.5, 0.5, A user can navigate to game's detail page through an event's detail page.
+0.5, 0.5, A user can naviage to a genre's detail page through an event's detail page.
+3, 5, A user can view new games that have been created.
+2, 2.5, A developer can call and receive data about games from a RESTful API.
+2, 3, A user can view new game developers that have made games.
+2, 2.5, A developer can call and receive data about game developers from a RESTful API.
+2, 3, A user can view new genres that have been created.
+2, 2.5, A developer can call and receive data about genres from a RESTful API.
+2, 2, A user can view new events that have been created.
+2, 2.5, A developer can call and recieve data about events from a RESTful API.
+
