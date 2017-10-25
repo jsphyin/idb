@@ -1,0 +1,70 @@
+{
+    "games": [
+        {
+            "name": "Settlers of Catan",
+            "img": "http://www.erzo.org/shannon/images-rpg/catan5-1.jpg",
+            "link": "games/catan"
+        },
+        {
+            "name": "Monopoly",
+            "img": "https://i5.walmartimages.ca/images/Large/313/221/1313221.jpg?odnBound=460",
+            "link": "games/monopoly"
+        },
+        {
+            "name": "Clue",
+            "img": "https://fthmb.tqn.com/gPrPIWmEiMGtka1e1NjW9PFUN_M=/960x0/filters:no_upscale()/about/clue-58a6f5775f9b58a3c91a4cc5.jpg",
+            "link": "games/clue"
+        }
+    ],
+    "genres":[
+        {
+            "name": "Negotiation",
+            "img": "https://d30y9cdsu7xlg0.cloudfront.net/png/180167-200.png",
+            "link": "genres/negotiation"
+        },
+        {
+            "name": "Economic",
+            "img": "https://cdn0.iconfinder.com/data/icons/economy/450/world-economy-512.png",
+            "link": "genres/economic"
+        },
+        {
+            "name": "Deduction",
+            "img": "https://d30y9cdsu7xlg0.cloudfront.net/png/41279-200.png",
+            "link": "genres/deduction"
+        }
+    ],
+    "developers":[
+        {
+            "name": "Klaus Teuber",
+            "img": "https://cf.geekdo-images.com/images/pic820225_t.jpg",
+            "link": "developers/teuber"
+        },
+        {
+            "name": "Elizabeth J. Magie (Phillips)",
+            "img": "https://cf.geekdo-images.com/images/pic945028_t.jpg",
+            "link": "developers/magie"
+        },
+        {
+            "name": "Anthony E. Pratt",
+            "img": "https://cf.geekdo-images.com/images/pic940371_t.jpg",
+            "link": "developers/pratt"
+        }
+    ],
+    "events":[
+        {
+            "name": "Catan World Championships",
+            "img": "https://www.catan.com/files/pageimages/cwc_winner_web2.jpg",
+            "link": "events/cwc"
+        },
+        {
+            "name": "Catan European Championships",
+            "img": "http://i.imgur.com/R3vAV.jpg",
+            "link": "events/cec"
+        },
+        {
+            "name": "Monopoly World Championships",
+            "img": "http://dvtfaqskbwkln.cloudfront.net/user_content/photos/5cce4b95-2846-42db-a114-17e1f699b4c0.jpeg?appID=278",
+            "link": "events/mwc"
+        }
+    ]
+}
