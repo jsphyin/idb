@@ -1,35 +1,42 @@
-{% extends "base.html" %}
+{% extends "grid.html" %}
 
-{% block content %}
+{% block model_name %}Genres{% endblock %}
+{% block title %}Genres{% endblock %}
+{% block page_id %}genres{% endblock %}
+{% block genres_active %}active{% endblock %}
 
-{% for genre in genreData | batch (3, '&nbsp') %}
-    <section id="grid-content">
-    <div class="row">
-        {% for genre in genre %}
-        <div class="col grid-model">
-            <div class="row">
-                <div class="col">
-                    <a href={{genre["link"]}}>
-                    <img class="grid-model-img" src={{genre["img"]}}>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <span class="grid-model-name">{{genre["name"]}}</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <ul class="grid-model-attribute">
-                    </ul>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    </section>
-{% endfor %}
+{% block model_description %}A listing of all the current available genres{% endblock %}
+
+{% block model_1_name %}Negotiation{% endblock %}
+{% block model_1_img %}https://d30y9cdsu7xlg0.cloudfront.net/png/180167-200.png{% endblock %}
+{% block model_1_link%}genres/negotiation{% endblock %}
+{% block model_1_attribute %}
+<li>Notable Devs: <a href="/developers/magie">Elizabeth J. Magie (Phillips)</a>, <a href="/developers/teuber">Klaus Teuber</a></li>
+<li>Mainstream Genre</li>
+<li>Notable Games: <a href="/games/monopoly">Monopoly</a>, <a href="/games/catan">Settlers of Catan</a></li>
+<li>Mechanics: Trading</li>
+<li>Popularity: 16</li>
+{% endblock %}
 
 
+{% block model_2_name %}Economic{% endblock %}
+{% block model_2_img %}https://cdn0.iconfinder.com/data/icons/economy/450/world-economy-512.png{% endblock %}
+{% block model_2_link%}genres/economic{% endblock %}
+{% block model_2_attribute %}
+<li>Notable Devs: <a href="/developers/magie">Elizabeth J. Magie (Phillips)</a></li>
+<li>Mainstream Genre</li>
+<li>Notable Games: <a href="/games/monopoly">Monopoly</a></li>
+<li>Mechanics: Auction/Bidding, Stock Holding, Trading</li>
+<li>Popularity: 46</li>
+{% endblock %}
+
+{% block model_3_name %}Deduction{% endblock %}
+{% block model_3_img %}https://d30y9cdsu7xlg0.cloudfront.net/png/41279-200.png{% endblock %}
+{% block model_3_link%}genres/deduction{% endblock %}
+{% block model_3_attribute %}
+<li>Notable Devs: <a href="/developers/pratt">Anthony E. Pratt</a></li>
+<li>Mainstream Genre</li>
+<li>Notable Games: <a href="/games/clue">Clue</a></li>
+<li>Mechanics: Memory, Paper-and-Pencil</li>
+<li>Popularity: 51</li>
 {% endblock %}

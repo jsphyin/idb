@@ -5,13 +5,6 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 
-import json
-
-from flask import Flask, render_template
-
-with open('dummy.json') as data_file:
-    data = json.load(data_file)
-
 app = Flask(__name__, static_url_path='/static')
 
 # for local: export SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:boardgamers@127.0.0.1:3306/boardgamedb-data
@@ -31,7 +24,7 @@ def about():
 
 @app.route('/games')
 def games():
-    return render_template('games.html', gameData=data["games"])
+    return render_template('games.html')
 
 @app.route('/games/<game>')
 def gameInstance(game):
@@ -40,7 +33,7 @@ def gameInstance(game):
 
 @app.route('/developers')
 def developers():
-    return render_template('developers.html', devData = data["developers"])
+    return render_template('developers.html')
 
 @app.route('/developers/<developer>')
 def devInstance(developer):
@@ -48,7 +41,7 @@ def devInstance(developer):
 
 @app.route('/genres')
 def genres():
-    return render_template('genres.html', genreData = data["genres"])
+    return render_template('genres.html')
     
 @app.route('/genres/<genre>')
 def genreInstance(genre):
@@ -57,7 +50,7 @@ def genreInstance(genre):
 
 @app.route('/events')
 def events():
-    return render_template('events.html', eventData = data["events"])
+    return render_template('events.html')
 
 @app.route('/events/<event>')
 def eventInstance(event):
