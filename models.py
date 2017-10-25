@@ -1,126 +1,108 @@
-from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String, Table
-from sqlalchemy.orm import relationship
-from database import Base
+from main import db
 
-
-game_family_assoc = Table('GameFamilyAssociation', Base.metadata,
-    Column('game_id', Integer, ForeignKey('Game.id')),
-    Column('family_id', Integer, ForeignKey('Family.id'))
+game_family_assoc = db.Table('game_family_assoc',
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
+    db.Column('family_id', db.Integer, db.ForeignKey('family.id'), primary_key=True)
 )
 
-game_genre_assoc = Table('GameGenreAssociation', Base.metadata,
-    Column('game_id', Integer, ForeignKey('Game.id')),
-    Column('genre_id', Integer, ForeignKey('Genre.id'))
+game_genre_assoc = db.Table('game_genre_assoc',
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
+    db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True)
 )
 
-game_publisher_assoc = Table('GamePublisherAssociation', Base.metadata,
-    Column('game_id', Integer, ForeignKey('Game.id')),
-    Column('publisher_id', Integer, ForeignKey('Publisher.id'))
+game_publisher_assoc = db.Table('game_publisher_assoc',
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
+    db.Column('publisher_id', db.Integer, db.ForeignKey('publisher.id'), primary_key=True)
 )
 
-game_artist_assoc = Table('GameArtistAssociation', Base.metadata,
-    Column('game_id', Integer, ForeignKey('Game.id')),
-    Column('artist_id', Integer, ForeignKey('Artist.id'))
+game_artist_assoc = db.Table('game_artist_assoc',
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
+    db.Column('artist_id', db.Integer, db.ForeignKey('artist.id'), primary_key=True)
 )
 
-game_developer_assoc = Table('GameDeveloperAssociation', Base.metadata,
-    Column('game_id', Integer, ForeignKey('Game.id')),
-    Column('developer_id', Integer, ForeignKey('Developer.id'))
+game_developer_assoc = db.Table('game_developer_assoc',
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
+    db.Column('developer_id', db.Integer, db.ForeignKey('developer.id'), primary_key=True)
 )
 
-game_mechanic_assoc = Table('GameMechanicAssociation', Base.metadata,
-    Column('game_id', Integer, ForeignKey('Game.id')),
-    Column('mechanic_id', Integer, ForeignKey('Mechanic.id'))
+game_mechanic_assoc = db.Table('game_mechanic_assoc',
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
+    db.Column('mechanic_id', db.Integer, db.ForeignKey('mechanic.id'), primary_key=True)
 )
 
 
-class Game(Base):
-    __tablename__ = 'Game'
+class Game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
-    id = Column(Integer, primary_key=True)
+    is_expansion = db.Column(db.Boolean)
 
-    is_expansion = Column(Boolean)
-
-    primary_name = Column(String(4096))
-    alt_names = Column(String(4096))
+    primary_name = db.Column(db.String(4096))
+    alt_names = db.Column(db.String(4096))
     
-    image = Column(String(4096))
+    image = db.Column(db.String(4096))
+    desc = db.Column(db.String(4096))
 
-    description = Column(String(4096))
+    families = db.relationship('Family', secondary=game_family_assoc, back_populates='games')
 
-    families = relationship("Family", secondary=game_family_assoc, back_populates="games")
+    genres = db.relationship('Genre', secondary=game_genre_assoc, back_populates='games')
 
-    genres = relationship("Genre", secondary=game_genre_assoc, back_populates="games")
+    year = db.Column(db.Integer)
 
-    year = Column(Integer)
+    publishers = db.relationship('Publisher', secondary=game_publisher_assoc, back_populates='games')
 
-    publishers = relationship("Publisher", secondary=game_publisher_assoc, back_populates="games")
+    artists = db.relationship('Artist', secondary=game_artist_assoc, back_populates='games')
 
-    artists = relationship("Artist", secondary=game_artist_assoc, back_populates="games")
+    developers = db.relationship('Developer', secondary=game_developer_assoc, back_populates='games')
 
-    developers = relationship("Developer", secondary=game_developer_assoc, back_populates="games")
+    mechanics = db.relationship('Mechanic', secondary=game_mechanic_assoc, back_populates='games')
 
-    mechanics = relationship("Mechanic", secondary=game_mechanic_assoc, back_populates="games")
+    min_players = db.Column(db.Integer)
+    max_players = db.Column(db.Integer)
 
-    min_players = Column(Integer)
-    max_players = Column(Integer)
+    rating = db.Column(db.Float)
 
-    rating = Column(Float)
+class Family(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
-class Family(Base):
-    __tablename__ = 'Family'
+    name = db.Column(db.String(4096))
 
-    id = Column(Integer, primary_key=True)
+    games = db.relationship('Game', secondary=game_family_assoc, back_populates='families')
 
-    name = Column(String(4096))
+class Genre(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
-    games = relationship("Game", secondary=game_family_assoc, back_populates="families")
+    name = db.Column(db.String(4096))
+    image = db.Column(db.String(4096))
+    desc = db.Column(db.String(4096))
 
-class Genre(Base):
-    __tablename__ = 'Genre'
+    games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
 
-    id = Column(Integer, primary_key=True)
+class Publisher(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
-    name = Column(String(4096))
+    name = db.Column(db.String(4096))
 
-    description = Column(String(4096))
+    games = db.relationship('Game', secondary=game_publisher_assoc, back_populates='publishers')
 
-    games = relationship("Game", secondary=game_genre_assoc, back_populates="genres")
+class Artist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
-class Publisher(Base):
-    __tablename__ = 'Publisher'
+    name = db.Column(db.String(4096))
 
-    id = Column(Integer, primary_key=True)
+    games = db.relationship('Game', secondary=game_artist_assoc, back_populates='artists')
 
-    name = Column(String(4096))
+class Developer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
-    games = relationship("Game", secondary=game_publisher_assoc, back_populates="publishers")
+    name = db.Column(db.String(4096))
+    image = db.Column(db.String(4096))
+    desc = db.Column(db.String(4096))
 
-class Artist(Base):
-    __tablename__ = 'Artist'
+    games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
 
-    id = Column(Integer, primary_key=True)
+class Mechanic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
 
-    name = Column(String(4096))
+    name = db.Column(db.String(4096))
 
-    games = relationship("Game", secondary=game_artist_assoc, back_populates="artists")
-
-class Developer(Base):
-    __tablename__ = 'Developer'
-
-    id = Column(Integer, primary_key=True)
-
-    name = Column(String(4096))
-
-    description = Column(String(4096))
-
-    games = relationship("Game", secondary=game_developer_assoc, back_populates="developers")
-
-class Mechanic(Base):
-    __tablename__ = 'Mechanic'
-
-    id = Column(Integer, primary_key=True)
-
-    name = Column(String(4096))
-
-    games = relationship("Game", secondary=game_mechanic_assoc, back_populates="mechanics")
+    games = db.relationship('Game', secondary=game_mechanic_assoc, back_populates='mechanics')
