@@ -222,3 +222,6 @@ venv.bak/
 
 # scraped data
 scrapefiles/
+
+# GCP proxy
+cloud_sql_proxy
