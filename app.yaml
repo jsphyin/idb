@@ -7,7 +7,7 @@ runtime_config:
 
 env_variables:
   SQLALCHEMY_DATABASE_URI: >-
-    mysql+pymysql://root:boardgamers@/boardgamedb-data?unix_socket=/cloudsql/boardgamedb-181002:us-central1:boardgamedb-data
+    mysql+pymysql://root:boardgamers@/proddata?unix_socket=/cloudsql/boardgamedb-181002:us-central1:boardgamedb-data
 
 beta_settings:
   cloud_sql_instances: boardgamedb-181002:us-central1:boardgamedb-data

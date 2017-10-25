@@ -37,10 +37,10 @@ class Game(db.Model):
     is_expansion = db.Column(db.Boolean)
 
     primary_name = db.Column(db.String(4096))
-    alt_names = db.Column(db.String(4096))
+    alt_names = db.Column(db.Text)
     
     image = db.Column(db.String(4096))
-    desc = db.Column(db.String(4096))
+    desc = db.Column(db.Text)
 
     families = db.relationship('Family', secondary=game_family_assoc, back_populates='games')
 
@@ -73,7 +73,7 @@ class Genre(db.Model):
 
     name = db.Column(db.String(4096))
     image = db.Column(db.String(4096))
-    desc = db.Column(db.String(4096))
+    desc = db.Column(db.Text)
 
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
 
@@ -96,7 +96,7 @@ class Developer(db.Model):
 
     name = db.Column(db.String(4096))
     image = db.Column(db.String(4096))
-    desc = db.Column(db.String(4096))
+    desc = db.Column(db.Text)
 
     games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
 
