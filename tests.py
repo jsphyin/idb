@@ -109,6 +109,42 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Family.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    #-------
+    # Genre
+    #-------
+    def test_add_Genre1(self):
+        
+        with app.test_request_context():
+            genre1 = Genre(id=1000000, name="genre1", image="www.test_image.com", 
+                           desc="This is a test genre.")
+            db.session.add(genre1)
+            db.session.commit()
+            
+            gamequery = db.session.query(Genre).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.id, 1000000)
+            self.assertEqual(gamequery.name, "genre1")
+            self.assertEqual(gamequery.image, "www.test_image.com")
+            self.assertEqual(gamequery.desc, "This is a test genre.")
+            
+            db.session.delete(genre1)
+            db.session.commit()
+            
+    def test_add_Genre2(self):
+    
+        with app.test_request_context():
+            genre2 = Genre()
+            init_len = len(Genre.query.all())
+            db.session.add(genre2)
+            db.session.commit()
+            changed_len = len(Genre.query.all())
+            self.assertEqual(init_len + 1, changed_len)
+            
+            init_len = changed_len
+            db.session.delete(genre2)
+            db.session.commit()
+            changed_len = len(Genre.query.all())
+            self.assertEqual(init_len - 1, changed_len)
 
 if __name__ == "__main__":
     main()
