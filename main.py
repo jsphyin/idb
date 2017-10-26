@@ -1,7 +1,7 @@
 import logging
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 
@@ -21,47 +21,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-@app.route('/games')
+@app.route('/api/games')
 def games():
-    return render_template('games.html', gameData=data["games"])
+    print('Request received')
+    return jsonify([1,2,3]);
 
-@app.route('/games/<game>')
-def gameInstance(game):
-    return render_template('game_models/'+game+'.html')
-
-
-@app.route('/developers')
-def developers():
-    return render_template('developers.html', devData = data["developers"])
-
-@app.route('/developers/<developer>')
-def devInstance(developer):
-    return render_template('dev_models/'+developer+'.html')
-
-@app.route('/genres')
-def genres():
-    return render_template('genres.html', genreData = data["genres"])
-    
-@app.route('/genres/<genre>')
-def genreInstance(genre):
-    return render_template('genre_models/'+genre+'.html')
-
-
-@app.route('/events')
-def events():
-    return render_template('events.html', eventData = data["events"])
-
-@app.route('/events/<event>')
-def eventInstance(event):
-    return render_template('event_models/'+event+'.html')
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template('index.html')
 
 if __name__ == '__main__':
     # Run locally in debug mode (gunicorn runs the app in production)
