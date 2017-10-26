@@ -145,6 +145,40 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Genre.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    #-----------
+    # Publisher
+    #-----------
+    def test_add_Publisher1(self):
+        
+        with app.test_request_context():
+            publisher1 = Publisher(id=1000000, name="publisher1")
+            db.session.add(publisher1)
+            db.session.commit()
+            
+            gamequery = db.session.query(Publisher).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.id, 1000000)
+            self.assertEqual(gamequery.name, "publisher1")
+            
+            db.session.delete(publisher1)
+            db.session.commit()
+            
+    def test_add_Publisher2(self):
+    
+        with app.test_request_context():
+            publisher2 = Publisher()
+            init_len = len(Publisher.query.all())
+            db.session.add(publisher2)
+            db.session.commit()
+            changed_len = len(Publisher.query.all())
+            self.assertEqual(init_len + 1, changed_len)
+            
+            init_len = changed_len
+            db.session.delete(publisher2)
+            db.session.commit()
+            changed_len = len(Publisher.query.all())
+            self.assertEqual(init_len - 1, changed_len)
+    
 
 if __name__ == "__main__":
     main()
