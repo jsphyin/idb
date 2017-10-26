@@ -30,6 +30,16 @@ game_mechanic_assoc = db.Table('game_mechanic_assoc',
     db.Column('mechanic_id', db.Integer, db.ForeignKey('mechanic.id'), primary_key=True)
 )
 
+event_game_assoc = db.Table('event_game_assoc',
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id'), primary_key=True),
+    db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True)
+)
+
+event_genre_assoc = db.Table('event_genre_assoc',
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id'), primary_key=True),
+    db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True)
+)
+
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -106,3 +116,16 @@ class Mechanic(db.Model):
     name = db.Column(db.String(4096))
 
     games = db.relationship('Game', secondary=game_mechanic_assoc, back_populates='mechanics')
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    name = db.Column(db.String(4096))
+    desc = db.Column(db.Text)
+    
+    location = db.Column(db.String(4096))
+    link = db.Column(db.String(4096))
+    time = db.Column(db.DateTime)
+
+    # games
+    # genres
