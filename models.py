@@ -84,6 +84,15 @@ class Genre(db.Model):
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
     events = db.relationship('Event', secondary=event_genre_assoc, back_populates='genres')
 
+    @property
+    def developers(self):
+        return db.session \
+            .query(Developer) \
+            .join(Developer.games) \
+            .join(Game.genres) \
+            .filter(Genre.id == self.id) \
+            .all()
+
 class Publisher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
