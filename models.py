@@ -107,6 +107,15 @@ class Developer(db.Model):
 
     games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
 
+    @property
+    def genres(self):
+        return db.session \
+            .query(Genre) \
+            .join(Genre.games) \
+            .join(Game.developers) \
+            .filter(Developer.id == self.id) \
+            .all()
+
 class Mechanic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
