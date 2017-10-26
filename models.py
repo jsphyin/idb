@@ -52,24 +52,20 @@ class Game(db.Model):
     image = db.Column(db.String(4096))
     desc = db.Column(db.Text)
 
-    families = db.relationship('Family', secondary=game_family_assoc, back_populates='games')
-
-    genres = db.relationship('Genre', secondary=game_genre_assoc, back_populates='games')
-
     year = db.Column(db.Integer)
-
-    publishers = db.relationship('Publisher', secondary=game_publisher_assoc, back_populates='games')
-
-    artists = db.relationship('Artist', secondary=game_artist_assoc, back_populates='games')
-
-    developers = db.relationship('Developer', secondary=game_developer_assoc, back_populates='games')
-
-    mechanics = db.relationship('Mechanic', secondary=game_mechanic_assoc, back_populates='games')
 
     min_players = db.Column(db.Integer)
     max_players = db.Column(db.Integer)
 
     rating = db.Column(db.Float)
+
+    families = db.relationship('Family', secondary=game_family_assoc, back_populates='games')
+    genres = db.relationship('Genre', secondary=game_genre_assoc, back_populates='games')
+    publishers = db.relationship('Publisher', secondary=game_publisher_assoc, back_populates='games')
+    artists = db.relationship('Artist', secondary=game_artist_assoc, back_populates='games')
+    developers = db.relationship('Developer', secondary=game_developer_assoc, back_populates='games')
+    mechanics = db.relationship('Mechanic', secondary=game_mechanic_assoc, back_populates='games')
+    events = db.relationship('Event', secondary=event_game_assoc, back_populates='games')
 
 class Family(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +82,7 @@ class Genre(db.Model):
     desc = db.Column(db.Text)
 
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
+    events = db.relationship('Event', secondary=event_genre_assoc, back_populates='games')
 
 class Publisher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -127,5 +124,5 @@ class Event(db.Model):
     link = db.Column(db.String(4096))
     time = db.Column(db.DateTime)
 
-    # games
-    # genres
+    games = db.relationship('Game', secondary=event_game_assoc, back_populates='events')
+    genres = db.relationship('Genre', secondary=event_genre_assoc, back_populates='events')
