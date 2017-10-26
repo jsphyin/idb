@@ -82,7 +82,7 @@ class Genre(db.Model):
     desc = db.Column(db.Text)
 
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
-    events = db.relationship('Event', secondary=event_genre_assoc, back_populates='games')
+    events = db.relationship('Event', secondary=event_genre_assoc, back_populates='genres')
 
 class Publisher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
