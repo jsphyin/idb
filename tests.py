@@ -19,6 +19,7 @@ class TestAPI(TestCase):
             db.session.commit()
             
             gamequery = db.session.query(Game).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.id, 1000000)
             self.assertEqual(gamequery.is_expansion, False)
             self.assertEqual(gamequery.primary_name, "game1")
             self.assertEqual(gamequery.alt_names, "alt_game1")
@@ -76,6 +77,38 @@ class TestAPI(TestCase):
             changed_len = len(Game.query.all())
             self.assertEqual(init_len - 1, changed_len)
             
+    #--------
+    # Family
+    #--------
+    def test_add_Family1(self):
+        
+        with app.test_request_context():
+            family1 = Family(id=1000000, name="family1")
+            db.session.add(family1)
+            db.session.commit()
+            
+            gamequery = db.session.query(Family).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.id, 1000000)
+            self.assertEqual(gamequery.name, "family1")
+            
+            db.session.delete(family1)
+            db.session.commit()
+            
+    def test_add_Family2(self):
+    
+        with app.test_request_context():
+            family2 = Family()
+            init_len = len(Family.query.all())
+            db.session.add(family2)
+            db.session.commit()
+            changed_len = len(Family.query.all())
+            self.assertEqual(init_len + 1, changed_len)
+            
+            init_len = changed_len
+            db.session.delete(family2)
+            db.session.commit()
+            changed_len = len(Family.query.all())
+            self.assertEqual(init_len - 1, changed_len)
 
 if __name__ == "__main__":
     main()
