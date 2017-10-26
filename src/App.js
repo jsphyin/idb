@@ -18,15 +18,18 @@ class App extends React.Component {
                 <div id="wrapper" class="container-fluid">
                     <NavBar />
                     <Route exact path='/' component={Home}/>
+                    <Route path='/about' component={About}/>
+
+                    <Route path='/game/:id' component={(props) => (<Model {...props} name="Games"/>)}/>
+                    <Route path='/genre/:id' component={(props) => (<Model {...props} name="Genres"/>)}/>
+                    <Route path='/developer/:id' component={(props) => (<Model {...props} name="Developers"/>)}/>
+                    <Route path='/event/:id' component={(props) => (<Model {...props} name="Events"/>)}/>
+
                     <Route path='/games' component={(props) => (<ModelGrid {...props} name="Games"/>)}/>
                     <Route path='/genres' component={(props) => (<ModelGrid {...props} name="Genres"/>)}/>
                     <Route path='/developers' component={(props) => (<ModelGrid {...props} name="Developers"/>)}/>
                     <Route path='/events' component={(props) => (<ModelGrid {...props} name="Events"/>)}/>
-                    <Route path='/about' component={About}/>
-                    <Route path='/games/:id' component={Model}/>
-                    <Route path='/genres/:id' component={Model}/>
-                    <Route path='/developers/:id' component={Model}/>
-                    <Route path='/events/:id' component={Model}/>
+
                 </div>
             </Router>
         );

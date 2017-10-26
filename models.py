@@ -61,12 +61,38 @@ class Game(db.Model):
 
     rating = db.Column(db.Float)
 
+    def json(self):
+        return {'id': self.id,
+            'is_expansion': self.is_expansion,
+            'name': self.primary_name,
+            'alt-names': self.alt_names,
+            'img': self.image,
+            'desc': self.desc,
+            'families': [(family.id, family.name) for family in self.families],
+            'genres': [(genre.id, genre.name) for genre in self.genres],
+            'year': self.year,
+            'publishers': [(publisher.id, publisher.name) for publisher in self.publishers],
+            'artists': [(artist.id, artist.name) for artist in self.artists],
+            'developers': [(developer.id, developer.name) for developer in self.developers],
+            'mechanics': [(mechanic.id, mechanic.name) for mechanic in self.mechanics],
+            'min_players': self.min_players,
+            'max_players': self.max_players,
+            'rating': self.rating
+            }
+
 class Family(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(4096))
 
     games = db.relationship('Game', secondary=game_family_assoc, back_populates='families')
+
+    def json(self):
+        return {'id': self.id,
+                'name': self.name,
+                'games': [(game.id, game.name) for game in self.games]
+                }
+
 
 class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -77,6 +103,13 @@ class Genre(db.Model):
 
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
 
+    def json(self):
+        return {'id': self.id,
+                'name': self.name,
+                'desc': self.desc,
+                'games': [(game.id, game.name) for game in self.games]
+                }
+
 class Publisher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -84,12 +117,24 @@ class Publisher(db.Model):
 
     games = db.relationship('Game', secondary=game_publisher_assoc, back_populates='publishers')
 
+    def json(self):
+        return {'id': self.id,
+                'name': self.name,
+                'games': [(game.id, game.name) for game in self.games]
+                }
+
 class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(4096))
 
     games = db.relationship('Game', secondary=game_artist_assoc, back_populates='artists')
+
+    def json(self):
+        return {'id': self.id,
+                'name': self.name,
+                'games': [(game.id, game.name) for game in self.games]
+                }
 
 class Developer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -100,9 +145,28 @@ class Developer(db.Model):
 
     games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
 
+    def json(self):
+        return {'id': self.id,
+                'name': self.name,
+                'desc': self.desc,
+                'games': [(game.id, game.name) for game in self.games]
+                }
+
 class Mechanic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(4096))
 
     games = db.relationship('Game', secondary=game_mechanic_assoc, back_populates='mechanics')
+
+    def json(self):
+        return {'id': self.id,
+                'name': self.name,
+                'games': [(game.id, game.name) for game in self.games]
+                }
+
+map = {'game': Game, 'games': Game,
+        'genre': Genre, 'genres': Genre,
+        'developer': Developer, 'developers': Developer,
+        }
+        #'event': Event, 'events': Event}

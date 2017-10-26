@@ -16,6 +16,7 @@ class ModelGrid extends React.Component {
         this.state = {
             models: []
         };
+        console.log(456);
         this.host = 'http://boardgamedb.me';
         if(window.location.hostname === 'localhost') {
             this.host = '';

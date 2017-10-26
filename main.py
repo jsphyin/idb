@@ -8,9 +8,7 @@ import sqlalchemy
 import json
 
 from flask import Flask, render_template
-
-with open('dummy.json') as data_file:
-    data = json.load(data_file)
+import models
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -21,15 +19,41 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-@app.route('/api/games')
-def games():
-    print('Request received')
-    return jsonify([1,2,3]);
+@app.route('/api/<any("game", "genre", "developer", "event"):model>/<ID>')
+def get_model(model, ID):
+    model = models.map[model]
+    instance = db.session.query(model).filter_by(id=ID).first()
+    return jsonify(instance.json())
 
+@app.route('/api/<any("games", "genres", "developers", "events"):model>/<page>')
+@app.route('/api/<any("games", "genres", "developers", "events"):model>/')
+def list_models(model, page=1):
+    model = models.map[model]
+    instances = db.session.query(model).order_by(model.id).limit(20).offset(20 * (page - 1))
+    return jsonify([instance.json() for instance in instances])
+
+@app.route('/')
+@app.route('/games')
+@app.route('/genres')
+@app.route('/developers')
+@app.route('/events')
+@app.route('/about')
+def grid():
+    return render_template('index.html')
+
+@app.route('/game/<ID>')
+@app.route('/genre/<ID>')
+@app.route('/developer/<ID>')
+@app.route('/event/<ID>')
+def index(ID):
+    return render_template('index.html')
+
+"""
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
     return render_template('index.html')
+"""
 
 if __name__ == '__main__':
     # Run locally in debug mode (gunicorn runs the app in production)
