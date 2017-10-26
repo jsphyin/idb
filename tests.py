@@ -211,6 +211,42 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Artist.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    #-----------
+    # Developer
+    #-----------
+    def test_add_Developer1(self):
+        
+        with app.test_request_context():
+            developer1 = Developer(id=1000000, name="developer1", image="www.test_image.com", 
+                           desc="This is a test developer.")
+            db.session.add(developer1)
+            db.session.commit()
+            
+            gamequery = db.session.query(Developer).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.id, 1000000)
+            self.assertEqual(gamequery.name, "developer1")
+            self.assertEqual(gamequery.image, "www.test_image.com")
+            self.assertEqual(gamequery.desc, "This is a test developer.")
+            
+            db.session.delete(developer1)
+            db.session.commit()
+            
+    def test_add_Developer2(self):
+    
+        with app.test_request_context():
+            developer2 = Developer()
+            init_len = len(Developer.query.all())
+            db.session.add(developer2)
+            db.session.commit()
+            changed_len = len(Developer.query.all())
+            self.assertEqual(init_len + 1, changed_len)
+            
+            init_len = changed_len
+            db.session.delete(developer2)
+            db.session.commit()
+            changed_len = len(Developer.query.all())
+            self.assertEqual(init_len - 1, changed_len)
     
 
 if __name__ == "__main__":
