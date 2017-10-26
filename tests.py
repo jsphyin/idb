@@ -3,11 +3,12 @@ from models import db, Game, Family, Genre, Publisher, Artist, Developer, Mechan
 from main import app
 
 class TestAPI(TestCase):
+    def setUp(self):
+        db.create_all()
+
     def test_add_Game1(self):
         
         with app.test_request_context():
-            db.create_all()
-
             game1 = Game(id=1000000, is_expansion=False, primary_name="game1", alt_names="alt_game1",
                          image="www.test_image.com", desc="This is a test game.", year=2000, 
                          min_players=0, max_players=1, rating=4.321)
