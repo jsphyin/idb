@@ -4,11 +4,9 @@ import os
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api
-import sqlalchemy
+from sqlalchemy import MetaData, Table
 
 import json
-
-from flask import Flask, render_template
 
 with open('dummy.json') as data_file:
     data = json.load(data_file)
@@ -16,12 +14,18 @@ with open('dummy.json') as data_file:
 app = Flask(__name__, static_url_path='/static')
 
 # for local: export SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:boardgamers@127.0.0.1:3306/boardgamedb-data
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
+app.config['SQLALCHEMY_DATABASE_URI'] = "pymysql://root:boardgamers@127.0.0.1:3306/boardgamedb-data"
 app.config['SQLALCHEMY_ECHO'] = bool(os.environ.get('SQLALCHEMY_ECHO', False))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 api = Api(app)
+metadata = MetaData()
+
+gameTable = Table("games", metadata)
+devTable = Table("developers", metadata)
+genreTable = Table("genres", metadata)
+eventTable = Table("events", metadata)
 
 @app.route('/')
 def index():
@@ -65,29 +69,37 @@ def events():
 def eventInstance(event):
     return render_template('event_models/'+event+'.html')
     
-class AllGames:
-    def get(self):      
-        
-class GameInstance:
-    def get(self):
-    
-class AllDevelopers:
-    def get(self):
-    
-class DevInstance:
-    def get(self):
-    
-class AllGenres:
-    def get(self):
-    
-class GenreInstance:
-    def get(self):
+class AllGames(Resource):
+    def get(self): 
+        return ""
 
-class AllEvents:
+class GameInstance(Resource):
     def get(self):
+        return ""
     
-class EventInstance:
+class AllDevelopers(Resource):
     def get(self):
+        return ""
+    
+class DevInstance(Resource):
+    def get(self):
+        return ""
+    
+class AllGenres(Resource):
+    def get(self):
+        return ""
+    
+class GenreInstance(Resource):
+    def get(self):
+        return ""
+
+class AllEvents(Resource):
+    def get(self):
+        return ""
+    
+class EventInstance(Resource):
+    def get(self):
+        return ""
     
 api.add_resource(AllGames, '/api/games')
 api.add_resource(GameInstance, '/api/games/<game>')
