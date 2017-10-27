@@ -108,7 +108,7 @@ class Genre(db.Model):
     desc = db.Column(db.Text)
 
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
-    events = db.relationship('Event', secondary=event_genre_assoc, back_populates='genres')
+    direct_events = db.relationship('Event', secondary=event_genre_assoc, back_populates='genres')
 
     def json(self):
         return {'id': self.id,
@@ -125,6 +125,18 @@ class Genre(db.Model):
         return db.session \
             .query(Developer) \
             .join(Developer.games) \
+            .join(Game.genres) \
+            .filter(Genre.id == self.id) \
+            .all()
+
+    @property
+    def events(self):
+        if self.direct_events:
+            return self.direct_events
+
+        return db.session \
+            .query(Event) \
+            .join(Event.games) \
             .join(Game.genres) \
             .filter(Genre.id == self.id) \
             .all()
@@ -161,6 +173,7 @@ class Developer(db.Model):
     name = db.Column(db.String(4096))
     image = db.Column(db.String(4096))
     desc = db.Column(db.Text)
+    website = db.Column(db.String(4096))
 
     games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
 
@@ -206,7 +219,7 @@ class Event(db.Model):
     time = db.Column(db.DateTime)
 
     games = db.relationship('Game', secondary=event_game_assoc, back_populates='events')
-    genres = db.relationship('Genre', secondary=event_genre_assoc, back_populates='events')
+    genres = db.relationship('Genre', secondary=event_genre_assoc, back_populates='direct_events')
 
     def json(self):
         image = 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'
