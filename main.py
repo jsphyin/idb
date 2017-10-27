@@ -27,8 +27,12 @@ def get_model(model, ID):
 @app.route('/api/<any("games", "genres", "developers", "events"):model>/<page>')
 @app.route('/api/<any("games", "genres", "developers", "events"):model>/')
 def list_models(model, page=1):
-    model = models.map[model]
-    instances = db.session.query(model).order_by(model.id).limit(20).offset(20 * (int(page) - 1))
+    if model != 'events':
+        model = models.map[model]
+        instances = db.session.query(model).order_by(model.id).limit(20).offset(20 * (int(page) - 1))
+    else:
+        model = models.map[model]
+        instances = db.session.query(model).order_by(model.id).limit(20).offset(200 + 20 * (int(page) - 1))
     return jsonify([instance.json() for instance in instances])
 
 @app.route('/')

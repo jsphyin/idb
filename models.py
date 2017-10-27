@@ -96,7 +96,7 @@ class Family(db.Model):
     def json(self):
         return {'id': self.id,
                 'name': self.name,
-                'games': [(game.id, game.name) for game in self.games]
+                'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
 
@@ -112,9 +112,11 @@ class Genre(db.Model):
 
     def json(self):
         return {'id': self.id,
+                'img': self.image,
                 'name': self.name,
                 'desc': self.desc,
-                'games': [(game.id, game.name) for game in self.games],
+                'games': [(game.id, game.primary_name) for game in self.games],
+                'events': [(event.id, event.name) for event in self.events],
                 'developers': [(developer.id, developer.name) for developer in self.developers]
                 }
 
@@ -137,7 +139,7 @@ class Publisher(db.Model):
     def json(self):
         return {'id': self.id,
                 'name': self.name,
-                'games': [(game.id, game.name) for game in self.games]
+                'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
 class Artist(db.Model):
@@ -150,7 +152,7 @@ class Artist(db.Model):
     def json(self):
         return {'id': self.id,
                 'name': self.name,
-                'games': [(game.id, game.name) for game in self.games]
+                'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
 class Developer(db.Model):
@@ -164,9 +166,10 @@ class Developer(db.Model):
 
     def json(self):
         return {'id': self.id,
+                'img': self.image,
                 'name': self.name,
                 'desc': self.desc,
-                'games': [(game.id, game.name) for game in self.games],
+                'games': [(game.id, game.primary_name) for game in self.games],
                 'genres': [(genre.id, genre.name) for genre in self.genres]
                 }
 
@@ -189,7 +192,7 @@ class Mechanic(db.Model):
     def json(self):
         return {'id': self.id,
                 'name': self.name,
-                'games': [(game.id, game.name) for game in self.games]
+                'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
 class Event(db.Model):
@@ -206,13 +209,20 @@ class Event(db.Model):
     genres = db.relationship('Genre', secondary=event_genre_assoc, back_populates='events')
 
     def json(self):
+        image = 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'
+        if self.games:
+            image = self.games[0].image
+        elif self.genres:
+            image = self.genres[0].image
         return {'id': self.id,
                 'name': self.name,
+                'img': image,
                 'desc': self.desc,
                 'location': self.location,
                 'time': self.time,
-                'games': [(game.id, game.name) for game in self.games],
-                'genres': [(genre.id, genre.name) for genre in self.genres]
+                'games': [(game.id, game.primary_name) for game in self.games],
+                'genres': [(genre.id, genre.name) for genre in self.genres],
+                'link': self.link
                 }
 
 map = {'game': Game, 'games': Game,

@@ -81,30 +81,29 @@ class ModelGrid extends React.Component {
                 case "Genres":
                     rows.push(
                         <ul style={grid_model_attribute}>
-                            <li>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></li>
-                            <li>{model.min_players} - {model.max_players} Players</li>
-                            <li>Released in {model.year}</li>
-                            <li>Rated {model.rating}/10</li>
+                            <li>Notable Dev: <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></li>
                         </ul>
                     );
                     break;
                 case "Developers":
                     rows.push(
                         <ul style={grid_model_attribute}>
-                            <li>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></li>
-                            <li>{model.min_players} - {model.max_players} Players</li>
-                            <li>Released in {model.year}</li>
-                            <li>Rated {model.rating}/10</li>
                         </ul>
                     );
                     break;
                 case "Events":
+                    var val = <div></div>
+                    if (model.games.length > 0) {
+                        val = model.games[0][1];
+                    } else {
+                        val = model.genres[0][1];
+                    }
                     rows.push(
                         <ul style={grid_model_attribute}>
-                            <li>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></li>
-                            <li>{model.min_players} - {model.max_players} Players</li>
-                            <li>Released in {model.year}</li>
-                            <li>Rated {model.rating}/10</li>
+                            <li>Time: {model.time}</li>
+                            <li>At {model.location}</li>
+                            <li>{val}</li>
+                            <li><a href={model.link}>Meetup Link</a></li>
                         </ul>
                     );
                     break;
