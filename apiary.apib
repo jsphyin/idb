@@ -14,17 +14,59 @@ These call provide information for the specific games in our database.
 + Response 200 (application/json)
 
     
-        {
-            “games”: [{
-                    “id”: 1, 
-                    “name”: “Catan”
-                },
-                ...
-            ]
-        }
+        [
+            {
+                "alt_names": [], 
+                "artists": [
+                    [
+                        12517, 
+                        "Marcus Gschwendtner"
+                    ]
+                ], 
+                "desc": "Die Macher is a game ...", 
+                "developers": [
+                    [
+                        1, 
+                        "Karl-Heinz Schmiel"
+                    ]
+                ], 
+                "families": [
+                    [
+                        91, 
+                        "Valley Games Classic Line"
+                    ], ...
+                ], 
+                "genres": [
+                    [
+                        1001, 
+                        "Political"
+                    ], ...
+                ], 
+                "id": 1, 
+                "img": "https://cf.geekdo-images.com/images/pic159509.jpg", 
+                "is_expansion": false, 
+                "max_players": 5, 
+                "mechanics": [
+                    [
+                        2012, 
+                        "Auction/Bidding"
+                    ], ...
+                ], 
+                "min_players": 3, 
+                "name": "Die Macher", 
+                "publishers": [
+                    [
+                        2, 
+                        "Moskito Spiele"
+                    ], ...
+                ], 
+                "rating": 7.65648, 
+                "year": 1986
+            }, ...
+        ]
 
         
-### Show Data for One Game [GET /api/games/{id}]
+### Show Data for One Game [GET /api/game/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Game ID
@@ -33,24 +75,52 @@ These call provide information for the specific games in our database.
 + Response 200 (application/json)
 
         {
-            “id”: 1,
-            “name”: “Catan”,
-            “alternate_names”: [“Catane”, ...],
-            “type”: “Board Game”,
-            “desc”: “A 3-4 player game that...”,
-            “family”: “Catan”,
-            “genre”: [“Negotiation”, ...],
-            “year”: 1995,
-            “publishers”: [“KOSMOS”, ...],
-            “developers”: [“Klaus Teuber”],
-            “artists”: [“Volkan Baga”, ...],
-            “mechanics”: [“Trading”, ...],
-            “min_players”: 3,
-            “max_players”: 4,
-            “suggested_players”: [100, 450],
-            “suggested_age”: [0,0,100, ...],
-            “price”: 49.00,
-            “rating”: 7.25022
+            "alt_names": [], 
+            "artists": [
+                [
+                    12517, 
+                    "Marcus Gschwendtner"
+                ]
+            ], 
+            "desc": "Die Macher is a game ...", 
+            "developers": [
+                [
+                    1, 
+                    "Karl-Heinz Schmiel"
+                ]
+            ], 
+            "families": [
+                [
+                    91, 
+                    "Valley Games Classic Line"
+                ], ...
+            ], 
+            "genres": [
+                [
+                    1001, 
+                    "Political"
+                ], ...
+            ], 
+            "id": 1, 
+            "img": "https://cf.geekdo-images.com/images/pic159509.jpg", 
+            "is_expansion": false, 
+            "max_players": 5, 
+            "mechanics": [
+                [
+                    2012, 
+                    "Auction/Bidding"
+                ], ...
+            ], 
+            "min_players": 3, 
+            "name": "Die Macher", 
+            "publishers": [
+                [
+                    2, 
+                    "Moskito Spiele"
+                ], ...
+            ], 
+            "rating": 7.65648, 
+            "year": 1986
         }
 
 
@@ -62,17 +132,30 @@ These callsprovide information about the board game developers in our database.
 
 + Response 200 (application/json)
 
-        {
-            “developers”: [{
-                    “id”: 1, 
-                    “name”: “Klaus Teuber”
-                },
-                ...
-            ]
-        }
+        [
+            {
+                "desc": "<p><strong>Karl-Heinz Schmiel</strong> (born November 28, 1948) ...", 
+                "games": [
+                    [
+                        1, 
+                        "Die Macher"
+                    ], ...
+                ], 
+                "genres": [
+                    [
+                        1001, 
+                        "Political"
+                    ], ...
+                ], 
+                "id": 1, 
+                "img": "https://cf.geekdo-images.com/images/pic477390_t.jpg", 
+                "name": "Karl-Heinz Schmiel", 
+                "website": "http://..."
+            }, ...
+        ]
 
         
-### Show Data for One Developer [GET /api/developers/{id}]
+### Show Data for One Developer [GET /api/developer/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Developer ID
@@ -81,18 +164,24 @@ These callsprovide information about the board game developers in our database.
 + Response 200 (application/json)
 
         {
-            “id”: 1,
-            “name”: “Klaus Teuber”,
-            “desc”: “A famous German game designer ...”,
-            “date_birth”: “June 25, 1952”,
-            “date_death”: “”,
-            “date_created”: “1995”
-            “artists”: [“Volkan Baga”, ...],
-            “games”: [“Catan”],
-            “genres”: [“Negotiation”, ...],
-            “awards”: [“2003 Origins Awards Hall of Fame Inductee”, ...],
-            “website”: “http://www.klausteuber.de/”
-        }   
+            "desc": "<p><strong>Karl-Heinz Schmiel</strong> (born November 28, 1948) ...", 
+            "games": [
+                [
+                    1, 
+                    "Die Macher"
+                ], ...
+            ], 
+            "genres": [
+                [
+                    1001, 
+                    "Political"
+                ], ...
+            ], 
+            "id": 1, 
+            "img": "https://cf.geekdo-images.com/images/pic477390_t.jpg", 
+            "name": "Karl-Heinz Schmiel", 
+            "website": "http://..."
+        }  
 
 
 
@@ -104,17 +193,30 @@ These calls provide data of all the genres that our games fall under.
 
 + Response 200 (application/json)
 
-        {
-            “genres”: [{
-                    “id”: 1, 
-                    “name”: “Negotiation”
-                },
-                ...
-            ]
-        }
+        [
+            {
+                "desc": "<p><em>Political</em> games encourage ...", 
+                "developers": [
+                    [
+                        1, 
+                        "Karl-Heinz Schmiel"
+                    ], ...
+                ], 
+                "events": [], 
+                "games": [
+                    [
+                        1, 
+                        "Die Macher"
+                    ], ..
+                ], 
+                "id": 1001, 
+                "img": "https://cf.geekdo-images.com/images/pic1657689_t.jpg", 
+                "name": "Political"
+            }, ...
+        ]
 
 
-### Show Data for One Genre [GET /api/genres/{id}]
+### Show Data for One Genre [GET /api/genre/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Genre ID
@@ -123,14 +225,23 @@ These calls provide data of all the genres that our games fall under.
 + Response 200 (application/json)
 
         {
-            “id”: 1,
-            “name”: “Negotiation”,
-            “desc”: “A game category that requires player to ...”,
-            “mechanics”: [“Trading”, ...],
-            “type”: “Mainstream”,
-            “games”: [“Catan”, “Monopoly”, ...],
-            “developers”: [“Klaus Teuber”, ...],
-            “popularity”: 46
+            "desc": "<p><em>Political</em> games encourage ...", 
+            "developers": [
+                [
+                    1, 
+                    "Karl-Heinz Schmiel"
+                ], ...
+            ], 
+            "events": [], 
+            "games": [
+                [
+                    1, 
+                    "Die Macher"
+                ], ..
+            ], 
+            "id": 1001, 
+            "img": "https://cf.geekdo-images.com/images/pic1657689_t.jpg", 
+            "name": "Political"
         }
 
 
@@ -142,17 +253,27 @@ These calls provide information about the board game events in our database.
 
 + Response 200 (application/json)
 
-        {
-            “events”: [{
-                    “id”: 1, 
-                    “name”: “Catan World Championship”
-                },
-                ...
-            ]
-        }
+        [
+            {
+                "desc": "<p>Come and join us ...", 
+                "games": [], 
+                "genres": [
+                    [
+                        1019, 
+                        "Wargame"
+                    ], ...
+                ], 
+                "id": 1, 
+                "img": "https://cf.geekdo-images.com/images/pic1657689_t.jpg", 
+                "link": "https://www.meetup.com/SABoardGamers/events/244392199/", 
+                "location": "San Antonio, TX", 
+                "name": "SA Board Gamers Thursday night gaming", 
+                "time": "Thu, 26 Oct 2017 18:00:00 GMT"
+            }, ...
+        ]
         
         
-### Show Data for One Event [GET /api/events/{id}]
+### Show Data for One Event [GET /api/event/{id}]
 
 + Parameters
     + id (required, int, `1`) ... Event ID
@@ -161,20 +282,25 @@ These calls provide information about the board game events in our database.
 + Response 200 (application/json)
 
         {
-            “id”: 1,
-            “name”: “Catan World Championship”,
-            “desc”: “A tournament to decide the best Settlers of ...”,
-            “type”: “Tournament/Competition”,
-            “date”: [“September 23 - 26, 2016”, “October 2018”],
-            “locations”: [“Durango, USA”, “Germany”, ...],
-            “winners”: [“William Cavaretta (USA)”],
-            “games”: [“Catan”],
-            “reward”: “trophy”
+            "desc": "<p>Come and join us ...", 
+            "games": [], 
+            "genres": [
+                [
+                    1019, 
+                    "Wargame"
+                ], ...
+            ], 
+            "id": 1, 
+            "img": "https://cf.geekdo-images.com/images/pic1657689_t.jpg", 
+            "link": "https://www.meetup.com/SABoardGamers/events/244392199/", 
+            "location": "San Antonio, TX", 
+            "name": "SA Board Gamers Thursday night gaming", 
+            "time": "Thu, 26 Oct 2017 18:00:00 GMT"
         }
         
 ## Search [/api/search/{attribute1}={val1}&{attribute2}={val2}...]
 
-This call provides search functionality to our website.
+This call provides search functionality to our website. (Not yet implemented)
 
 ### Search Model Instance by Attribute [GET]
 
