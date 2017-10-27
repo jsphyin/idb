@@ -68,7 +68,7 @@ class Model extends React.Component {
                 if (model.developers.length > 0) {
                     devs = []
                     for(var i = 0; i < model.developers.length; i++) {
-                        devs.push(<li>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></li>);
+                        devs.push(<li>Developed by <Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
                     }
                 }
 
@@ -76,7 +76,7 @@ class Model extends React.Component {
                 if (model.publishers.length > 0) {
                     pubs = []
                     for(var i = 0; i < model.publishers.length; i++) {
-                        pubs.push(<li>Published by {model.publishers[0][1]}</li>);
+                        pubs.push(<li>Published by {model.publishers[i][1]}</li>);
                     }
                 }
 
@@ -84,7 +84,7 @@ class Model extends React.Component {
                 if (model.artists.length > 0) {
                     arts = []
                     for(var i = 0; i < model.artists.length; i++) {
-                        arts.push(<li>Art done by {model.artists[0][1]}</li>);
+                        arts.push(<li>Art done by {model.artists[i][1]}</li>);
                     }
                 }
                 
@@ -93,6 +93,30 @@ class Model extends React.Component {
                     names = []
                     for(var i = 0; i < model.alt_names.length; i++) {
                         names.push(<li>{model.alt_names[i]}</li>);
+                    }
+                }
+
+                var fams = <div>No board game family</div>;
+                if (model.families.length > 0) {
+                    fams = []
+                    for(var i = 0; i < model.families.length; i++) {
+                        fams.push(<li>{model.families[i][1]}</li>);
+                    }
+                }
+
+                var gens = <div>No genres</div>;
+                if (model.genres.length > 0) {
+                    gens = []
+                    for(var i = 0; i < model.genres.length; i++) {
+                        gens.push(<li>{model.genres[i][1]}</li>);
+                    }
+                }
+
+                var mechs = <div>No mechanics</div>;
+                if (model.mechanics.length > 0) {
+                    mechs = []
+                    for(var i = 0; i < model.mechanics.length; i++) {
+                        mechs.push(<li>{model.mechanics[i][1]}</li>);
                     }
                 }
                 attrib = (
@@ -112,10 +136,19 @@ class Model extends React.Component {
                             {pubs}
                             {arts}
                         </ul>
+                        <h3>Genres and Mechanics</h3>
+                        <ul style={grid_model_attribute}>
+                            {gens}
+                            {mechs}
+                        </ul>
                         <h3>Play Information</h3>
                         <ul style={grid_model_attribute}>
                             <li>{model.min_players} - {model.max_players} Players</li>
                             <li>Rated {model.rating}/10</li>
+                        </ul>
+                        <h3>Board Game Families</h3>
+                        <ul style={grid_model_attribute}>
+                            {fams}
                         </ul>
                     </div>
                 );
