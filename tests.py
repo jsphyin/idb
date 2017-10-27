@@ -1,6 +1,7 @@
 from unittest import main, TestCase
-from models import db, Game, Family, Genre, Publisher, Artist, Developer, Mechanic
+from models import db, Game, Family, Genre, Publisher, Artist, Developer, Mechanic, Event
 from main import app
+from datetime import datetime
 
 class TestAPI(TestCase):
     def setUp(self):
@@ -280,6 +281,58 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Mechanic.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    #-------
+    # Event
+    #-------
+    def test_add_Event1(self):
+        
+        with app.test_request_context():
+            event1 = Event(id=1000000, name="event1", desc="This is a test event.",
+                           location="event_location", link="www.test_link.com", time=datetime(1864,2,4,0,0))
+            db.session.add(event1)
+            db.session.commit()
+            
+            gamequery = db.session.query(Event).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.id, 1000000)
+            self.assertEqual(gamequery.name, "event1")
+            self.assertEqual(gamequery.desc, "This is a test event.")
+            
+            db.session.delete(event1)
+            db.session.commit()
+            
+    def test_add_Event2(self):
+        
+        with app.test_request_context():
+            event2 = Event(id=1000000, name="event2", desc="This is a test event 2.",
+                           location="event_location2", link="www.test_link2.com", time=datetime(1980,1,1,5,4))
+            db.session.add(event2)
+            db.session.commit()
+            
+            gamequery = db.session.query(Event).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.location, "event_location2")
+            self.assertEqual(gamequery.link, "www.test_link2.com")
+            self.assertEqual(gamequery.time, datetime(1980,1,1,5,4))
+            
+            db.session.delete(event2)
+            db.session.commit()
+            
+    def test_add_Event3(self):
+    
+        with app.test_request_context():
+            event3 = Event()
+            init_len = len(Event.query.all())
+            db.session.add(event3)
+            db.session.commit()
+            changed_len = len(Event.query.all())
+            self.assertEqual(init_len + 1, changed_len)
+            
+            init_len = changed_len
+            db.session.delete(event3)
+            db.session.commit()
+            changed_len = len(Event.query.all())
+            self.assertEqual(init_len - 1, changed_len)
+    
 
 if __name__ == "__main__":
     main()
