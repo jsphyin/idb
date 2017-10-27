@@ -1,22 +1,10 @@
 import logging
-import os
 
-from flask import Flask, render_template, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData, Table
+from flask import render_template, jsonify
 
-from flask import Flask, render_template
 import models
 
-app = Flask(__name__, static_url_path='/static')
-
-# for access cloud sql from local: export SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:boardgamers@127.0.0.1:3306/proddata
-# for creating db locally: export SQLALCHEMY_DATABASE_URI=sqlite:////tmp/boardgamedb.sqlite
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
-app.config['SQLALCHEMY_ECHO'] = bool(os.environ.get('SQLALCHEMY_ECHO', False))
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
+from extensions import app, db
 
 @app.route('/api/<any("game", "genre", "developer", "event"):model>/<ID>')
 def get_model(model, ID):
@@ -56,5 +44,8 @@ def catch_all(path):
 """
 
 if __name__ == '__main__':
+    from os import sys, path
+    sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
     # Run locally in debug mode (gunicorn runs the app in production)
     app.run(host='127.0.0.1', port=8080, debug=True, threaded=True)

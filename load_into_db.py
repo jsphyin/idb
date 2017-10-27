@@ -147,13 +147,13 @@ def populate_db():
     models.db.drop_all()
     models.db.create_all()
 
-    xml_root = load_items(glob.glob("scrapefiles/*.xml")[:10])
+    xml_root = load_items(glob.glob("../idb_scrapefiles/*.xml")[:10])
     print("loaded xml")
 
-    add_and_commit(json_to_db_objects(load_json("scrapefiles/categories.json"), models.Genre))
+    add_and_commit(json_to_db_objects(load_json("../idb_scrapefiles/categories.json"), models.Genre))
     print("added genres")
 
-    add_and_commit(json_to_db_objects(load_json("scrapefiles/designers.json"), models.Developer))
+    add_and_commit(json_to_db_objects(load_json("../idb_scrapefiles/designers.json"), models.Developer))
     print("added developers")
     
     add_and_commit(json_to_db_objects(xml_link_type_to_json(xml_root, "boardgamefamily"), models.Family))
@@ -171,9 +171,9 @@ def populate_db():
     populate_games(xml_root)
 
     populate_events(
-        load_json("scrapefiles/austin.json") + \
-        load_json("scrapefiles/newyorkcity.json") + \
-        load_json("scrapefiles/sanfrancisco.json")
+        load_json("../idb_scrapefiles/austin.json") + \
+        load_json("../idb_scrapefiles/newyorkcity.json") + \
+        load_json("../idb_scrapefiles/sanfrancisco.json")
     )
 
 populate_db()
