@@ -33991,8 +33991,8 @@ var Model = function (_React$Component) {
                                 'Developed by ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/developer/' + model.developers[0][0] },
-                                    model.developers[0][1]
+                                    { to: '/developer/' + model.developers[i][0] },
+                                    model.developers[i][1]
                                 )
                             ));
                         }
@@ -34010,7 +34010,7 @@ var Model = function (_React$Component) {
                                 'li',
                                 null,
                                 'Published by ',
-                                model.publishers[0][1]
+                                model.publishers[i][1]
                             ));
                         }
                     }
@@ -34027,7 +34027,7 @@ var Model = function (_React$Component) {
                                 'li',
                                 null,
                                 'Art done by ',
-                                model.artists[0][1]
+                                model.artists[i][1]
                             ));
                         }
                     }
@@ -34044,6 +34044,54 @@ var Model = function (_React$Component) {
                                 'li',
                                 null,
                                 model.alt_names[i]
+                            ));
+                        }
+                    }
+
+                    var fams = _react2.default.createElement(
+                        'div',
+                        null,
+                        'No board game family'
+                    );
+                    if (model.families.length > 0) {
+                        fams = [];
+                        for (var i = 0; i < model.families.length; i++) {
+                            fams.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                model.families[i][1]
+                            ));
+                        }
+                    }
+
+                    var gens = _react2.default.createElement(
+                        'div',
+                        null,
+                        'No genres'
+                    );
+                    if (model.genres.length > 0) {
+                        gens = [];
+                        for (var i = 0; i < model.genres.length; i++) {
+                            gens.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                model.genres[i][1]
+                            ));
+                        }
+                    }
+
+                    var mechs = _react2.default.createElement(
+                        'div',
+                        null,
+                        'No mechanics'
+                    );
+                    if (model.mechanics.length > 0) {
+                        mechs = [];
+                        for (var i = 0; i < model.mechanics.length; i++) {
+                            mechs.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                model.mechanics[i][1]
                             ));
                         }
                     }
@@ -34091,6 +34139,17 @@ var Model = function (_React$Component) {
                         _react2.default.createElement(
                             'h3',
                             null,
+                            'Genres and Mechanics'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            gens,
+                            mechs
+                        ),
+                        _react2.default.createElement(
+                            'h3',
+                            null,
                             'Play Information'
                         ),
                         _react2.default.createElement(
@@ -34111,6 +34170,16 @@ var Model = function (_React$Component) {
                                 model.rating,
                                 '/10'
                             )
+                        ),
+                        _react2.default.createElement(
+                            'h3',
+                            null,
+                            'Board Game Families'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            fams
                         )
                     );
                     break;
