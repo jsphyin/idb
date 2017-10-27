@@ -1,4 +1,4 @@
-from main import db
+from extensions import db
 
 game_family_assoc = db.Table('game_family_assoc',
     db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
