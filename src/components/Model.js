@@ -192,7 +192,7 @@ class Model extends React.Component {
                         <CardImg style={grid_model_img} src={model.img}/>
                         <CardBody>
                             <CardText>
-                                <strong><h1 style={grid_model_name}>{model.name}</span></h1>
+                                <strong><h1 style={grid_model_name}>{model.name}</h1></strong>
                                 {attrib}
                             </CardText>
                         </CardBody>

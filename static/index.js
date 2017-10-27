@@ -33983,45 +33983,134 @@ var Model = function (_React$Component) {
                         'Unknown Developer'
                     );
                     if (model.developers.length > 0) {
-                        devs = _react2.default.createElement(
-                            'div',
-                            null,
-                            'Developed by ',
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/developer/' + model.developers[0][0] },
-                                model.developers[0][1]
-                            )
-                        );
+                        devs = [];
+                        for (var i = 0; i < model.developers.length; i++) {
+                            devs.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                'Developed by ',
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/developer/' + model.developers[0][0] },
+                                    model.developers[0][1]
+                                )
+                            ));
+                        }
+                    }
+
+                    var pubs = _react2.default.createElement(
+                        'div',
+                        null,
+                        'Unknown Publisher'
+                    );
+                    if (model.publishers.length > 0) {
+                        pubs = [];
+                        for (var i = 0; i < model.publishers.length; i++) {
+                            pubs.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                'Published by ',
+                                model.publishers[0][1]
+                            ));
+                        }
+                    }
+
+                    var arts = _react2.default.createElement(
+                        'div',
+                        null,
+                        'Unknown Artist'
+                    );
+                    if (model.artists.length > 0) {
+                        arts = [];
+                        for (var i = 0; i < model.artists.length; i++) {
+                            arts.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                'Art done by ',
+                                model.artists[0][1]
+                            ));
+                        }
+                    }
+
+                    var names = _react2.default.createElement(
+                        'div',
+                        null,
+                        'No alternate names'
+                    );
+                    if (model.alt_names.length > 0) {
+                        names = [];
+                        for (var i = 0; i < model.alt_names.length; i++) {
+                            names.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                model.alt_names[i]
+                            ));
+                        }
                     }
                     attrib = _react2.default.createElement(
-                        'ul',
-                        { style: grid_model_attribute },
+                        'div',
+                        null,
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            devs
+                            'Alternate Names'
                         ),
                         _react2.default.createElement(
-                            'li',
-                            null,
-                            model.min_players,
-                            ' - ',
-                            model.max_players,
-                            ' Players'
+                            'ul',
+                            { style: grid_model_attribute },
+                            names
                         ),
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            'Released in ',
-                            model.year
+                            'Description'
                         ),
                         _react2.default.createElement(
-                            'li',
+                            'ul',
+                            { style: grid_model_attribute },
+                            model.desc
+                        ),
+                        _react2.default.createElement(
+                            'h3',
                             null,
-                            'Rated ',
-                            model.rating,
-                            '/10'
+                            'Release Information'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'Released in ',
+                                model.year
+                            ),
+                            devs,
+                            pubs,
+                            arts
+                        ),
+                        _react2.default.createElement(
+                            'h3',
+                            null,
+                            'Play Information'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                model.min_players,
+                                ' - ',
+                                model.max_players,
+                                ' Players'
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'Rated ',
+                                model.rating,
+                                '/10'
+                            )
                         )
                     );
                     break;
@@ -34249,7 +34338,7 @@ var Model = function (_React$Component) {
                                     'strong',
                                     null,
                                     _react2.default.createElement(
-                                        'span',
+                                        'h1',
                                         { style: grid_model_name },
                                         model.name
                                     )

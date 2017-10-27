@@ -28,12 +28,10 @@ def list_models(model, page=1):
 @app.route('/<any("games", "genres", "developers", "events"):model>/<page>')
 @app.route('/<any("games", "genres", "developers", "events"):model>/')
 def grid(model, page=1):
-    print('grid',model,page)
     return render_template('index.html')
 
 @app.route('/<any("game", "genre", "developer", "event"):model>/<ID>')
 def index(model, ID):
-    print('instance',model,ID)
     return render_template('index.html')
 
 """
