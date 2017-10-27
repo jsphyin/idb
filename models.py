@@ -114,8 +114,18 @@ class Genre(db.Model):
         return {'id': self.id,
                 'name': self.name,
                 'desc': self.desc,
-                'games': [(game.id, game.name) for game in self.games]
+                'games': [(game.id, game.name) for game in self.games],
+                'developers': [(developer.id, developer.name) for developer in self.developers]
                 }
+
+    @property
+    def developers(self):
+        return db.session \
+            .query(Developer) \
+            .join(Developer.games) \
+            .join(Game.genres) \
+            .filter(Genre.id == self.id) \
+            .all()
 
 class Publisher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -156,8 +166,18 @@ class Developer(db.Model):
         return {'id': self.id,
                 'name': self.name,
                 'desc': self.desc,
-                'games': [(game.id, game.name) for game in self.games]
+                'games': [(game.id, game.name) for game in self.games],
+                'genres': [(genre.id, genre.name) for genre in self.genres]
                 }
+
+    @property
+    def genres(self):
+        return db.session \
+            .query(Genre) \
+            .join(Genre.games) \
+            .join(Game.developers) \
+            .filter(Developer.id == self.id) \
+            .all()
 
 class Mechanic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
