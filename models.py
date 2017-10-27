@@ -183,7 +183,8 @@ class Developer(db.Model):
                 'name': self.name,
                 'desc': self.desc,
                 'games': [(game.id, game.primary_name) for game in self.games],
-                'genres': [(genre.id, genre.name) for genre in self.genres]
+                'genres': [(genre.id, genre.name) for genre in self.genres],
+                'website': self.website
                 }
 
     @property

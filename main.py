@@ -29,10 +29,10 @@ def get_model(model, ID):
 def list_models(model, page=1):
     if model != 'events':
         model = models.map[model]
-        instances = db.session.query(model).order_by(model.id).limit(20).offset(20 * (int(page) - 1))
+        instances = db.session.query(model).order_by(model.id).limit(99).offset(20 * (int(page) - 1))
     else:
         model = models.map[model]
-        instances = db.session.query(model).order_by(model.id).limit(20).offset(200 + 20 * (int(page) - 1))
+        instances = db.session.query(model).order_by(model.id).limit(99).offset(300 + 20 * (int(page) - 1))
     return jsonify([instance.json() for instance in instances])
 
 @app.route('/')
@@ -44,7 +44,7 @@ def grid(model, page=1):
     return render_template('index.html')
 
 @app.route('/<any("game", "genre", "developer", "event"):model>/<ID>')
-def index(ID):
+def index(model, ID):
     print('instance',model,ID)
     return render_template('index.html')
 
