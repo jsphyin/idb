@@ -71,7 +71,7 @@ class Game(db.Model):
         return {'id': self.id,
             'is_expansion': self.is_expansion,
             'name': self.primary_name,
-            'alt-names': self.alt_names.split(',') if self.alt_names else [],
+            'alt_names': self.alt_names.split(',') if self.alt_names else [],
             'img': self.image,
             'desc': self.desc,
             'families': [(family.id, family.name) for family in self.families],

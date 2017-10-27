@@ -27,7 +27,7 @@ def list_models(model, page=1):
 @app.route('/about')
 @app.route('/<any("games", "genres", "developers", "events"):model>/<page>')
 @app.route('/<any("games", "genres", "developers", "events"):model>/')
-def grid(model, page=1):
+def grid(model=None, page=1):
     return render_template('index.html')
 
 @app.route('/<any("game", "genre", "developer", "event"):model>/<ID>')
