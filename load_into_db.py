@@ -1,3 +1,4 @@
+from datetime import datetime
 import glob
 import json
 from lxml import etree
@@ -103,7 +104,44 @@ def populate_games(xml_root):
     models.db.session.execute(models.game_mechanic_assoc.insert().values(list(game_mechanic_pairs)))
     
     models.db.session.commit()
-    print("added foreign keys")
+    print("added game assocs")
+
+def populate_events(event_list):
+    event_game_pairs = set()
+    event_genre_pairs = set()
+
+    json_events = {}
+    event_id = 1
+
+    valid_game_ids = set(models.db.session.query(models.Game.id).distinct())
+    valid_genre_ids = set(models.db.session.query(models.Genre.id).distinct())
+
+    for event in event_list:
+        location = event["group"]["localized_location"]
+        if "venue" in event:
+            location = "{}, {}".format(event["venue"]["city"], event["venue"]["state"])
+
+        json_events[event_id] = {
+            "name": event["name"],
+            "desc": event.get("description"),
+            "location": location,
+            "link": event["link"],
+            "time": datetime.fromtimestamp(event["time"] / 1000),
+        }
+
+        event_game_pairs.update((event_id, foreign_id) for foreign_id in event.get("game_ids", []) if (foreign_id,) in valid_game_ids)
+        event_genre_pairs.update((event_id, foreign_id) for foreign_id in event.get("genre_ids", []) if (foreign_id,) in valid_genre_ids)
+
+        event_id += 1
+
+    add_and_commit(json_to_db_objects(json_events, models.Event))
+    print("added events")
+
+    models.db.session.execute(models.event_game_assoc.insert().values(list(event_game_pairs)))
+    models.db.session.execute(models.event_genre_assoc.insert().values(list(event_genre_pairs)))
+    
+    models.db.session.commit()
+    print("added event assocs")
 
 def populate_db():
     models.db.drop_all()
@@ -131,5 +169,11 @@ def populate_db():
     print("added mechanics")
     
     populate_games(xml_root)
+
+    populate_events(
+        load_json("scrapefiles/austin.json") + \
+        load_json("scrapefiles/newyorkcity.json") + \
+        load_json("scrapefiles/sanfrancisco.json")
+    )
 
 populate_db()
