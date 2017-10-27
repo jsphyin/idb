@@ -171,6 +171,7 @@ class Developer(db.Model):
     name = db.Column(db.String(4096))
     image = db.Column(db.String(4096))
     desc = db.Column(db.Text)
+    website = db.Column(db.String(4096))
 
     games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
 
