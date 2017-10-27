@@ -5,14 +5,7 @@ import {
     Link
 } from 'react-router-dom'
 import {
-    Navbar,
-    NavItem,
-    NavbarBrand,
-    Nav,
-    NavLink,
-    InputGroup,
-    Input,
-    InputGroupAddon,
+    Row,
     Col
 } from 'reactstrap';
 
@@ -39,7 +32,7 @@ class Model extends React.Component {
     }
 
     render() {
-        return <h1>{this.type} {this.id}</h1>;
+        return <h1>{this.type}{this.id}</h1>
     }
 
 }
