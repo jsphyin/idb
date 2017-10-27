@@ -33101,7 +33101,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 14'
+                                            ' 32'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33111,7 +33111,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 6'
+                                            ' 9'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33189,7 +33189,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 17'
+                                            ' 26'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33199,7 +33199,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 6'
+                                            ' 10'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33277,7 +33277,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 7'
+                                            ' 15'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33287,7 +33287,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 4'
+                                            ' 7'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33297,7 +33297,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' 0'
+                                            ' 4'
                                         )
                                     )
                                 )
@@ -33369,7 +33369,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 2'
+                                            ' 7'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33379,7 +33379,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 0'
+                                            ' 4'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33389,7 +33389,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' 0'
+                                            ' -'
                                         )
                                     )
                                 )
@@ -33457,7 +33457,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 1'
+                                            ' 12'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33467,7 +33467,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 1'
+                                            ' 4'
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33477,7 +33477,7 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' 0'
+                                            ' 15'
                                         )
                                     )
                                 )
@@ -33508,7 +33508,7 @@ var About = function (_React$Component) {
                                 null,
                                 'Total No. of Commits:'
                             ),
-                            ' 48'
+                            ' 112'
                         ),
                         _react2.default.createElement(
                             'li',
@@ -33518,7 +33518,7 @@ var About = function (_React$Component) {
                                 null,
                                 'Total No. of Issues:'
                             ),
-                            ' 17'
+                            ' 34'
                         ),
                         _react2.default.createElement(
                             'li',
@@ -33611,6 +33611,15 @@ var About = function (_React$Component) {
                                 'a',
                                 { href: 'http://www.reddit.com/dev/api' },
                                 'http://www.reddit.com/dev/api'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(
+                                'a',
+                                { href: 'http://api.meetup.com' },
+                                'http://api.meetup.com'
                             )
                         )
                     ),
@@ -34187,109 +34196,157 @@ var Model = function (_React$Component) {
                     var devs = _react2.default.createElement(
                         'div',
                         null,
-                        'No notable devs'
+                        'No Notable Developers'
                     );
                     if (model.developers.length > 0) {
-                        devs = _react2.default.createElement(
-                            'div',
-                            null,
-                            'Notable Dev: ',
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/developer/' + model.developers[0][0] },
-                                model.developers[0][1]
-                            )
-                        );
+                        devs = [];
+                        for (var i = 0; i < model.developers.length; i++) {
+                            devs.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/developer/' + model.developers[i][0] },
+                                    model.developers[i][1]
+                                )
+                            ));
+                        }
                     }
+
                     var games = _react2.default.createElement(
                         'div',
                         null,
-                        'No notable games'
+                        'No Notable Games'
                     );
                     if (model.games.length > 0) {
-                        games = _react2.default.createElement(
-                            'div',
-                            null,
-                            'Notable Games: ',
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/game/' + model.games[0][0] },
-                                model.games[0][1]
-                            )
-                        );
+                        games = [];
+                        for (var i = 0; i < model.games.length; i++) {
+                            games.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/game/' + model.games[i][0] },
+                                    model.games[i][1]
+                                )
+                            ));
+                        }
                     }
+
                     var events = _react2.default.createElement(
                         'div',
                         null,
-                        'No events'
+                        'No Events'
                     );
                     if (model.events.length > 0) {
-                        events = _react2.default.createElement(
-                            'div',
-                            null,
-                            'Events: ',
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/event/' + model.events[0][0] },
-                                model.events[0][1]
-                            )
-                        );
+                        events = [];
+                        for (var i = 0; i < model.events.length; i++) {
+                            events.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/event/' + model.events[i][0] },
+                                    model.events[i][1]
+                                )
+                            ));
+                        }
                     }
+
                     attrib = _react2.default.createElement(
-                        'ul',
-                        { style: grid_model_attribute },
+                        'div',
+                        null,
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            devs
+                            'Description'
                         ),
                         _react2.default.createElement(
-                            'li',
-                            null,
-                            games
+                            'ul',
+                            { style: grid_model_attribute },
+                            model.desc
                         ),
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            events
+                            'Notable Developers'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                devs
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'h3',
+                            null,
+                            'Notable Games'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                games
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'h3',
+                            null,
+                            'Events'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                events
+                            )
                         )
                     );
                     break;
                 case "Developers":
-                    var genres = _react2.default.createElement(
+                    var gens = _react2.default.createElement(
                         'div',
                         null,
-                        'No Genres'
+                        'No genres'
                     );
                     if (model.genres.length > 0) {
-                        genres = _react2.default.createElement(
-                            'div',
-                            null,
-                            'Genres: ',
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/genre/' + model.genres[0][0] },
-                                model.genres[0][1]
-                            )
-                        );
+                        gens = [];
+                        for (var i = 0; i < model.genres.length; i++) {
+                            gens.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                model.genres[i][1]
+                            ));
+                        }
                     }
+
                     var games = _react2.default.createElement(
                         'div',
                         null,
-                        'No notable games'
+                        'No Notable Games'
                     );
                     if (model.games.length > 0) {
-                        games = _react2.default.createElement(
-                            'div',
-                            null,
-                            'Notable Games: ',
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/game/' + model.games[0][0] },
-                                model.games[0][1]
-                            )
-                        );
+                        games = [];
+                        for (var i = 0; i < model.games.length; i++) {
+                            games.push(_react2.default.createElement(
+                                'li',
+                                null,
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/game/' + model.games[i][0] },
+                                    model.games[i][1]
+                                )
+                            ));
+                        }
                     }
+
                     var website = _react2.default.createElement(
                         'a',
                         { href: model.website },
@@ -34297,28 +34354,58 @@ var Model = function (_React$Component) {
                     );
                     if (model.website === null) {
                         website = _react2.default.createElement(
-                            'div',
+                            'li',
                             null,
                             'No website'
                         );
                     }
+
                     attrib = _react2.default.createElement(
-                        'ul',
-                        { style: grid_model_attribute },
+                        'div',
+                        null,
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            genres
+                            'Description'
                         ),
                         _react2.default.createElement(
-                            'li',
+                            'ul',
+                            { style: grid_model_attribute },
+                            model.desc
+                        ),
+                        _react2.default.createElement(
+                            'h3',
                             null,
+                            'Games'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
                             games
                         ),
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            website
+                            'Genres'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            gens
+                        ),
+                        _react2.default.createElement(
+                            'h3',
+                            null,
+                            'Website Link'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                website
+                            )
                         )
                     );
                     break;
@@ -34342,32 +34429,60 @@ var Model = function (_React$Component) {
                         );
                     }
                     attrib = _react2.default.createElement(
-                        'ul',
-                        { style: grid_model_attribute },
+                        'div',
+                        null,
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            'Time: ',
-                            model.time
+                            'Description'
                         ),
                         _react2.default.createElement(
-                            'li',
-                            null,
-                            'At ',
-                            model.location
+                            'ul',
+                            { style: grid_model_attribute },
+                            model.desc
                         ),
                         _react2.default.createElement(
-                            'li',
+                            'h3',
                             null,
-                            val
+                            'Meetup Information'
                         ),
                         _react2.default.createElement(
-                            'li',
-                            null,
+                            'ul',
+                            { style: grid_model_attribute },
                             _react2.default.createElement(
-                                'a',
-                                { href: model.link },
-                                'Meetup Link'
+                                'li',
+                                null,
+                                'Time: ',
+                                model.time
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'At ',
+                                model.location
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: model.link },
+                                    'Meetup Link'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'h3',
+                            null,
+                            'Related Games or Genres'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            { style: grid_model_attribute },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                val
                             )
                         )
                     );
@@ -34376,20 +34491,6 @@ var Model = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { 'class': 'container' },
-                _react2.default.createElement(
-                    'div',
-                    { style: page_header },
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        this.props.name
-                    ),
-                    _react2.default.createElement(
-                        'section',
-                        { id: 'grid-description' },
-                        this.props.desc
-                    )
-                ),
                 _react2.default.createElement(
                     'section',
                     null,

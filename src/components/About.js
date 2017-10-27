@@ -62,8 +62,8 @@ class About extends React.Component {
                                     <ul style={about_person_detail}>
                                         <li><strong>Bio:</strong> Anurag is a junior studying CS and Math at UT Austin. He enjoys traveling, road trips, and barbecue.</li>
                                         <li><strong>Responsibilities:</strong> Frontend, Backend, GCP and domain management</li>
-                                        <li><strong>No. Of Commits:</strong> 14</li>
-                                        <li><strong>No. Of Issues:</strong> 6</li>
+                                        <li><strong>No. Of Commits:</strong> 32</li>
+                                        <li><strong>No. Of Issues:</strong> 9</li>
                                         <li><strong>No. Of Unit Tests:</strong> 0</li>
                                     </ul>
                                 </div>
@@ -86,8 +86,8 @@ class About extends React.Component {
                                     <ul style={about_person_detail}>
                                         <li><strong>Bio:</strong> Quang is a third year CS/Math student with an addiction to reading anything from fantasy to romance.</li>
                                         <li><strong>Responsibilities:</strong> Frontend, scraping and parsing data, Report</li>
-                                        <li><strong>No. Of Commits:</strong> 17</li>
-                                        <li><strong>No. Of Issues:</strong> 6</li>
+                                        <li><strong>No. Of Commits:</strong> 26</li>
+                                        <li><strong>No. Of Issues:</strong> 10</li>
                                         <li><strong>No. Of Unit Tests:</strong> 0</li>
                                     </ul>
                                 </div>
@@ -110,9 +110,9 @@ class About extends React.Component {
                                     <ul style={about_person_detail}>
                                         <li><strong>Bio:</strong> Joseph is a third year student at UT pursuing a BS in computer science. In his free time he enjoys reading manga, browsing memes, and playing league.</li>
                                         <li><strong>Responsibilities:</strong> Task management, Frontend</li>
-                                        <li><strong>No. Of Commits:</strong> 7</li>
-                                        <li><strong>No. Of Issues:</strong> 4</li>
-                                        <li><strong>No. Of Unit Tests:</strong> 0</li>
+                                        <li><strong>No. Of Commits:</strong> 15</li>
+                                        <li><strong>No. Of Issues:</strong> 7</li>
+                                        <li><strong>No. Of Unit Tests:</strong> 4</li>
                                     </ul>
                                 </div>
                             </div>
@@ -136,9 +136,9 @@ class About extends React.Component {
                                     <ul style={about_person_detail}>
                                         <li><strong>Bio:</strong> Kamron Ledet is a third-year Computer Science major interested in programming for games and software. He also takes an interest in acting and has been active in theatre since junior high.</li>
                                         <li><strong>Responsibilities:</strong> Apiary, Domain management</li>
-                                        <li><strong>No. Of Commits:</strong> 2</li>
-                                        <li><strong>No. Of Issues:</strong> 0</li>
-                                        <li><strong>No. Of Unit Tests:</strong> 0</li>
+                                        <li><strong>No. Of Commits:</strong> 7</li>
+                                        <li><strong>No. Of Issues:</strong> 4</li>
+                                        <li><strong>No. Of Unit Tests:</strong> -</li>
                                     </ul>
                                 </div>
                             </div>
@@ -160,9 +160,9 @@ class About extends React.Component {
                                     <ul style={about_person_detail}>
                                         <li><strong>Bio:</strong> Alex is a third year computer science major with an interest in pursuing game and graphical development.</li>
                                         <li><strong>Responsibilities:</strong> Apiary, Frontend</li>
-                                        <li><strong>No. Of Commits:</strong> 1</li>
-                                        <li><strong>No. Of Issues:</strong> 1</li>
-                                        <li><strong>No. Of Unit Tests:</strong> 0</li>
+                                        <li><strong>No. Of Commits:</strong> 12</li>
+                                        <li><strong>No. Of Issues:</strong> 4</li>
+                                        <li><strong>No. Of Unit Tests:</strong> 15</li>
                                     </ul>
                                 </div>
                             </div>
@@ -175,8 +175,8 @@ class About extends React.Component {
                 </div>
                 <section id="about-stats-content">
                     <ul>
-                        <li><strong>Total No. of Commits:</strong> 48</li>
-                        <li><strong>Total No. of Issues:</strong> 17</li>
+                        <li><strong>Total No. of Commits:</strong> 112</li>
+                        <li><strong>Total No. of Issues:</strong> 34</li>
                         <li><strong>Total No. of Unit Tests:</strong> 0</li>
                         <li><a href="http://docs.boardgamedb.apiary.io/"><strong>Apiary</strong></a></li>
                         <li><a href="https://github.com/jsphyin/idb"><strong>Github</strong></a></li>
@@ -192,6 +192,7 @@ class About extends React.Component {
                         <li><a href="http://www.boardgamegeek.com/xmlapi">http://www.boardgamegeek.com/xmlapi</a></li>
                         <li><a href="http://www.mediawiki.org/wiki/API ">http://www.mediawiki.org/wiki/API </a></li>
                         <li><a href="http://www.reddit.com/dev/api">http://www.reddit.com/dev/api</a></li>
+                        <li><a href="http://api.meetup.com">http://api.meetup.com</a></li>
                     </ul>
                     Using the Python <a href="http://docs.python-requests.org/en/master/">requests</a> library, we grabbed all the XML by iterating through all possible ids and filtering out all the non-board game items.
                 </section>

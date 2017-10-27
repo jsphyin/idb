@@ -154,45 +154,93 @@ class Model extends React.Component {
                 );
                 break;
             case "Genres":
-                var devs = <div>No notable devs</div>;
+                var devs = <div>No Notable Developers</div>;
                 if (model.developers.length > 0) {
-                    devs = <div>Notable Dev: <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
+                    devs = []
+                    for(var i = 0; i < model.developers.length; i++) {
+                        devs.push(<li><Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
+                    }
                 }
-                var games = <div>No notable games</div>;
+
+                var games = <div>No Notable Games</div>;
                 if (model.games.length > 0) {
-                    games = <div>Notable Games: <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
+                    games = []
+                    for(var i = 0; i < model.games.length; i++) {
+                        games.push(<li><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                    }
                 }
-                var events = <div>No events</div>;
+
+                var events = <div>No Events</div>;
                 if (model.events.length > 0) {
-                    events = <div>Events: <Link to={'/event/' + model.events[0][0]}>{model.events[0][1]}</Link></div>;
+                    events = []
+                    for(var i = 0; i < model.events.length; i++) {
+                        events.push(<li><Link to={'/event/' + model.events[i][0]}>{model.events[i][1]}</Link></li>);
+                    }
                 }
+
                 attrib = (
-                    <ul style={grid_model_attribute}>
-                        <li>{devs}</li>
-                        <li>{games}</li>
-                        <li>{events}</li>
-                    </ul>
+                    <div>
+                        <h3>Description</h3>
+                        <ul style={grid_model_attribute}>
+                            {model.desc}
+                        </ul>
+                        <h3>Notable Developers</h3>
+                        <ul style={grid_model_attribute}>
+                            <li>{devs}</li>
+                        </ul>
+                        <h3>Notable Games</h3>
+                        <ul style={grid_model_attribute}>
+                            <li>{games}</li>
+                        </ul>
+                        <h3>Events</h3>
+                        <ul style={grid_model_attribute}>
+                            <li>{events}</li>
+                        </ul>
+                    </div>
                 );
                 break;
             case "Developers":
-                var genres = <div>No Genres</div>;
+                var gens = <div>No genres</div>;
                 if (model.genres.length > 0) {
-                    genres = <div>Genres: <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link></div>;
+                    gens = []
+                    for(var i = 0; i < model.genres.length; i++) {
+                        gens.push(<li>{model.genres[i][1]}</li>);
+                    }
                 }
-                var games = <div>No notable games</div>;
+
+                var games = <div>No Notable Games</div>;
                 if (model.games.length > 0) {
-                    games = <div>Notable Games: <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
+                    games = []
+                    for(var i = 0; i < model.games.length; i++) {
+                        games.push(<li><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                    }
                 }
+
+
                 var website = <a href={model.website}>{model.website}</a>;
                 if (model.website === null) {
-                    website = <div>No website</div>;
+                    website = <li>No website</li>;
                 }
+
                 attrib = (
-                    <ul style={grid_model_attribute}>
-                        <li>{genres}</li>
-                        <li>{games}</li>
-                        <li>{website}</li>
-                    </ul>
+                    <div>
+                        <h3>Description</h3>
+                        <ul style={grid_model_attribute}>
+                            {model.desc}
+                        </ul>
+                        <h3>Games</h3>
+                        <ul style={grid_model_attribute}>
+                            {games}
+                        </ul>
+                        <h3>Genres</h3>
+                        <ul style={grid_model_attribute}>
+                            {gens}
+                        </ul>
+                        <h3>Website Link</h3>
+                        <ul style={grid_model_attribute}>
+                            <li>{website}</li>
+                        </ul>
+                    </div>
                 );
                 break;
             case "Events":
@@ -203,23 +251,27 @@ class Model extends React.Component {
                     val = <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
                 }
                 attrib = (
-                    <ul style={grid_model_attribute}>
-                        <li>Time: {model.time}</li>
-                        <li>At {model.location}</li>
-                        <li>{val}</li>
-                        <li><a href={model.link}>Meetup Link</a></li>
-                    </ul>
+                    <div>
+                        <h3>Description</h3>
+                        <ul style={grid_model_attribute}>
+                            {model.desc}
+                        </ul>
+                        <h3>Meetup Information</h3>
+                        <ul style={grid_model_attribute}>
+                            <li>Time: {model.time}</li>
+                            <li>At {model.location}</li>
+                            <li><a href={model.link}>Meetup Link</a></li>
+                        </ul>
+                        <h3>Related Games or Genres</h3> 
+                        <ul style={grid_model_attribute}>
+                            <li>{val}</li>
+                        </ul>
+                    </div>
                 );
                 break;
         }
         return (
             <div class="container">
-                <div style={page_header}>
-                    <h2>{this.props.name}</h2>
-                    <section id="grid-description">
-                        {this.props.desc}
-                    </section>
-                </div>
                 <section>
                     <Card style={grid_model}>
                         <CardImg style={grid_model_img} src={model.img}/>
