@@ -1,27 +1,55 @@
 import logging
 
-from flask import render_template, jsonify
+from flask import render_template, request, jsonify
 
 import models
 
 from extensions import app, db
 
-@app.route('/api/<any("game", "genre", "developer", "event"):model>/<ID>')
-def get_model(model, ID):
-    model = models.map[model]
-    instance = db.session.query(model).filter_by(id=ID).first()
-    return jsonify(instance.json())
 
-@app.route('/api/<any("games", "genres", "developers", "events"):model>/<page>')
-@app.route('/api/<any("games", "genres", "developers", "events"):model>/')
-def list_models(model, page=1):
-    if model != 'events':
-        model = models.map[model]
-        instances = db.session.query(model).order_by(model.id).limit(99).offset(20 * (int(page) - 1))
-    else:
-        model = models.map[model]
-        instances = db.session.query(model).order_by(model.id).limit(99).offset(300 + 20 * (int(page) - 1))
-    return jsonify([instance.json() for instance in instances])
+def paginated(query):
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 20))
+
+    instances = query \
+        .order_by('id') \
+        .limit(per_page) \
+        .offset((page - 1) * per_page) \
+        .all()
+
+    return jsonify([i.json() for i in instances])
+
+@app.route('/api/games')
+@app.route('/api/games/<int:id>')
+def api_games(id=None):
+    if id is not None:
+        return jsonify(models.Game.query.get(id).json())
+
+    return paginated(models.Game.query)
+
+@app.route('/api/genres')
+@app.route('/api/genres/<int:id>')
+def api_genres(id=None):
+    if id is not None:
+        return jsonify(models.Genre.query.get(id).json())
+
+    return paginated(models.Genre.query)
+
+@app.route('/api/developers')
+@app.route('/api/developers/<int:id>')
+def api_developers(id=None):
+    if id is not None:
+        return jsonify(models.Developer.query.get(id).json())
+
+    return paginated(models.Developer.query)
+
+@app.route('/api/events')
+@app.route('/api/events/<int:id>')
+def api_events(id=None):
+    if id is not None:
+        return jsonify(models.Event.query.get(id).json())
+
+    return paginated(models.Event.query)
 
 @app.route('/')
 @app.route('/about')

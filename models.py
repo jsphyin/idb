@@ -48,7 +48,7 @@ class Game(db.Model):
 
     primary_name = db.Column(db.String(4096))
     alt_names = db.Column(db.Text)
-    
+
     image = db.Column(db.String(4096))
     desc = db.Column(db.Text)
 
@@ -214,7 +214,7 @@ class Event(db.Model):
 
     name = db.Column(db.String(4096))
     desc = db.Column(db.Text)
-    
+
     location = db.Column(db.String(4096))
     link = db.Column(db.String(4096))
     time = db.Column(db.DateTime)
@@ -238,9 +238,3 @@ class Event(db.Model):
                 'genres': [(genre.id, genre.name) for genre in self.genres],
                 'link': self.link
                 }
-
-map = {'game': Game, 'games': Game,
-        'genre': Genre, 'genres': Genre,
-        'developer': Developer, 'developers': Developer,
-        'event': Event, 'events': Event
-      }
