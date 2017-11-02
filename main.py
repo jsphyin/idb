@@ -1,6 +1,7 @@
 import logging
 
 from flask import abort, render_template, request, jsonify
+from sqlalchemy import column, literal, literal_column
 
 import models
 
@@ -12,7 +13,6 @@ def paginated(query):
     per_page = int(request.args.get('per_page', 20))
 
     instances = query \
-        .order_by('id') \
         .limit(per_page) \
         .offset((page - 1) * per_page) \
         .all()
@@ -100,6 +100,23 @@ def api_events(id=None):
         q = q.order_by(models.Event.time.desc())
     else:
         abort(400)
+
+    return paginated(q)
+
+@app.route('/api/search')
+def api_search():
+    query = request.args.get('query')
+    if not query:
+        abort(400)
+
+    q = models.SearchResult.query.union_all(*(
+        db.session.query(
+            m.id.label(models.SearchResult.id.name),
+            literal(m.__name__).label(models.SearchResult.type.name),
+            literal_column('MATCH ({}) AGAINST (\'{}\' IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__, query)).label(models.SearchResult.score.name)
+        )
+        for m in (models.Game, models.Genre, models.Developer, models.Event)
+    )).order_by(models.SearchResult.score.desc())
 
     return paginated(q)
 
