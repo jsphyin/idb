@@ -3,7 +3,7 @@
 CLOUD_ARGS="-instances=boardgamedb-181002:us-central1:boardgamedb-data=tcp:3306"
 
 function clean_up() {
-    if [[ -z $KILL_CLOUD_PROXY ]] && [[ -z $IDB_CLOUD_PID ]]; then
+    if [[ -n $KILL_CLOUD_PROXY ]] && [[ -n $IDB_CLOUD_PID ]]; then
         kill $IDB_CLOUD_PID
     fi
     exit
@@ -47,12 +47,13 @@ function cloud_proxy() {
             exit
         fi
 
-        eval $CLOUD_SQL_PROXY $CLOUD_ARGS /dev/null 2>&1 &
+        eval "("$CLOUD_SQL_PROXY $CLOUD_ARGS ">/dev/null 2>&1 &)"
 
         # Wait for up to 5 seconds for the cloud proxy to start up
         CLOUD_TIMEOUT=5
-        while [[ -z $(pidof "cloud_sql_proxy") ]] && [[ CLOUD_TIMEOUT > 0 ]]; do
+        while [[ -z $(pidof "cloud_sql_proxy") ]] && [[ $CLOUD_TIMEOUT > 0 ]]; do
             sleep 1
+            CLOUD_TIMEMOUT=$((CLOUD_TIMEOUT - 1))
         done
 
         # Try to grab the PID
