@@ -1,6 +1,7 @@
 import logging
 
-from flask import render_template, request, jsonify
+from flask import abort, render_template, request, jsonify
+from sqlalchemy import column, literal, literal_column
 
 import models
 
@@ -12,7 +13,6 @@ def paginated(query):
     per_page = int(request.args.get('per_page', 20))
 
     instances = query \
-        .order_by('id') \
         .limit(per_page) \
         .offset((page - 1) * per_page) \
         .all()
@@ -25,7 +25,21 @@ def api_games(id=None):
     if id is not None:
         return jsonify(models.Game.query.get(id).json())
 
-    return paginated(models.Game.query)
+    q = models.Game.query
+
+    sort = request.args.get('sort', 'name')
+    if sort == 'name':
+        q = q.order_by(models.Game.primary_name)
+    elif sort == '-name':
+        q = q.order_by(models.Game.primary_name.desc())
+    elif sort == 'year':
+        q = q.order_by(models.Game.year)
+    elif sort == '-year':
+        q = q.order_by(models.Game.year.desc())
+    else:
+        abort(400)
+
+    return paginated(q)
 
 @app.route('/api/genres')
 @app.route('/api/genres/<int:id>')
@@ -33,7 +47,17 @@ def api_genres(id=None):
     if id is not None:
         return jsonify(models.Genre.query.get(id).json())
 
-    return paginated(models.Genre.query)
+    q = models.Genre.query
+
+    sort = request.args.get('sort', 'name')
+    if sort == 'name':
+        q = q.order_by(models.Genre.name)
+    elif sort == '-name':
+        q = q.order_by(models.Genre.name.desc())
+    else:
+        abort(400)
+
+    return paginated(q)
 
 @app.route('/api/developers')
 @app.route('/api/developers/<int:id>')
@@ -41,7 +65,17 @@ def api_developers(id=None):
     if id is not None:
         return jsonify(models.Developer.query.get(id).json())
 
-    return paginated(models.Developer.query)
+    q = models.Developer.query
+
+    sort = request.args.get('sort', 'name')
+    if sort == 'name':
+        q = q.order_by(models.Developer.name)
+    elif sort == '-name':
+        q = q.order_by(models.Developer.name.desc())
+    else:
+        abort(400)
+
+    return paginated(q)
 
 @app.route('/api/events')
 @app.route('/api/events/<int:id>')
@@ -49,7 +83,42 @@ def api_events(id=None):
     if id is not None:
         return jsonify(models.Event.query.get(id).json())
 
-    return paginated(models.Event.query)
+    q = models.Event.query
+
+    sort = request.args.get('sort', 'name')
+    if sort == 'name':
+        q = q.order_by(models.Event.name)
+    elif sort == '-name':
+        q = q.order_by(models.Event.name.desc())
+    elif sort == 'location':
+        q = q.order_by(models.Event.location)
+    elif sort == '-location':
+        q = q.order_by(models.Event.location.desc())
+    elif sort == 'time':
+        q = q.order_by(models.Event.time)
+    elif sort == '-time':
+        q = q.order_by(models.Event.time.desc())
+    else:
+        abort(400)
+
+    return paginated(q)
+
+@app.route('/api/search')
+def api_search():
+    query = request.args.get('query')
+    if not query:
+        abort(400)
+
+    q = models.SearchResult.query.union_all(*(
+        db.session.query(
+            m.id.label(models.SearchResult.id.name),
+            literal(m.__name__).label(models.SearchResult.type.name),
+            literal_column('MATCH ({}) AGAINST (\'{}\' IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__, query)).label(models.SearchResult.score.name)
+        )
+        for m in (models.Game, models.Genre, models.Developer, models.Event)
+    )).order_by(models.SearchResult.score.desc())
+
+    return paginated(q)
 
 @app.route('/')
 @app.route('/about')

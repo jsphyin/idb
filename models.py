@@ -40,8 +40,42 @@ event_genre_assoc = db.Table('event_genre_assoc',
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True)
 )
 
+class SearchResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(64), primary_key=True)
+    score = db.Column(db.Float, primary_key=True)
 
+    def json(self):
+        return {'id': self.id,
+            'type': self.type,
+            'score': self.score
+            }
+
+# class FTSearchable(object):
+#     @classmethod
+#     def ftsearch(cls, query):
+#         return cls.query \
+#             .filter('MATCH ({}) AGAINST (":query" IN NATURAL LANGUAGE MODE)'.format(cls.__ftcolumns__)) \
+#             .params(query=query) \
+#             .all()
+
+#     @staticmethod
+#     def ftsearch_many(query, *models):
+#         q = SearchResult.query.union_all(*(
+#             db.session.query(
+#                 m.id.label('model_id'),
+#                 literal(m.__name__).label('model_type'),
+#                 literal_column('MATCH ({}) AGAINST (":query" IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__)).label('score')
+#             ).params(query=query)
+#             for m in models
+#         ))
+
+#         print(q)
+
+# class Game(db.Model, FTSearchable):
 class Game(db.Model):
+    __ftcolumns__ = 'primary_name, alt_names, raw_desc'
+
     id = db.Column(db.Integer, primary_key=True)
 
     is_expansion = db.Column(db.Boolean)
@@ -51,6 +85,7 @@ class Game(db.Model):
 
     image = db.Column(db.String(4096))
     desc = db.Column(db.Text)
+    raw_desc = db.Column(db.Text)
 
     year = db.Column(db.Integer)
 
@@ -99,13 +134,16 @@ class Family(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
-
+# class Genre(db.Model, FTSearchable):
 class Genre(db.Model):
+    __ftcolumns__ = 'name, raw_desc'
+
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(4096))
     image = db.Column(db.String(4096))
     desc = db.Column(db.Text)
+    raw_desc = db.Column(db.Text)
 
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
     direct_events = db.relationship('Event', secondary=event_genre_assoc, back_populates='genres')
@@ -122,8 +160,7 @@ class Genre(db.Model):
 
     @property
     def developers(self):
-        return db.session \
-            .query(Developer) \
+        return Developer.query \
             .join(Developer.games) \
             .join(Game.genres) \
             .filter(Genre.id == self.id) \
@@ -134,8 +171,7 @@ class Genre(db.Model):
         if self.direct_events:
             return self.direct_events
 
-        return db.session \
-            .query(Event) \
+        return Event.query \
             .join(Event.games) \
             .join(Game.genres) \
             .filter(Genre.id == self.id) \
@@ -167,12 +203,16 @@ class Artist(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
+# class Developer(db.Model, FTSearchable):
 class Developer(db.Model):
+    __ftcolumns__ = 'name, raw_desc, website'
+
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(4096))
     image = db.Column(db.String(4096))
     desc = db.Column(db.Text)
+    raw_desc = db.Column(db.Text)
     website = db.Column(db.String(4096))
 
     games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
@@ -189,8 +229,7 @@ class Developer(db.Model):
 
     @property
     def genres(self):
-        return db.session \
-            .query(Genre) \
+        return Genre.query \
             .join(Genre.games) \
             .join(Game.developers) \
             .filter(Developer.id == self.id) \
@@ -209,11 +248,15 @@ class Mechanic(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
+# class Event(db.Model, FTSearchable):
 class Event(db.Model):
+    __ftcolumns__ = 'name, raw_desc, location, link'
+
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(4096))
     desc = db.Column(db.Text)
+    raw_desc = db.Column(db.Text)
 
     location = db.Column(db.String(4096))
     link = db.Column(db.String(4096))
