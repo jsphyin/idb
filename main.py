@@ -115,7 +115,7 @@ def api_search():
             literal(m.__name__).label(models.SearchResult.type.name),
             literal_column(str(text(
                 'MATCH ({}) AGAINST (:query IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__)
-                ).bindparams(query=query).compile(compile_kwargs={"literal_binds": True}))
+                ).bindparams(query=query).compile(compile_kwargs={'literal_binds': True}))
             ).label(models.SearchResult.score.name)
         )
         for m in (models.Game, models.Genre, models.Developer, models.Event)
