@@ -1,7 +1,7 @@
 import logging
 
 from flask import abort, render_template, request, jsonify
-from sqlalchemy import column, literal, literal_column
+from sqlalchemy import column, literal, literal_column, text
 
 import models
 
@@ -113,7 +113,10 @@ def api_search():
         db.session.query(
             m.id.label(models.SearchResult.id.name),
             literal(m.__name__).label(models.SearchResult.type.name),
-            literal_column('MATCH ({}) AGAINST (\'{}\' IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__, query)).label(models.SearchResult.score.name)
+            literal_column(str(text(
+                'MATCH ({}) AGAINST (:query IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__)
+                ).bindparams(query=query).compile(compile_kwargs={"literal_binds": True}))
+            ).label(models.SearchResult.score.name)
         )
         for m in (models.Game, models.Genre, models.Developer, models.Event)
     )).order_by(models.SearchResult.score.desc())
