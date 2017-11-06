@@ -51,28 +51,6 @@ class SearchResult(db.Model):
             'score': self.score
             }
 
-# class FTSearchable(object):
-#     @classmethod
-#     def ftsearch(cls, query):
-#         return cls.query \
-#             .filter('MATCH ({}) AGAINST (":query" IN NATURAL LANGUAGE MODE)'.format(cls.__ftcolumns__)) \
-#             .params(query=query) \
-#             .all()
-
-#     @staticmethod
-#     def ftsearch_many(query, *models):
-#         q = SearchResult.query.union_all(*(
-#             db.session.query(
-#                 m.id.label('model_id'),
-#                 literal(m.__name__).label('model_type'),
-#                 literal_column('MATCH ({}) AGAINST (":query" IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__)).label('score')
-#             ).params(query=query)
-#             for m in models
-#         ))
-
-#         print(q)
-
-# class Game(db.Model, FTSearchable):
 class Game(db.Model):
     __ftcolumns__ = 'primary_name, alt_names, raw_desc'
 
@@ -134,7 +112,6 @@ class Family(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
-# class Genre(db.Model, FTSearchable):
 class Genre(db.Model):
     __ftcolumns__ = 'name, raw_desc'
 
@@ -203,7 +180,6 @@ class Artist(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
-# class Developer(db.Model, FTSearchable):
 class Developer(db.Model):
     __ftcolumns__ = 'name, raw_desc, website'
 
@@ -248,7 +224,6 @@ class Mechanic(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
-# class Event(db.Model, FTSearchable):
 class Event(db.Model):
     __ftcolumns__ = 'name, raw_desc, location, link'
 
