@@ -2,10 +2,17 @@ from unittest import main, TestCase
 from models import db, Game, Family, Genre, Publisher, Artist, Developer, Mechanic, Event
 from main import app
 from datetime import datetime
+import requests
+import json
 
 class TestAPI(TestCase):
     def setUp(self):
         db.create_all()
+        games_url = 'http://boardgamedb.me/api/games'
+        genres_url = 'http://boardgamedb.me/api/genres'
+        developers_url = 'http://boardgamedb.me/api/developers'
+        events_url = 'http://boardgamedb.me/api/events'
+        headers = {'Content-Type': 'application/json'}
 
     #------
     # Game
