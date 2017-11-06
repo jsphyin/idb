@@ -1,5 +1,7 @@
 from extensions import db
 
+from sqlalchemy.ext.hybrid import hybrid_property
+
 game_family_assoc = db.Table('game_family_assoc',
     db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
     db.Column('family_id', db.Integer, db.ForeignKey('family.id'), primary_key=True)
@@ -135,7 +137,7 @@ class Genre(db.Model):
                 'developers': [(developer.id, developer.name) for developer in self.developers]
                 }
 
-    @property
+    @hybrid_property
     def developers(self):
         return Developer.query \
             .join(Developer.games) \
@@ -143,7 +145,7 @@ class Genre(db.Model):
             .filter(Genre.id == self.id) \
             .all()
 
-    @property
+    @hybrid_property
     def events(self):
         if self.direct_events:
             return self.direct_events
@@ -203,7 +205,7 @@ class Developer(db.Model):
                 'website': self.website
                 }
 
-    @property
+    @hybrid_property
     def genres(self):
         return Genre.query \
             .join(Genre.games) \
