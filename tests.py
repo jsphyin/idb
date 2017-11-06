@@ -222,7 +222,7 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             developer1 = Developer(id=1000000, name="developer1", image="www.test_image.com", 
-                           desc="This is a test developer.")
+                           desc="This is a test developer.", raw_desc="Test developer", website="www.developer.com")
             db.session.add(developer1)
             db.session.commit()
             
@@ -230,23 +230,38 @@ class TestAPI(TestCase):
             self.assertEqual(gamequery.id, 1000000)
             self.assertEqual(gamequery.name, "developer1")
             self.assertEqual(gamequery.image, "www.test_image.com")
-            self.assertEqual(gamequery.desc, "This is a test developer.")
             
             db.session.delete(developer1)
             db.session.commit()
             
     def test_add_Developer2(self):
+        
+        with app.test_request_context():
+            developer2 = Developer(id=1000000, name="developer2", image="www.test_image2.com", 
+                           desc="This is a test developer 2.", raw_desc="Test developer 2", website="www.developer2.com")
+            db.session.add(developer2)
+            db.session.commit()
+            
+            gamequery = db.session.query(Developer).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.desc, "This is a test developer 2.")
+            self.assertEqual(gamequery.raw_desc, "Test developer 2")
+            self.assertEqual(gamequery.website, "www.developer2.com")
+            
+            db.session.delete(developer2)
+            db.session.commit()
+            
+    def test_add_Developer3(self):
     
         with app.test_request_context():
-            developer2 = Developer()
+            developer3 = Developer()
             init_len = len(Developer.query.all())
-            db.session.add(developer2)
+            db.session.add(developer3)
             db.session.commit()
             changed_len = len(Developer.query.all())
             self.assertEqual(init_len + 1, changed_len)
             
             init_len = changed_len
-            db.session.delete(developer2)
+            db.session.delete(developer3)
             db.session.commit()
             changed_len = len(Developer.query.all())
             self.assertEqual(init_len - 1, changed_len)
