@@ -12,10 +12,7 @@ def paginated(query):
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 20))
 
-    instances = query \
-        .limit(per_page) \
-        .offset((page - 1) * per_page) \
-        .all()
+    instances = query.limit(per_page).offset((page - 1) * per_page).all()
 
     return jsonify([i.json() for i in instances])
 
