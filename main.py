@@ -9,8 +9,8 @@ from extensions import app, db
 
 
 def paginated(query):
-    page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 20))
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 20, type=int)
 
     instances = query.limit(per_page).offset((page - 1) * per_page).all()
 
@@ -23,6 +23,14 @@ def api_games(id=None):
         return jsonify(models.Game.query.get(id).json())
 
     q = models.Game.query
+
+    genres = request.args.getlist('genres', type=int)
+    if genres:
+        q = q.filter(models.Game.genres.any(models.Genre.id.in_(genres)))
+
+    developers = request.args.getlist('developers', type=int)
+    if developers:
+        q = q.filter(models.Game.developers.any(models.Developer.id.in_(developers)))
 
     sort = request.args.get('sort', 'name')
     if sort == 'name':
