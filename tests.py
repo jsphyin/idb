@@ -14,8 +14,8 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             game1 = Game(id=1000000, is_expansion=False, primary_name="game1", alt_names="alt_game1",
-                         image="www.test_image.com", desc="This is a test game.", year=2000, 
-                         min_players=0, max_players=1, rating=4.321)
+                         image="www.test_image.com", desc="This is a test game.", raw_desc="Test game", 
+                         year=2000, min_players=0, max_players=1, rating=4.321)
             db.session.add(game1)
             db.session.commit()
             
@@ -32,14 +32,15 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             game2 = Game(id=1000000, is_expansion=True, primary_name="game2", alt_names="alt_game2",
-                         image="www.test_image2.com", desc="This is a test game 2.", year=1997, 
-                         min_players=2, max_players=4, rating=3.21)
+                         image="www.test_image2.com", desc="This is a test game 2.", raw_desc="Test game 2", 
+                         year=1997, min_players=2, max_players=4, rating=3.21)
             db.session.add(game2)
             db.session.commit()
             
             gamequery = db.session.query(Game).filter_by(id="1000000").first()
             self.assertEqual(gamequery.image, "www.test_image2.com")
             self.assertEqual(gamequery.desc, "This is a test game 2.")
+            self.assertEqual(gamequery.raw_desc, "Test game 2")
             self.assertEqual(gamequery.year, 1997)
             
             db.session.delete(game2)
@@ -49,8 +50,8 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             game3 = Game(id=1000000, is_expansion=False, primary_name="game3", alt_names="alt_game3",
-                         image="www.test_image3.com", desc="This is a test game 3.", year=1980, 
-                         min_players=10, max_players=15, rating=2.5)
+                         image="www.test_image3.com", desc="This is a test game 3.", raw_desc="Test game 3",
+                         year=1980, min_players=10, max_players=15, rating=2.5)
             db.session.add(game3)
             db.session.commit()
             
