@@ -103,6 +103,22 @@ def api_events(id=None):
 
     return paginated(q)
 
+@app.route('/api/games/names')
+def api_games_names():
+    return jsonify(models.Game.query.with_entities(models.Game.id, models.Game.primary_name).all())
+
+@app.route('/api/genres/names')
+def api_genres_names():
+    return jsonify(models.Genre.query.with_entities(models.Genre.id, models.Genre.name).all())
+
+@app.route('/api/developers/names')
+def api_developers_names():
+    return jsonify(models.Developer.query.with_entities(models.Developer.id, models.Developer.name).all())
+
+@app.route('/api/events/names')
+def api_events_names():
+    return jsonify(models.Event.query.with_entities(models.Event.id, models.Event.name).all())
+
 @app.route('/api/search')
 def api_search():
     query = request.args.get('query')
