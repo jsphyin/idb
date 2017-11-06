@@ -119,7 +119,7 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             genre1 = Genre(id=1000000, name="genre1", image="www.test_image.com", 
-                           desc="This is a test genre.")
+                           desc="This is a test genre.", raw_desc="Test genre")
             db.session.add(genre1)
             db.session.commit()
             
@@ -128,6 +128,7 @@ class TestAPI(TestCase):
             self.assertEqual(gamequery.name, "genre1")
             self.assertEqual(gamequery.image, "www.test_image.com")
             self.assertEqual(gamequery.desc, "This is a test genre.")
+            self.assertEqual(gamequery.raw_desc, "Test genre")
             
             db.session.delete(genre1)
             db.session.commit()
