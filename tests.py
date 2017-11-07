@@ -421,6 +421,29 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Event.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    def test_get_Event1(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.events_url+"/"+str(323), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Event).get(323)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['name'], db_res.name)
+            self.assertEqual(json_res['desc'], db_res.desc)
+            
+    def test_get_Event2(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.events_url+"/"+str(387), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Event).get(387)
+            
+            self.assertEqual(json_res['location'], db_res.location)
+            self.assertEqual(json_res['link'], db_res.link)
     
 
 if __name__ == "__main__":
