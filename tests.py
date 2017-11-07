@@ -314,6 +314,29 @@ class TestAPI(TestCase):
             changed_len = len(Developer.query.all())
             self.assertEqual(init_len - 1, changed_len)
             
+    def test_get_Developer1(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.developers_url+"/"+str(81), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Developer).get(81)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['img'], db_res.image)
+            
+    def test_get_Developer2(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.developers_url+"/"+str(101), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Developer).get(101)
+            
+            self.assertEqual(json_res['name'], db_res.name)
+            self.assertEqual(json_res['desc'], db_res.desc)
+            self.assertEqual(json_res['website'], db_res.website)
+            
     #----------
     # Mechanic
     #----------
