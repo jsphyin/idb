@@ -2,7 +2,6 @@ from unittest import main, TestCase
 from models import db, Game, Family, Genre, Publisher, Artist, Developer, Mechanic, Event
 from main import app
 from datetime import datetime
-from random import randint
 import requests
 import json
 
@@ -91,11 +90,10 @@ class TestAPI(TestCase):
     def test_get_Game1(self):
     
         with app.test_request_context():
-            i = randint(1, 99)
-            res = requests.get(self.games_url+"/"+str(i), headers=self.headers)
+            res = requests.get(self.games_url+"/"+str(57), headers=self.headers)
             self.assertEqual(res.status_code, 200)
             json_res = json.loads(res.text)
-            db_res = db.session.query(Game).get(i)
+            db_res = db.session.query(Game).get(57)
             
             self.assertEqual(json_res['id'], db_res.id)
             self.assertEqual(json_res['is_expansion'], db_res.is_expansion)
@@ -106,11 +104,10 @@ class TestAPI(TestCase):
     def test_get_Game2(self):
     
         with app.test_request_context():
-            i = randint(1, 99)
-            res = requests.get(self.games_url+"/"+str(i), headers=self.headers)
+            res = requests.get(self.games_url+"/"+str(910), headers=self.headers)
             self.assertEqual(res.status_code, 200)
             json_res = json.loads(res.text)
-            db_res = db.session.query(Game).get(i)
+            db_res = db.session.query(Game).get(910)
             
             self.assertEqual(json_res['year'], db_res.year)
             self.assertEqual(json_res['min_players'], db_res.min_players)
@@ -186,6 +183,19 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Genre.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    def test_get_Genre1(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.genres_url+"/"+str(1029), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Genre).get(1029)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['img'], db_res.image)
+            self.assertEqual(json_res['name'], db_res.name)
+            self.assertEqual(json_res['desc'], db_res.desc)
             
     #-----------
     # Publisher
