@@ -58,6 +58,14 @@ def api_genres(id=None):
 
     q = models.Genre.query
 
+    games = request.args.getlist('games', type=int)
+    if games:
+        q = q.filter(models.Genre.games.any(models.Game.id.in_(games)))
+
+    developers = request.args.getlist('developers', type=int)
+    if developers:
+        q = q.filter(models.Genre.developers.any(models.Developer.id.in_(developers)))
+
     sort = request.args.get('sort', 'name')
     if sort == 'name':
         q = q.order_by(models.Genre.name)
@@ -76,6 +84,14 @@ def api_developers(id=None):
 
     q = models.Developer.query
 
+    games = request.args.getlist('games', type=int)
+    if games:
+        q = q.filter(models.Developer.games.any(models.Game.id.in_(games)))
+
+    genres = request.args.getlist('genres', type=int)
+    if genres:
+        q = q.filter(models.Developer.genres.any(models.Genre.id.in_(genres)))
+
     sort = request.args.get('sort', 'name')
     if sort == 'name':
         q = q.order_by(models.Developer.name)
@@ -93,6 +109,16 @@ def api_events(id=None):
         return jsonify(models.Event.query.get(id).json())
 
     q = models.Event.query
+
+    games = request.args.getlist('games', type=int)
+    if games:
+        q = q.filter(models.Event.games.any(models.Game.id.in_(games)))
+
+    genres = request.args.getlist('genres', type=int)
+    if genres:
+        q = q.filter(models.Event.direct_genres.any(models.Genre.id.in_(genres)) |
+                     models.Event.indirect_genres.any(models.Genre.id.in_(genres)))
+        print(q)
 
     sort = request.args.get('sort', 'name')
     if sort == 'name':
