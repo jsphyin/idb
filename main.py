@@ -14,7 +14,11 @@ def paginated(query):
 
     instances = query.limit(per_page).offset((page - 1) * per_page).all()
 
-    return jsonify([i.json() for i in instances])
+    return jsonify({
+        'page': page,
+        'total_pages': -(-query.count() // per_page),
+        'results': [i.json() for i in instances]
+    })
 
 @app.route('/api/games')
 @app.route('/api/games/<int:id>')
