@@ -2,17 +2,19 @@ from unittest import main, TestCase
 from models import db, Game, Family, Genre, Publisher, Artist, Developer, Mechanic, Event
 from main import app
 from datetime import datetime
+from random import randint
 import requests
 import json
 
 class TestAPI(TestCase):
+    games_url = 'http://boardgamedb.me/api/game'
+    genres_url = 'http://boardgamedb.me/api/genre'
+    developers_url = 'http://boardgamedb.me/api/developer'
+    events_url = 'http://boardgamedb.me/api/event'
+    headers = {'Content-Type': 'application/json'}
+
     def setUp(self):
         db.create_all()
-        games_url = 'http://boardgamedb.me/api/games'
-        genres_url = 'http://boardgamedb.me/api/genres'
-        developers_url = 'http://boardgamedb.me/api/developers'
-        events_url = 'http://boardgamedb.me/api/events'
-        headers = {'Content-Type': 'application/json'}
 
     #------
     # Game
@@ -85,6 +87,35 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Game.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    def test_get_Game1(self):
+    
+        with app.test_request_context():
+            i = randint(1, 99)
+            res = requests.get(self.games_url+"/"+str(i), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Game).get(i)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['is_expansion'], db_res.is_expansion)
+            self.assertEqual(json_res['name'], db_res.primary_name)
+            self.assertEqual(json_res['img'], db_res.image)
+            self.assertEqual(json_res['desc'], db_res.desc)
+            
+    def test_get_Game2(self):
+    
+        with app.test_request_context():
+            i = randint(1, 99)
+            res = requests.get(self.games_url+"/"+str(i), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Game).get(i)
+            
+            self.assertEqual(json_res['year'], db_res.year)
+            self.assertEqual(json_res['min_players'], db_res.min_players)
+            self.assertEqual(json_res['max_players'], db_res.max_players)
+            self.assertEqual(json_res['rating'], db_res.rating)
             
     #--------
     # Family
