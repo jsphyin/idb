@@ -75,6 +75,9 @@ function cloud_proxy() {
 function flask_server() {
     # Set environment variable for Flask to connect to database
     export SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:boardgamers@127.0.0.1:3306/proddata
+    
+    # Uncomment to run tests as well
+    # python tests.py
 
     # Start Flask Server
     echo "Starting Flask Backend"
