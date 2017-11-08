@@ -5,7 +5,7 @@ HOST: http://boardgamedb.me/
 
 This API will display general info about a collection of board games such as their developer(s), genre, and the mechanics they have as well as events for players to meet up and enjoy board games.
 
-## Games [/api/games]
+## Games [/api/games?page={int}]
 
 These call provide information for the specific games in our database. 
 
@@ -15,84 +15,59 @@ These call provide information for the specific games in our database.
 
     
         {
-          "page": 1, 
-          "results": [
-            {
-              "alt_names": [], 
-              "artists": [
-                [
-                  87934, 
-                  "Anton Khozyaenko"
-                ]
-              ], 
-              "desc": "1% is a deckbuilding game where not only are you building your deck collecting point and/or useful card while also trying to take over sites that give you powerful abilities. Collecting three of these sites instantly wins the game so players must be aware, battle opponent's crew, and interact more than your usual deckbuilder. &#10;A drafting mechanic while setting up allows you to customize your gang members prior to play so you feel like you have actually customized your crew from actual strategy and choice.&#10;&#10;", 
-              "developers": [
-                [
-                  87933, 
-                  "Bryan M. Simmons"
-                ]
-              ], 
-              "families": [
-                [
-                  8374, 
-                  "Crowdfunding: Kickstarter"
-                ], 
-                [
-                  22184, 
-                  "Admin: Unreleased Games"
-                ]
-              ], 
-              "genres": [
-                [
-                  1002, 
-                  "Card Game"
-                ]
-              ], 
-              "id": 190608, 
-              "img": "https://cf.geekdo-images.com/images/pic2826605.png", 
-              "is_expansion": false, 
-              "max_players": 8, 
-              "mechanics": [
-                [
-                  2015, 
-                  "Variable Player Powers"
-                ], 
-                [
-                  2040, 
-                  "Hand Management"
-                ], 
-                [
-                  2041, 
-                  "Card Drafting"
-                ], 
-                [
-                  2072, 
-                  "Dice Rolling"
-                ], 
-                [
-                  2080, 
-                  "Area Control / Area Influence"
-                ], 
-                [
-                  2664, 
-                  "Deck / Pool Building"
-                ], 
-                [
-                  2686, 
-                  "Take That"
-                ]
-              ], 
-              "min_players": 1, 
-              "name": "1%", 
-              "publishers": [
-                [
-                  31326, 
-                  "Rolling Outlaw Games"
-                ]
-              ], 
-              "rating": 10.0, 
-              "year": 0
-        }, ...
+            "page": 1, 
+            "results": [
+                {
+                  "alt_names": [], 
+                  "artists": [
+                    [
+                      87934, 
+                      "Anton Khozyaenko"
+                    ]
+                  ], 
+                  "desc": "1% is a deckbuilding game...", 
+                  "developers": [
+                    [
+                      87933, 
+                      "Bryan M. Simmons"
+                    ]
+                  ], 
+                  "families": [
+                    [
+                      8374, 
+                      "Crowdfunding: Kickstarter"
+                    ],...
+                  ], 
+                  "genres": [
+                    [
+                      1002, 
+                      "Card Game"
+                    ]
+                  ], 
+                  "id": 190608, 
+                  "img": "https://cf.geekdo-images.com/images/pic2826605.png", 
+                  "is_expansion": false, 
+                  "max_players": 8, 
+                  "mechanics": [
+                    [
+                      2015, 
+                      "Variable Player Powers"
+                    ],...
+                  ], 
+                  "min_players": 1, 
+                  "name": "1%", 
+                  "publishers": [
+                    [
+                      31326, 
+                      "Rolling Outlaw Games"
+                    ]
+                  ], 
+                  "rating": 10.0, 
+                  "year": 0
+                }, ...
+            ],
+            "total_pages"=167
+        }
 
         
 ### Show Data for One Game [GET /api/game/{id}]
@@ -164,7 +139,7 @@ These call provide information for the specific games in our database.
         ]
 
 
-## Developers [/api/developers]
+## Developers [/api/developers?page={int}]
 
 These calls provide information about the board game developers in our database.
 
@@ -173,8 +148,8 @@ These calls provide information about the board game developers in our database.
 + Response 200 (application/json)
 
         {
-              "page": 1, 
-              "results": [
+            "page": 1, 
+            "results": [
                 {
                   "desc": null, 
                   "games": [], 
@@ -184,6 +159,8 @@ These calls provide information about the board game developers in our database.
                   "name": "\"Eclaireur\"", 
                   "website": null
                 },...
+            ],
+            "total_pages": 1275
         }
 
         
@@ -227,7 +204,7 @@ These calls provide information about the board game developers in our database.
         ]
 
 
-## Genres [/api/genres]
+## Genres [/api/genres?page={int}]
 
 These calls provide data of all the genres that our games fall under. 
 
@@ -258,7 +235,8 @@ These calls provide data of all the genres that our games fall under.
                     "img": "https://cf.geekdo-images.com/images/pic1657689_t.jpg", 
                     "name": "Political"
                 }, ...
-            ]
+            ],
+            "total_pages": 5
         }
 
 
@@ -301,7 +279,7 @@ These calls provide data of all the genres that our games fall under.
           ],...
         ]
 
-## Events [/api/events]
+## Events [/api/events?page={int}]
 
 These calls provide information about the board game events in our database.
 
@@ -328,7 +306,8 @@ These calls provide information about the board game events in our database.
                 "name": "SA Board Gamers Thursday night gaming", 
                 "time": "Thu, 26 Oct 2017 18:00:00 GMT"
             }, ...
-            ]
+            ],
+            "total_pages": 40
         }
         
         
