@@ -1,5 +1,6 @@
 from datetime import datetime
 import glob
+import itertools
 import json
 from lxml import etree
 import re
@@ -56,6 +57,9 @@ def add_and_commit(db_objects):
 
     models.db.session.commit()
 
+def get_all_ids(db_type):
+    return set(next(zip(*models.db.session.query(db_type.id).all())))
+
 def populate_games(xml_root):
     game_family_pairs = set()
     game_genre_pairs = set()
@@ -65,6 +69,13 @@ def populate_games(xml_root):
     game_mechanic_pairs = set()
 
     json_games = {}
+
+    valid_family_ids = get_all_ids(models.Family)
+    valid_genre_ids = get_all_ids(models.Genre)
+    valid_publisher_ids = get_all_ids(models.Publisher)
+    valid_artist_ids = get_all_ids(models.Artist)
+    valid_developer_ids = get_all_ids(models.Developer)
+    valid_mechanic_ids = get_all_ids(models.Mechanic)
 
     for item in xml_root.xpath('item'):
         game_id = item.xpath('@id')
@@ -98,12 +109,12 @@ def populate_games(xml_root):
             'rating': float(rating[0]) if rating and rating[0] else None,
         }
 
-        game_family_pairs.update((game_id, int(foreign_id)) for foreign_id in families)
-        game_genre_pairs.update((game_id, int(foreign_id)) for foreign_id in genres)
-        game_publisher_pairs.update((game_id, int(foreign_id)) for foreign_id in publishers)
-        game_artist_pairs.update((game_id, int(foreign_id)) for foreign_id in artists)
-        game_developer_pairs.update((game_id, int(foreign_id)) for foreign_id in developers)
-        game_mechanic_pairs.update((game_id, int(foreign_id)) for foreign_id in mechanics)
+        game_family_pairs.update(itertools.product((game_id,), set(map(int, families)) & valid_family_ids))
+        game_genre_pairs.update(itertools.product((game_id,), set(map(int, genres)) & valid_genre_ids))
+        game_publisher_pairs.update(itertools.product((game_id,), set(map(int, publishers)) & valid_publisher_ids))
+        game_artist_pairs.update(itertools.product((game_id,), set(map(int, artists)) & valid_artist_ids))
+        game_developer_pairs.update(itertools.product((game_id,), set(map(int, developers)) & valid_developer_ids))
+        game_mechanic_pairs.update(itertools.product((game_id,), set(map(int, mechanics)) & valid_mechanic_ids))
 
     add_and_commit(json_to_db_objects(augment_raw_desc(json_games), models.Game))
     print('added games')
@@ -125,8 +136,8 @@ def populate_events(event_list):
     json_events = {}
     event_id = 1
 
-    valid_game_ids = set(models.db.session.query(models.Game.id).distinct())
-    valid_genre_ids = set(models.db.session.query(models.Genre.id).distinct())
+    valid_game_ids = get_all_ids(models.Game)
+    valid_genre_ids = get_all_ids(models.Genre)
 
     for event in event_list:
         location = event['group']['localized_location']
@@ -141,8 +152,8 @@ def populate_events(event_list):
             'time': datetime.fromtimestamp(event['time'] / 1000),
         }
 
-        event_game_pairs.update((event_id, foreign_id) for foreign_id in event.get('game_ids', []) if (foreign_id,) in valid_game_ids)
-        event_genre_pairs.update((event_id, foreign_id) for foreign_id in event.get('genre_ids', []) if (foreign_id,) in valid_genre_ids)
+        event_game_pairs.update(itertools.product((event_id,), set(event.get('game_ids', [])) & valid_game_ids))
+        event_genre_pairs.update(itertools.product((event_id,), set(event.get('genre_ids', [])) & valid_genre_ids))
 
         event_id += 1
 
@@ -166,7 +177,7 @@ def populate_db():
     models.db.drop_all()
     models.db.create_all()
 
-    xml_root = load_items(glob.glob('../idb_scrapefiles/*.xml')[:10])
+    xml_root = load_items(glob.glob('../idb_scrapefiles/*.xml')[:1000])
     print('loaded xml')
 
     add_and_commit(json_to_db_objects(augment_raw_desc(load_json('../idb_scrapefiles/categories.json')), models.Genre))

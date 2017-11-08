@@ -6,10 +6,10 @@ import requests
 import json
 
 class TestAPI(TestCase):
-    games_url = 'http://boardgamedb.me/api/game'
-    genres_url = 'http://boardgamedb.me/api/genre'
-    developers_url = 'http://boardgamedb.me/api/developer'
-    events_url = 'http://boardgamedb.me/api/event'
+    games_url = 'http://boardgamedb.me/api/games'
+    genres_url = 'http://boardgamedb.me/api/genres'
+    developers_url = 'http://boardgamedb.me/api/developers'
+    events_url = 'http://boardgamedb.me/api/events'
     headers = {'Content-Type': 'application/json'}
 
     def setUp(self):
