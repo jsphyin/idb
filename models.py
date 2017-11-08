@@ -50,7 +50,7 @@ class SearchResult(db.Model):
 
     def json(self):
         return {'id': self.id,
-            'type': self.type,
+            'type': self.type.lower(),
             'score': self.score
             }
 
