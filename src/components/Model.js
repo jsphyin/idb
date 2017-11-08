@@ -31,13 +31,13 @@ class Model extends React.Component {
         if(model.charAt(model.length - 1) == '/') {
             model = model.substring(0, model.length - 1);
         }
-        model = model.split("/")
+		model = model.split('/');
         var url = ''
-        if(model.length > 1) {
-            url = model[0] + 's/' + model[1]
-        } else {
-            url = model[0] + 's' + query
-        }
+		if(model.length > 1) {
+			url = model[0] + 's/' + model[1];
+		} else {
+			url = model[0] + query
+		}
         fetch(this.host + '/api/' + url, {method: 'GET'})
             .then(response => response.json())
             .then(json => {
@@ -80,7 +80,7 @@ class Model extends React.Component {
                 if (model.developers.length > 0) {
                     devs = []
                     for(var i = 0; i < model.developers.length; i++) {
-                        devs.push(<li>Developed by <Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
+                        devs.push(<li key={i}>Developed by <Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
                     }
                 }
 
@@ -88,7 +88,7 @@ class Model extends React.Component {
                 if (model.publishers.length > 0) {
                     pubs = []
                     for(var i = 0; i < model.publishers.length; i++) {
-                        pubs.push(<li>Published by {model.publishers[i][1]}</li>);
+                        pubs.push(<li key={i}>Published by {model.publishers[i][1]}</li>);
                     }
                 }
 
@@ -96,7 +96,7 @@ class Model extends React.Component {
                 if (model.artists.length > 0) {
                     arts = []
                     for(var i = 0; i < model.artists.length; i++) {
-                        arts.push(<li>Art done by {model.artists[i][1]}</li>);
+                        arts.push(<li key={i}>Art done by {model.artists[i][1]}</li>);
                     }
                 }
                 
@@ -104,7 +104,7 @@ class Model extends React.Component {
                 if (model.alt_names.length > 0) {
                     names = []
                     for(var i = 0; i < model.alt_names.length; i++) {
-                        names.push(<li>{model.alt_names[i]}</li>);
+                        names.push(<li key={i}>{model.alt_names[i]}</li>);
                     }
                 }
 
@@ -112,7 +112,7 @@ class Model extends React.Component {
                 if (model.families.length > 0) {
                     fams = []
                     for(var i = 0; i < model.families.length; i++) {
-                        fams.push(<li>{model.families[i][1]}</li>);
+                        fams.push(<li key={i}>{model.families[i][1]}</li>);
                     }
                 }
 
@@ -120,7 +120,7 @@ class Model extends React.Component {
                 if (model.genres.length > 0) {
                     gens = []
                     for(var i = 0; i < model.genres.length; i++) {
-                        gens.push(<li>{model.genres[i][1]}</li>);
+                        gens.push(<li key={i}>{model.genres[i][1]}</li>);
                     }
                 }
 
@@ -128,7 +128,7 @@ class Model extends React.Component {
                 if (model.mechanics.length > 0) {
                     mechs = []
                     for(var i = 0; i < model.mechanics.length; i++) {
-                        mechs.push(<li>{model.mechanics[i][1]}</li>);
+                        mechs.push(<li key={i}>{model.mechanics[i][1]}</li>);
                     }
                 }
                 attrib = (
@@ -138,9 +138,7 @@ class Model extends React.Component {
                             {names}
                         </ul>
                         <h3>Description</h3>
-                        <ul style={grid_model_attribute}>
-                            {model.desc}
-                        </ul>
+                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Release Information</h3>
                         <ul style={grid_model_attribute}>
                             <li>Released in {model.year}</li>
@@ -170,7 +168,7 @@ class Model extends React.Component {
                 if (model.developers.length > 0) {
                     devs = []
                     for(var i = 0; i < model.developers.length; i++) {
-                        devs.push(<li><Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
+                        devs.push(<li key={i}><Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
                     }
                 }
 
@@ -178,7 +176,7 @@ class Model extends React.Component {
                 if (model.games.length > 0) {
                     games = []
                     for(var i = 0; i < model.games.length; i++) {
-                        games.push(<li><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                        games.push(<li key={i}><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
                     }
                 }
 
@@ -186,16 +184,14 @@ class Model extends React.Component {
                 if (model.events.length > 0) {
                     events = []
                     for(var i = 0; i < model.events.length; i++) {
-                        events.push(<li><Link to={'/event/' + model.events[i][0]}>{model.events[i][1]}</Link></li>);
+                        events.push(<li key={i}><Link to={'/event/' + model.events[i][0]}>{model.events[i][1]}</Link></li>);
                     }
                 }
 
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <ul style={grid_model_attribute}>
-                            {model.desc}
-                        </ul>
+                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Notable Developers</h3>
                         <ul style={grid_model_attribute}>
                             <li>{devs}</li>
@@ -216,7 +212,7 @@ class Model extends React.Component {
                 if (model.genres.length > 0) {
                     gens = []
                     for(var i = 0; i < model.genres.length; i++) {
-                        gens.push(<li>{model.genres[i][1]}</li>);
+                        gens.push(<li key={i}>{model.genres[i][1]}</li>);
                     }
                 }
 
@@ -224,7 +220,7 @@ class Model extends React.Component {
                 if (model.games.length > 0) {
                     games = []
                     for(var i = 0; i < model.games.length; i++) {
-                        games.push(<li><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                        games.push(<li key={i}><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
                     }
                 }
 
@@ -237,9 +233,7 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <ul style={grid_model_attribute}>
-                            {model.desc}
-                        </ul>
+                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Games</h3>
                         <ul style={grid_model_attribute}>
                             {games}
@@ -250,7 +244,7 @@ class Model extends React.Component {
                         </ul>
                         <h3>Website Link</h3>
                         <ul style={grid_model_attribute}>
-                            <li>{website}</li>
+                            {website}
                         </ul>
                     </div>
                 );
@@ -265,9 +259,7 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <ul style={grid_model_attribute}>
-                            {model.desc}
-                        </ul>
+                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Meetup Information</h3>
                         <ul style={grid_model_attribute}>
                             <li>Time: {model.time}</li>
@@ -283,15 +275,13 @@ class Model extends React.Component {
                 break;
         }
         return (
-            <div class="container">
+            <div className="container">
                 <section>
                     <Card style={grid_model}>
                         <CardImg style={grid_model_img} src={model.img}/>
                         <CardBody>
-                            <CardText>
-                                <strong><h1 style={grid_model_name}>{model.name}</h1></strong>
-                                {attrib}
-                            </CardText>
+                            <strong><h1 style={grid_model_name}>{model.name}</h1></strong>
+                            {attrib}
                         </CardBody>
                     </Card>
                 </section>

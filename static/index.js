@@ -32908,22 +32908,10 @@ var App = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     'div',
-                    { id: 'wrapper', 'class': 'container-fluid' },
+                    { id: 'wrapper', className: 'container-fluid' },
                     _react2.default.createElement(_NavBar2.default, null),
                     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/about', component: _About2.default }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/game/:id', component: function component(props) {
-                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Games' }));
-                        } }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/genre/:id', component: function component(props) {
-                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Genres' }));
-                        } }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/developer/:id', component: function component(props) {
-                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Developers' }));
-                        } }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/event/:id', component: function component(props) {
-                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Events' }));
-                        } }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/games', component: function component(props) {
                             return _react2.default.createElement(_ModelGrid2.default, _extends({}, props, { name: 'Games' }));
                         } }),
@@ -32935,6 +32923,22 @@ var App = function (_React$Component) {
                         } }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/events', component: function component(props) {
                             return _react2.default.createElement(_ModelGrid2.default, _extends({}, props, { name: 'Events' }));
+                        } }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/game/:id', component: function component(props) {
+                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Games' }));
+                        } }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/boardgame/:id/:name', render: function render(_ref) {
+                            var match = _ref.match;
+                            return _react2.default.createElement(_reactRouterDom.Redirect, { to: "/game/" + match.params.id });
+                        } }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/genre/:id', component: function component(props) {
+                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Genres' }));
+                        } }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/developer/:id', component: function component(props) {
+                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Developers' }));
+                        } }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/event/:id', component: function component(props) {
+                            return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Events' }));
                         } })
                 )
             );
@@ -33945,12 +33949,12 @@ var Model = function (_React$Component) {
         if (model.charAt(model.length - 1) == '/') {
             model = model.substring(0, model.length - 1);
         }
-        model = model.split("/");
+        model = model.split('/');
         var url = '';
         if (model.length > 1) {
             url = model[0] + 's/' + model[1];
         } else {
-            url = model[0] + 's' + query;
+            url = model[0] + query;
         }
         fetch(_this.host + '/api/' + url, { method: 'GET' }).then(function (response) {
             return response.json();
@@ -33966,7 +33970,6 @@ var Model = function (_React$Component) {
         key: 'render',
         value: function render() {
             var model = this.state.model;
-            console.log(model);
             if (model === null) {
                 return _react2.default.createElement('div', null);
             }
@@ -34004,7 +34007,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.developers.length; i++) {
                             devs.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 'Developed by ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
@@ -34025,7 +34028,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.publishers.length; i++) {
                             pubs.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 'Published by ',
                                 model.publishers[i][1]
                             ));
@@ -34042,7 +34045,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.artists.length; i++) {
                             arts.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 'Art done by ',
                                 model.artists[i][1]
                             ));
@@ -34059,7 +34062,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.alt_names.length; i++) {
                             names.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 model.alt_names[i]
                             ));
                         }
@@ -34075,7 +34078,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.families.length; i++) {
                             fams.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 model.families[i][1]
                             ));
                         }
@@ -34091,7 +34094,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.genres.length; i++) {
                             gens.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 model.genres[i][1]
                             ));
                         }
@@ -34107,7 +34110,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.mechanics.length; i++) {
                             mechs.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 model.mechanics[i][1]
                             ));
                         }
@@ -34130,11 +34133,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement(
-                            'ul',
-                            { style: grid_model_attribute },
-                            model.desc
-                        ),
+                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -34211,7 +34210,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.developers.length; i++) {
                             devs.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
                                     { to: '/developer/' + model.developers[i][0] },
@@ -34231,7 +34230,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.games.length; i++) {
                             games.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
                                     { to: '/game/' + model.games[i][0] },
@@ -34251,7 +34250,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.events.length; i++) {
                             events.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
                                     { to: '/event/' + model.events[i][0] },
@@ -34269,11 +34268,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement(
-                            'ul',
-                            { style: grid_model_attribute },
-                            model.desc
-                        ),
+                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -34329,7 +34324,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.genres.length; i++) {
                             gens.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 model.genres[i][1]
                             ));
                         }
@@ -34345,7 +34340,7 @@ var Model = function (_React$Component) {
                         for (var i = 0; i < model.games.length; i++) {
                             games.push(_react2.default.createElement(
                                 'li',
-                                null,
+                                { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
                                     { to: '/game/' + model.games[i][0] },
@@ -34376,11 +34371,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement(
-                            'ul',
-                            { style: grid_model_attribute },
-                            model.desc
-                        ),
+                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -34409,11 +34400,7 @@ var Model = function (_React$Component) {
                         _react2.default.createElement(
                             'ul',
                             { style: grid_model_attribute },
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                website
-                            )
+                            website
                         )
                     );
                     break;
@@ -34444,11 +34431,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement(
-                            'ul',
-                            { style: grid_model_attribute },
-                            model.desc
-                        ),
+                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -34498,7 +34481,7 @@ var Model = function (_React$Component) {
             }
             return _react2.default.createElement(
                 'div',
-                { 'class': 'container' },
+                { className: 'container' },
                 _react2.default.createElement(
                     'section',
                     null,
@@ -34510,19 +34493,15 @@ var Model = function (_React$Component) {
                             _reactstrap.CardBody,
                             null,
                             _react2.default.createElement(
-                                _reactstrap.CardText,
+                                'strong',
                                 null,
                                 _react2.default.createElement(
-                                    'strong',
-                                    null,
-                                    _react2.default.createElement(
-                                        'h1',
-                                        { style: grid_model_name },
-                                        model.name
-                                    )
-                                ),
-                                attrib
-                            )
+                                    'h1',
+                                    { style: grid_model_name },
+                                    model.name
+                                )
+                            ),
+                            attrib
                         )
                     )
                 )
@@ -34571,18 +34550,19 @@ var ModelGrid = function (_React$Component) {
         _this.type = props.match.url;
         document.title = _this.props.name + " - BGDB";
         _this.state = {
-            models: []
+            models: [],
+            page: 1,
+            total_pages: 3
         };
         _this.host = 'http://boardgamedb.me';
         if (window.location.hostname === 'localhost') {
             _this.host = '';
         }
         var query = props.location.search;
-        var model = props.match.url.substring(1, props.match.url.length);
-        if (model.charAt(model.length - 1) == '/') {
-            model = model.substring(0, model.length - 1);
-        }
-        fetch(_this.host + '/api/' + model + query, { method: 'GET' }).then(function (response) {
+        var model = props.name.toLowerCase();
+        _this.api_url = _this.host + '/api/' + model + query;
+        _this.url = _this.host + '/' + model + query;
+        fetch(_this.api_url, { method: 'GET' }).then(function (response) {
             return response.json();
         }).then(function (json) {
             _this.setState({
@@ -34595,8 +34575,72 @@ var ModelGrid = function (_React$Component) {
     }
 
     _createClass(ModelGrid, [{
+        key: 'parse_query',
+        value: function parse_query(query) {
+            var params = [];
+            params = query.split('&');
+            for (var i = 0; i < params.length; i++) {
+                params[i] = params[i].split('=');
+            }
+            return params;
+        }
+    }, {
+        key: 'gen_query',
+        value: function gen_query(params) {
+            var query = '';
+            for (var i = 0; i < params.length; i++) {
+                if (i > 0) {
+                    query += '&';
+                }
+                query += params[i][0] + '=' + params[i][1];
+            }
+            return query;
+        }
+    }, {
+        key: 'fetch_page',
+        value: function fetch_page(page_number) {
+            var _this2 = this;
+
+            if (this.state.page != page_number && page_number >= 1 && page_number <= this.state.total_pages) {
+                var api_url = this.api_url.split('?');
+                var url = this.url.split('?');
+                if (url.length > 1) {
+                    var params = this.parse_query(url[1]);
+                    var found = false;
+                    for (var i = 0; i < params.length; i++) {
+                        if (params[i][0] === 'page') {
+                            params[i][1] = page_number;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        api_url = this.api_url + '&page=' + page_number;
+                        this.props.history.push(this.url + '&page=' + page_number);
+                    } else {
+                        api_url = api_url[0] + '?' + this.gen_query(params);
+                        this.props.history.push(url[0] + '?' + this.gen_query(params));
+                    }
+                } else {
+                    api_url = api_url[0] + '?page=' + page_number;
+                    this.props.history.push(url[0] + '?page=' + page_number);
+                }
+                fetch(api_url, { method: 'GET' }).then(function (response) {
+                    return response.json();
+                }).then(function (json) {
+                    _this2.setState({
+                        page: json.page,
+                        total_pages: json.total_pages,
+                        models: json.results
+                    });
+                });
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var page_header = {
                 paddingTop: '20px'
             };
@@ -34864,9 +34908,59 @@ var ModelGrid = function (_React$Component) {
                         break;
                 }
             }
+            var pages = [];
+            var show_pages = 2;
+            for (var i = -show_pages; i <= show_pages; i++) {
+                if (this.state.page + i >= 1 && this.state.page + i <= this.state.total_pages) {
+                    pages.push(this.state.page + i);
+                }
+            }
+            var pagination = _react2.default.createElement(
+                _reactstrap.ButtonGroup,
+                null,
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: 'secondary', onClick: function onClick() {
+                            return _this3.fetch_page(1);
+                        } },
+                    "<<"
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: 'secondary', onClick: function onClick() {
+                            return _this3.fetch_page(_this3.state.page - 1);
+                        } },
+                    "<"
+                ),
+                pages.map(function (page, i) {
+                    var _this4 = this;
+
+                    return _react2.default.createElement(
+                        _reactstrap.Button,
+                        { key: i, color: this.state.page == page ? "primary" : "secondary", onClick: function onClick() {
+                                return _this4.fetch_page(page);
+                            } },
+                        page
+                    );
+                }, this),
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: 'secondary', onClick: function onClick() {
+                            return _this3.fetch_page(_this3.state.page + 1);
+                        } },
+                    ">"
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: 'secondary', onClick: function onClick() {
+                            return _this3.fetch_page(_this3.state.total_pages);
+                        } },
+                    ">>"
+                )
+            );
             return _react2.default.createElement(
                 'div',
-                { 'class': 'container' },
+                { className: 'container' },
                 _react2.default.createElement(
                     'div',
                     { style: page_header },
@@ -34876,9 +34970,9 @@ var ModelGrid = function (_React$Component) {
                         this.props.name
                     ),
                     _react2.default.createElement(
-                        'section',
-                        { id: 'grid-description' },
-                        this.props.desc
+                        _reactstrap.Row,
+                        null,
+                        pagination
                     )
                 ),
                 _react2.default.createElement(
@@ -34890,7 +34984,7 @@ var ModelGrid = function (_React$Component) {
                         this.state.models.map(function (model, i) {
                             return _react2.default.createElement(
                                 _reactstrap.Card,
-                                { style: grid_model },
+                                { key: i, style: grid_model },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
                                     { to: '/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id },
@@ -34900,19 +34994,15 @@ var ModelGrid = function (_React$Component) {
                                     _reactstrap.CardBody,
                                     null,
                                     _react2.default.createElement(
-                                        _reactstrap.CardText,
+                                        'strong',
                                         null,
                                         _react2.default.createElement(
-                                            'strong',
-                                            null,
-                                            _react2.default.createElement(
-                                                'span',
-                                                { style: grid_model_name },
-                                                model.name
-                                            )
-                                        ),
-                                        rows[i]
-                                    )
+                                            'span',
+                                            { style: grid_model_name },
+                                            model.name
+                                        )
+                                    ),
+                                    rows[i]
                                 )
                             );
                         }, this)

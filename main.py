@@ -29,7 +29,7 @@ def paginated(query):
 @app.route('/api/games')
 def api_games(game_id=None):
     if game_id:
-        return jsonify(models.Game.query.get(game_id).json())
+        return api(models.Game.query.get(game_id))
 
     q = models.Game.query
 
@@ -184,10 +184,10 @@ def api_search():
 
 @app.route('/')
 @app.route('/about')
-@app.route('/<any("games", "genres", "developers", "events"):model>/<id>')
+@app.route('/boardgame/<id>/<model>')
 @app.route('/<any("game", "genre", "developer", "event"):model>/<id>')
 @app.route('/<any("games", "genres", "developers", "events"):model>')
-@app.route('/<any("game", "genre", "developer", "event"):model>')
+@app.route('/<any("games", "genres", "developers", "events"):model>/')
 def grid(model=None, id=None):
     return render_template('index.html')
 

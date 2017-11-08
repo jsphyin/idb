@@ -2,7 +2,8 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Redirect
 } from 'react-router-dom'
 import {
     Row,
@@ -14,7 +15,9 @@ import {
     CardBody,
     CardFooter,
     CardImg,
-    CardSubtitle
+    CardSubtitle,
+    Button,
+    ButtonGroup
 } from 'reactstrap';
 
 class ModelGrid extends React.Component {
@@ -24,18 +27,19 @@ class ModelGrid extends React.Component {
         this.type = props.match.url;
         document.title = this.props.name + " - BGDB";
         this.state = {
-            models: []
+            models: [],
+            page: 1,
+            total_pages: 3
         };
         this.host = 'http://boardgamedb.me';
         if(window.location.hostname === 'localhost') {
             this.host = '';
         }
         var query = props.location.search
-        var model = props.match.url.substring(1, props.match.url.length)
-        if(model.charAt(model.length - 1) == '/') {
-            model = model.substring(0, model.length - 1);
-        }
-        fetch(this.host + '/api/' + model + query, {method: 'GET'})
+        var model = props.name.toLowerCase()
+        this.api_url = this.host + '/api/' + model + query;
+        this.url = this.host + '/' + model + query;
+        fetch(this.api_url, {method: 'GET'})
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -44,6 +48,63 @@ class ModelGrid extends React.Component {
                     models: json.results
                 });
             });
+    }
+
+    parse_query(query) {
+        var params = [];
+        params = query.split('&')
+        for(var i = 0; i < params.length; i++) {
+            params[i] = params[i].split('=');
+        }
+        return params;
+    }
+
+    gen_query(params) {
+        var query = '';
+        for(var i = 0; i < params.length; i++) {
+            if(i > 0) {
+                query += '&';
+            }
+            query += params[i][0] + '=' + params[i][1];
+        }
+        return query;
+    }
+
+    fetch_page(page_number) {
+        if(this.state.page != page_number && page_number >= 1 && page_number <= this.state.total_pages) {
+            var api_url = this.api_url.split('?')
+            var url = this.url.split('?')
+            if(url.length > 1) {
+                var params = this.parse_query(url[1])
+                var found = false;
+                for(var i = 0; i < params.length; i++) {
+                    if(params[i][0] === 'page') {
+                        params[i][1] = page_number;
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) {
+                    api_url = this.api_url + '&page=' + page_number;
+                    this.props.history.push(this.url + '&page=' + page_number);
+                } else {
+                    api_url = api_url[0] + '?' + this.gen_query(params);
+                    this.props.history.push(url[0] + '?' + this.gen_query(params));
+                }
+            } else {
+                api_url = api_url[0] + '?page=' + page_number;
+                this.props.history.push(url[0] + '?page=' + page_number);
+            }
+            fetch(api_url, {method: 'GET'})
+                .then(response => response.json())
+                .then(json => {
+                    this.setState({
+                        page: json.page,
+                        total_pages: json.total_pages,
+                        models: json.results
+                    });
+                });
+        }
     }
 
     render() {
@@ -148,27 +209,45 @@ class ModelGrid extends React.Component {
                     break;
             }
         }
+        var pages = [];
+        var show_pages = 2;
+        for(var i = -show_pages; i <= show_pages; i++) {
+            if(this.state.page + i >= 1 && this.state.page + i <= this.state.total_pages) {
+                pages.push(this.state.page + i)
+            }
+        }
+        var pagination = (
+            <ButtonGroup>
+            <Button color="secondary" onClick={() => this.fetch_page(1)}>{"<<"}</Button>
+            <Button color="secondary" onClick={() => this.fetch_page(this.state.page - 1)}>{"<"}</Button>
+            {pages.map(function(page, i) {
+                return (
+                    <Button key={i} color={this.state.page == page ? "primary" : "secondary"} onClick={() => this.fetch_page(page)}>{page}</Button>
+                );
+            }, this)}
+            <Button color="secondary" onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
+            <Button color="secondary" onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
+            </ButtonGroup>
+        );
         return (
-            <div class="container">
+            <div className="container">
                 <div style={page_header}>
                     <h2>{this.props.name}</h2>
-                    <section id="grid-description">
-                        {this.props.desc}
-                    </section>
+                    <Row>
+                        {pagination}
+                    </Row>
                 </div>
                 <section>
                     <Row>
                     {this.state.models.map(function(model, i) {
                         return (
-                                <Card style={grid_model}>
+                                <Card key={i} style={grid_model}>
                                     <Link to={'/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id}>
                                     <CardImg style={grid_model_img} src={model.img}/>
                                     </Link>
                                     <CardBody>
-                                        <CardText>
-                                            <strong><span style={grid_model_name}>{model.name}</span></strong>
-                                            {rows[i]}
-                                        </CardText>
+                                        <strong><span style={grid_model_name}>{model.name}</span></strong>
+                                        {rows[i]}
                                     </CardBody>
                                 </Card>
                         );
