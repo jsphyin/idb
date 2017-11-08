@@ -20,10 +20,10 @@ class App extends React.Component {
                     <Route exact path='/' component={Home}/>
                     <Route path='/about' component={About}/>
 
-                    <Route path='/game/:id' component={(props) => (<Model {...props} name="Games"/>)}/>
-                    <Route path='/genre/:id' component={(props) => (<Model {...props} name="Genres"/>)}/>
-                    <Route path='/developer/:id' component={(props) => (<Model {...props} name="Developers"/>)}/>
-                    <Route path='/event/:id' component={(props) => (<Model {...props} name="Events"/>)}/>
+                    <Route path='/game' component={(props) => (<Model {...props} name="Games"/>)}/>
+                    <Route path='/genre' component={(props) => (<Model {...props} name="Genres"/>)}/>
+                    <Route path='/developer' component={(props) => (<Model {...props} name="Developers"/>)}/>
+                    <Route path='/event' component={(props) => (<Model {...props} name="Events"/>)}/>
 
                     <Route path='/games' component={(props) => (<ModelGrid {...props} name="Games"/>)}/>
                     <Route path='/genres' component={(props) => (<ModelGrid {...props} name="Genres"/>)}/>
@@ -36,7 +36,4 @@ class App extends React.Component {
     }
 }
 
-/*
-    <Route path='/about' component={About}/>
-*/
 export default App;

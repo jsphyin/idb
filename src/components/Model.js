@@ -26,7 +26,12 @@ class Model extends React.Component {
         if(window.location.hostname === 'localhost') {
             this.host = '';
         }
-        fetch(this.host + '/api' + props.match.url, {method: 'GET'})
+        var query = props.location.search
+        var model = props.match.url.substring(1, props.match.url.length)
+        if(model.charAt(model.length - 1) == '/') {
+            model = model.substring(0, model.length - 1);
+        }
+        fetch(this.host + '/api/' + model + 's' + query, {method: 'GET'})
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -68,7 +73,7 @@ class Model extends React.Component {
                 if (model.developers.length > 0) {
                     devs = []
                     for(var i = 0; i < model.developers.length; i++) {
-                        devs.push(<li>Developed by <Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
+                        devs.push(<li>Developed by <Link to={'/developer?id=' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
                     }
                 }
 
@@ -158,7 +163,7 @@ class Model extends React.Component {
                 if (model.developers.length > 0) {
                     devs = []
                     for(var i = 0; i < model.developers.length; i++) {
-                        devs.push(<li><Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
+                        devs.push(<li><Link to={'/developer?id=' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
                     }
                 }
 
@@ -166,7 +171,7 @@ class Model extends React.Component {
                 if (model.games.length > 0) {
                     games = []
                     for(var i = 0; i < model.games.length; i++) {
-                        games.push(<li><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                        games.push(<li><Link to={'/game?id=' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
                     }
                 }
 
@@ -174,7 +179,7 @@ class Model extends React.Component {
                 if (model.events.length > 0) {
                     events = []
                     for(var i = 0; i < model.events.length; i++) {
-                        events.push(<li><Link to={'/event/' + model.events[i][0]}>{model.events[i][1]}</Link></li>);
+                        events.push(<li><Link to={'/event?id=' + model.events[i][0]}>{model.events[i][1]}</Link></li>);
                     }
                 }
 
@@ -212,7 +217,7 @@ class Model extends React.Component {
                 if (model.games.length > 0) {
                     games = []
                     for(var i = 0; i < model.games.length; i++) {
-                        games.push(<li><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                        games.push(<li><Link to={'/game?id=' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
                     }
                 }
 
@@ -246,9 +251,9 @@ class Model extends React.Component {
             case "Events":
                 var val = <div>No Games or Genres</div>
                 if (model.games.length > 0) {
-                    val = <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link>;
+                    val = <Link to={'/game?id=' + model.games[0][0]}>{model.games[0][1]}</Link>;
                 } else if(model.genres.length > 0) {
-                    val = <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
+                    val = <Link to={'/genre?id=' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
                 }
                 attrib = (
                     <div>

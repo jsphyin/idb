@@ -7,6 +7,10 @@ import models
 
 from extensions import app, db
 
+def api(data):
+    if not data:
+        return jsonify([])
+    return jsonify(data.json())
 
 def paginated(query):
     page = int(request.args.get('page', 1))
@@ -19,11 +23,12 @@ def paginated(query):
 
     return jsonify([i.json() for i in instances])
 
+@app.route('/api/games/')
 @app.route('/api/games')
-@app.route('/api/games/<int:id>')
-def api_games(id=None):
-    if id is not None:
-        return jsonify(models.Game.query.get(id).json())
+def api_games():
+    game_id = request.args.get('id', 0)
+    if game_id:
+        return jsonify(models.Game.query.get(game_id).json())
 
     q = models.Game.query
 
@@ -41,11 +46,12 @@ def api_games(id=None):
 
     return paginated(q)
 
+@app.route('/api/genres/')
 @app.route('/api/genres')
-@app.route('/api/genres/<int:id>')
-def api_genres(id=None):
-    if id is not None:
-        return jsonify(models.Genre.query.get(id).json())
+def api_genres():
+    genre_id = request.args.get('id', 0)
+    if genre_id:
+        return api(models.Genre.query.get(genre_id))
 
     q = models.Genre.query
 
@@ -59,11 +65,12 @@ def api_genres(id=None):
 
     return paginated(q)
 
+@app.route('/api/developers/')
 @app.route('/api/developers')
-@app.route('/api/developers/<int:id>')
-def api_developers(id=None):
-    if id is not None:
-        return jsonify(models.Developer.query.get(id).json())
+def api_developers():
+    developer_id = request.args.get('id', 0)
+    if developer_id:
+        return api(models.Developer.query.get(developer_id))
 
     q = models.Developer.query
 
@@ -77,11 +84,12 @@ def api_developers(id=None):
 
     return paginated(q)
 
+@app.route('/api/events/')
 @app.route('/api/events')
-@app.route('/api/events/<int:id>')
-def api_events(id=None):
-    if id is not None:
-        return jsonify(models.Event.query.get(id).json())
+def api_events():
+    event_id = request.args.get('id', 0)
+    if event_id:
+        return api(models.Event.query.get(event_id))
 
     q = models.Event.query
 
@@ -122,21 +130,12 @@ def api_search():
 
 @app.route('/')
 @app.route('/about')
-@app.route('/<any("games", "genres", "developers", "events"):model>/<page>')
 @app.route('/<any("games", "genres", "developers", "events"):model>/')
-def grid(model=None, page=1):
+@app.route('/<any("game", "genre", "developer", "event"):model>/')
+@app.route('/<any("games", "genres", "developers", "events"):model>')
+@app.route('/<any("game", "genre", "developer", "event"):model>')
+def grid(model=None, params=None):
     return render_template('index.html')
-
-@app.route('/<any("game", "genre", "developer", "event"):model>/<ID>')
-def index(model, ID):
-    return render_template('index.html')
-
-"""
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template('index.html')
-"""
 
 if __name__ == '__main__':
     from os import sys, path

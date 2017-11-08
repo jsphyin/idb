@@ -30,7 +30,12 @@ class ModelGrid extends React.Component {
         if(window.location.hostname === 'localhost') {
             this.host = '';
         }
-        fetch(this.host + '/api' + props.match.url, {method: 'GET'})
+        var query = props.location.search
+        var model = props.match.url.substring(1, props.match.url.length)
+        if(model.charAt(model.length - 1) == '/') {
+            model = model.substring(0, model.length - 1);
+        }
+        fetch(this.host + '/api/' + model + query, {method: 'GET'})
             .then(response => response.json())
             .then(json => {
                 this.setState({
@@ -70,7 +75,7 @@ class ModelGrid extends React.Component {
                 case "Games":
                     var devs = <div>Unknown Developer</div>;
                     if (model.developers.length > 0) {
-                        devs = <div>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
+                        devs = <div>Developed by <Link to={'/developer?id=' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
                     }
                     rows.push(
                         <ul style={grid_model_attribute}>
@@ -84,15 +89,15 @@ class ModelGrid extends React.Component {
                 case "Genres":
                     var devs = <div>No notable devs</div>;
                     if (model.developers.length > 0) {
-                        devs = <div>Notable Dev: <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
+                        devs = <div>Notable Dev: <Link to={'/developer?id=' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
                     }
                     var games = <div>No notable games</div>;
                     if (model.games.length > 0) {
-                        games = <div>Notable Games: <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
+                        games = <div>Notable Games: <Link to={'/game?id=' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
                     }
                     var events = <div>No events</div>;
                     if (model.events.length > 0) {
-                        events = <div>Events: <Link to={'/event/' + model.events[0][0]}>{model.events[0][1]}</Link></div>;
+                        events = <div>Events: <Link to={'/event?id=' + model.events[0][0]}>{model.events[0][1]}</Link></div>;
                     }
                     rows.push(
                         <ul style={grid_model_attribute}>
@@ -105,11 +110,11 @@ class ModelGrid extends React.Component {
                 case "Developers":
                     var genres = <div>No Genres</div>;
                     if (model.genres.length > 0) {
-                        genres = <div>Genres: <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link></div>;
+                        genres = <div>Genres: <Link to={'/genre?id=' + model.genres[0][0]}>{model.genres[0][1]}</Link></div>;
                     }
                     var games = <div>No notable games</div>;
                     if (model.games.length > 0) {
-                        games = <div>Notable Games: <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
+                        games = <div>Notable Games: <Link to={'/game?id=' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
                     }
                     var website = <a href={model.website}>{model.website}</a>;
                     if (model.website === null) {
@@ -126,9 +131,9 @@ class ModelGrid extends React.Component {
                 case "Events":
                     var val = <div>No Games or Genres</div>
                     if (model.games.length > 0) {
-                        val = <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link>;
+                        val = <Link to={'/game?id=' + model.games[0][0]}>{model.games[0][1]}</Link>;
                     } else if(model.genres.length > 0) {
-                        val = <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
+                        val = <Link to={'/genre?id=' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
                     }
                     rows.push(
                         <ul style={grid_model_attribute}>
@@ -154,7 +159,7 @@ class ModelGrid extends React.Component {
                     {this.state.models.map(function(model, i) {
                         return (
                                 <Card style={grid_model}>
-                                    <Link to={'/' + this.props.name.toLowerCase().slice(0,this.props.name.length-1) + '/' + model.id}>
+                                    <Link to={'/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '?id=' + model.id}>
                                     <CardImg style={grid_model_img} src={model.img}/>
                                     </Link>
                                     <CardBody>
