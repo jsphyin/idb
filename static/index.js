@@ -32982,7 +32982,41 @@ var About = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).call(this, props));
 
         document.title = "About - BGDB";
-
+        _this.state = {
+            'Quangmire': [0, 0, 0],
+            'anuragbakshi': [0, 0, 0],
+            'jsphyin': [0, 0, 4],
+            'aytiel': [0, 0, 15],
+            'KLedet': [0, 0, 0],
+            total: [0, 0, 19]
+        };
+        _this.trello = {
+            '53e2bdcf2041ed5793869e18': 'Quangmire',
+            '52b512661a8b5aaf35003276': 'anuragbakshi',
+            '58589311a6d8eef22a13c76d': 'jsphyin',
+            '596ba9b2870eed3c04b7781e': 'aytiel',
+            '58d172575c1863c115c95146': 'KLedet'
+        };
+        fetch('https://api.github.com/repos/jsphyin/idb/contributors', { method: 'GET' }).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            for (var i = 0; i < json.length; i++) {
+                _this.state[json[i]['login']][0] = json[i]['contributions'];
+                _this.state.total[0] += json[i]['contributions'];
+            }
+            _this.setState(_this.state);
+        });
+        fetch('https://api.trello.com/1/board/EIE23URq/cards?key=08a3dc10723149d7a4ae84358b891ccd&token=429171254d122b908ec39035216d699feb5014c5c8df2bcd9fbb2ec1ba797167', { method: 'GET' }).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            for (var i = 0; i < json.length; i++) {
+                for (var j = 0; j < json[i]['idMembers'].length; j++) {
+                    _this.state[_this.trello[json[i]['idMembers'][j]]][1] += 1;
+                }
+                _this.state.total[1] += 1;
+            }
+            _this.setState(_this.state);
+        });
         return _this;
     }
 
@@ -33100,7 +33134,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 32'
+                                            ' ',
+                                            this.state['anuragbakshi'][0]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33110,7 +33145,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 9'
+                                            ' ',
+                                            this.state['anuragbakshi'][1]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33120,7 +33156,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' 0'
+                                            ' ',
+                                            this.state['anuragbakshi'][2]
                                         )
                                     )
                                 )
@@ -33188,7 +33225,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 26'
+                                            ' ',
+                                            this.state['Quangmire'][0]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33198,7 +33236,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 10'
+                                            ' ',
+                                            this.state['Quangmire'][1]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33208,7 +33247,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' 0'
+                                            ' ',
+                                            this.state['Quangmire'][2]
                                         )
                                     )
                                 )
@@ -33276,7 +33316,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 15'
+                                            ' ',
+                                            this.state['jsphyin'][0]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33286,7 +33327,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 7'
+                                            ' ',
+                                            this.state['jsphyin'][1]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33296,7 +33338,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' 4'
+                                            ' ',
+                                            this.state['jsphyin'][2]
                                         )
                                     )
                                 )
@@ -33368,7 +33411,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 7'
+                                            ' ',
+                                            this.state['KLedet'][0]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33378,7 +33422,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 4'
+                                            ' ',
+                                            this.state['KLedet'][1]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33388,7 +33433,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' -'
+                                            ' ',
+                                            this.state['KLedet'][2]
                                         )
                                     )
                                 )
@@ -33456,7 +33502,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Commits:'
                                             ),
-                                            ' 12'
+                                            ' ',
+                                            this.state['aytiel'][0]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33466,7 +33513,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Issues:'
                                             ),
-                                            ' 4'
+                                            ' ',
+                                            this.state['aytiel'][1]
                                         ),
                                         _react2.default.createElement(
                                             'li',
@@ -33476,7 +33524,8 @@ var About = function (_React$Component) {
                                                 null,
                                                 'No. Of Unit Tests:'
                                             ),
-                                            ' 15'
+                                            ' ',
+                                            this.state['aytiel'][2]
                                         )
                                     )
                                 )
@@ -33507,7 +33556,8 @@ var About = function (_React$Component) {
                                 null,
                                 'Total No. of Commits:'
                             ),
-                            ' 112'
+                            ' ',
+                            this.state.total[0]
                         ),
                         _react2.default.createElement(
                             'li',
@@ -33517,7 +33567,8 @@ var About = function (_React$Component) {
                                 null,
                                 'Total No. of Issues:'
                             ),
-                            ' 34'
+                            ' ',
+                            this.state.total[1]
                         ),
                         _react2.default.createElement(
                             'li',
@@ -33527,7 +33578,8 @@ var About = function (_React$Component) {
                                 null,
                                 'Total No. of Unit Tests:'
                             ),
-                            ' 0'
+                            ' ',
+                            this.state.total[2]
                         ),
                         _react2.default.createElement(
                             'li',
