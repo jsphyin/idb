@@ -32912,16 +32912,16 @@ var App = function (_React$Component) {
                     _react2.default.createElement(_NavBar2.default, null),
                     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/about', component: _About2.default }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/game', component: function component(props) {
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/game/:id', component: function component(props) {
                             return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Games' }));
                         } }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/genre', component: function component(props) {
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/genre/:id', component: function component(props) {
                             return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Genres' }));
                         } }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/developer', component: function component(props) {
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/developer/:id', component: function component(props) {
                             return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Developers' }));
                         } }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: '/event', component: function component(props) {
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/event/:id', component: function component(props) {
                             return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Events' }));
                         } }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/games', component: function component(props) {
@@ -32943,11 +32943,6 @@ var App = function (_React$Component) {
 
     return App;
 }(_react2.default.Component);
-
-/*
-    <Route path='/about' component={About}/>
-*/
-
 
 exports.default = App;
 
@@ -33950,7 +33945,14 @@ var Model = function (_React$Component) {
         if (model.charAt(model.length - 1) == '/') {
             model = model.substring(0, model.length - 1);
         }
-        fetch(_this.host + '/api/' + model + 's' + query, { method: 'GET' }).then(function (response) {
+        model = model.split("/");
+        var url = '';
+        if (model.length > 1) {
+            url = model[0] + 's/' + model[1];
+        } else {
+            url = model[0] + 's' + query;
+        }
+        fetch(_this.host + '/api/' + url, { method: 'GET' }).then(function (response) {
             return response.json();
         }).then(function (json) {
             _this.setState({
@@ -33964,6 +33966,7 @@ var Model = function (_React$Component) {
         key: 'render',
         value: function render() {
             var model = this.state.model;
+            console.log(model);
             if (model === null) {
                 return _react2.default.createElement('div', null);
             }
@@ -34005,7 +34008,7 @@ var Model = function (_React$Component) {
                                 'Developed by ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/developer?id=' + model.developers[i][0] },
+                                    { to: '/developer/' + model.developers[i][0] },
                                     model.developers[i][1]
                                 )
                             ));
@@ -34211,7 +34214,7 @@ var Model = function (_React$Component) {
                                 null,
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/developer?id=' + model.developers[i][0] },
+                                    { to: '/developer/' + model.developers[i][0] },
                                     model.developers[i][1]
                                 )
                             ));
@@ -34231,7 +34234,7 @@ var Model = function (_React$Component) {
                                 null,
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/game?id=' + model.games[i][0] },
+                                    { to: '/game/' + model.games[i][0] },
                                     model.games[i][1]
                                 )
                             ));
@@ -34251,7 +34254,7 @@ var Model = function (_React$Component) {
                                 null,
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/event?id=' + model.events[i][0] },
+                                    { to: '/event/' + model.events[i][0] },
                                     model.events[i][1]
                                 )
                             ));
@@ -34345,7 +34348,7 @@ var Model = function (_React$Component) {
                                 null,
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/game?id=' + model.games[i][0] },
+                                    { to: '/game/' + model.games[i][0] },
                                     model.games[i][1]
                                 )
                             ));
@@ -34423,13 +34426,13 @@ var Model = function (_React$Component) {
                     if (model.games.length > 0) {
                         val = _react2.default.createElement(
                             _reactRouterDom.Link,
-                            { to: '/game?id=' + model.games[0][0] },
+                            { to: '/game/' + model.games[0][0] },
                             model.games[0][1]
                         );
                     } else if (model.genres.length > 0) {
                         val = _react2.default.createElement(
                             _reactRouterDom.Link,
-                            { to: '/genre?id=' + model.genres[0][0] },
+                            { to: '/genre/' + model.genres[0][0] },
                             model.genres[0][1]
                         );
                     }
@@ -34583,7 +34586,9 @@ var ModelGrid = function (_React$Component) {
             return response.json();
         }).then(function (json) {
             _this.setState({
-                models: json
+                page: json.page,
+                total_pages: json.total_pages,
+                models: json.results
             });
         });
         return _this;
@@ -34632,7 +34637,7 @@ var ModelGrid = function (_React$Component) {
                                 'Developed by ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/developer?id=' + model.developers[0][0] },
+                                    { to: '/developer/' + model.developers[0][0] },
                                     model.developers[0][1]
                                 )
                             );
@@ -34681,7 +34686,7 @@ var ModelGrid = function (_React$Component) {
                                 'Notable Dev: ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/developer?id=' + model.developers[0][0] },
+                                    { to: '/developer/' + model.developers[0][0] },
                                     model.developers[0][1]
                                 )
                             );
@@ -34698,7 +34703,7 @@ var ModelGrid = function (_React$Component) {
                                 'Notable Games: ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/game?id=' + model.games[0][0] },
+                                    { to: '/game/' + model.games[0][0] },
                                     model.games[0][1]
                                 )
                             );
@@ -34715,7 +34720,7 @@ var ModelGrid = function (_React$Component) {
                                 'Events: ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/event?id=' + model.events[0][0] },
+                                    { to: '/event/' + model.events[0][0] },
                                     model.events[0][1]
                                 )
                             );
@@ -34753,7 +34758,7 @@ var ModelGrid = function (_React$Component) {
                                 'Genres: ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/genre?id=' + model.genres[0][0] },
+                                    { to: '/genre/' + model.genres[0][0] },
                                     model.genres[0][1]
                                 )
                             );
@@ -34770,7 +34775,7 @@ var ModelGrid = function (_React$Component) {
                                 'Notable Games: ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/game?id=' + model.games[0][0] },
+                                    { to: '/game/' + model.games[0][0] },
                                     model.games[0][1]
                                 )
                             );
@@ -34816,13 +34821,13 @@ var ModelGrid = function (_React$Component) {
                         if (model.games.length > 0) {
                             val = _react2.default.createElement(
                                 _reactRouterDom.Link,
-                                { to: '/game?id=' + model.games[0][0] },
+                                { to: '/game/' + model.games[0][0] },
                                 model.games[0][1]
                             );
                         } else if (model.genres.length > 0) {
                             val = _react2.default.createElement(
                                 _reactRouterDom.Link,
-                                { to: '/genre?id=' + model.genres[0][0] },
+                                { to: '/genre/' + model.genres[0][0] },
                                 model.genres[0][1]
                             );
                         }
@@ -34888,7 +34893,7 @@ var ModelGrid = function (_React$Component) {
                                 { style: grid_model },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '?id=' + model.id },
+                                    { to: '/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id },
                                     _react2.default.createElement(_reactstrap.CardImg, { style: grid_model_img, src: model.img })
                                 ),
                                 _react2.default.createElement(

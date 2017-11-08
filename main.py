@@ -24,10 +24,10 @@ def paginated(query):
         'results': [i.json() for i in instances]
     })
 
+@app.route('/api/games/<game_id>')
 @app.route('/api/games/')
 @app.route('/api/games')
-def api_games():
-    game_id = request.args.get('id', 0)
+def api_games(game_id=None):
     if game_id:
         return jsonify(models.Game.query.get(game_id).json())
 
@@ -55,10 +55,10 @@ def api_games():
 
     return paginated(q)
 
+@app.route('/api/genres/<genre_id>')
 @app.route('/api/genres/')
 @app.route('/api/genres')
-def api_genres():
-    genre_id = request.args.get('id', 0)
+def api_genres(genre_id=None):
     if genre_id:
         return api(models.Genre.query.get(genre_id))
 
@@ -82,10 +82,10 @@ def api_genres():
 
     return paginated(q)
 
+@app.route('/api/developers/<developer_id>')
 @app.route('/api/developers/')
 @app.route('/api/developers')
-def api_developers():
-    developer_id = request.args.get('id', 0)
+def api_developers(developer_id=None):
     if developer_id:
         return api(models.Developer.query.get(developer_id))
 
@@ -109,10 +109,10 @@ def api_developers():
 
     return paginated(q)
 
+@app.route('/api/events/<event_id>')
 @app.route('/api/events/')
 @app.route('/api/events')
-def api_events():
-    event_id = request.args.get('id', 0)
+def api_events(event_id=None):
     if event_id:
         return api(models.Event.query.get(event_id))
 
@@ -184,11 +184,11 @@ def api_search():
 
 @app.route('/')
 @app.route('/about')
-@app.route('/<any("games", "genres", "developers", "events"):model>/')
-@app.route('/<any("game", "genre", "developer", "event"):model>/')
+@app.route('/<any("games", "genres", "developers", "events"):model>/<id>')
+@app.route('/<any("game", "genre", "developer", "event"):model>/<id>')
 @app.route('/<any("games", "genres", "developers", "events"):model>')
 @app.route('/<any("game", "genre", "developer", "event"):model>')
-def grid(model=None, params=None):
+def grid(model=None, id=None):
     return render_template('index.html')
 
 if __name__ == '__main__':
