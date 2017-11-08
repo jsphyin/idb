@@ -1,5 +1,8 @@
 from extensions import db
 
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.sql.expression import join, union_all
+
 game_family_assoc = db.Table('game_family_assoc',
     db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
     db.Column('family_id', db.Integer, db.ForeignKey('family.id'), primary_key=True)
@@ -47,32 +50,10 @@ class SearchResult(db.Model):
 
     def json(self):
         return {'id': self.id,
-            'type': self.type,
+            'type': self.type.lower(),
             'score': self.score
             }
 
-# class FTSearchable(object):
-#     @classmethod
-#     def ftsearch(cls, query):
-#         return cls.query \
-#             .filter('MATCH ({}) AGAINST (":query" IN NATURAL LANGUAGE MODE)'.format(cls.__ftcolumns__)) \
-#             .params(query=query) \
-#             .all()
-
-#     @staticmethod
-#     def ftsearch_many(query, *models):
-#         q = SearchResult.query.union_all(*(
-#             db.session.query(
-#                 m.id.label('model_id'),
-#                 literal(m.__name__).label('model_type'),
-#                 literal_column('MATCH ({}) AGAINST (":query" IN NATURAL LANGUAGE MODE)'.format(m.__ftcolumns__)).label('score')
-#             ).params(query=query)
-#             for m in models
-#         ))
-
-#         print(q)
-
-# class Game(db.Model, FTSearchable):
 class Game(db.Model):
     __ftcolumns__ = 'primary_name, alt_names, raw_desc'
 
@@ -134,7 +115,6 @@ class Family(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
-# class Genre(db.Model, FTSearchable):
 class Genre(db.Model):
     __ftcolumns__ = 'name, raw_desc'
 
@@ -146,7 +126,16 @@ class Genre(db.Model):
     raw_desc = db.Column(db.Text)
 
     games = db.relationship('Game', secondary=game_genre_assoc, back_populates='genres')
-    direct_events = db.relationship('Event', secondary=event_genre_assoc, back_populates='genres')
+    direct_events = db.relationship('Event', secondary=event_genre_assoc)
+    indirect_events = db.relationship('Event',
+                                      viewonly=True,
+                                      secondary=join(game_genre_assoc, event_game_assoc,
+                                                     game_genre_assoc.c.game_id == event_game_assoc.c.game_id).alias())
+
+    developers = db.relationship('Developer',
+                                 viewonly=True,
+                                 secondary=join(game_genre_assoc, game_developer_assoc,
+                                                game_genre_assoc.c.game_id == game_developer_assoc.c.game_id).alias())
 
     def json(self):
         return {'id': self.id,
@@ -158,24 +147,9 @@ class Genre(db.Model):
                 'developers': [(developer.id, developer.name) for developer in self.developers]
                 }
 
-    @property
-    def developers(self):
-        return Developer.query \
-            .join(Developer.games) \
-            .join(Game.genres) \
-            .filter(Genre.id == self.id) \
-            .all()
-
-    @property
+    @hybrid_property
     def events(self):
-        if self.direct_events:
-            return self.direct_events
-
-        return Event.query \
-            .join(Event.games) \
-            .join(Game.genres) \
-            .filter(Genre.id == self.id) \
-            .all()
+        return self.direct_events or self.indirect_events
 
 class Publisher(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -203,7 +177,6 @@ class Artist(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
-# class Developer(db.Model, FTSearchable):
 class Developer(db.Model):
     __ftcolumns__ = 'name, raw_desc, website'
 
@@ -217,6 +190,11 @@ class Developer(db.Model):
 
     games = db.relationship('Game', secondary=game_developer_assoc, back_populates='developers')
 
+    genres = db.relationship('Genre',
+                             viewonly=True,
+                             secondary=join(game_developer_assoc, game_genre_assoc,
+                                            game_developer_assoc.c.game_id == game_genre_assoc.c.game_id).alias())
+
     def json(self):
         return {'id': self.id,
                 'img': self.image,
@@ -226,14 +204,6 @@ class Developer(db.Model):
                 'genres': [(genre.id, genre.name) for genre in self.genres],
                 'website': self.website
                 }
-
-    @property
-    def genres(self):
-        return Genre.query \
-            .join(Genre.games) \
-            .join(Game.developers) \
-            .filter(Developer.id == self.id) \
-            .all()
 
 class Mechanic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -248,7 +218,6 @@ class Mechanic(db.Model):
                 'games': [(game.id, game.primary_name) for game in self.games]
                 }
 
-# class Event(db.Model, FTSearchable):
 class Event(db.Model):
     __ftcolumns__ = 'name, raw_desc, location, link'
 
@@ -262,8 +231,12 @@ class Event(db.Model):
     link = db.Column(db.String(4096))
     time = db.Column(db.DateTime)
 
-    games = db.relationship('Game', secondary=event_game_assoc, back_populates='events')
-    genres = db.relationship('Genre', secondary=event_genre_assoc, back_populates='direct_events')
+    games = db.relationship('Game', secondary=event_game_assoc)
+    direct_genres = db.relationship('Genre', secondary=event_genre_assoc)
+    indirect_genres = db.relationship('Genre',
+                                      viewonly=True,
+                                      secondary=join(event_game_assoc, game_genre_assoc,
+                                                     event_game_assoc.c.game_id == game_genre_assoc.c.game_id).alias())
 
     def json(self):
         image = 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'
@@ -271,6 +244,7 @@ class Event(db.Model):
             image = self.games[0].image
         elif self.genres:
             image = self.genres[0].image
+
         return {'id': self.id,
                 'name': self.name,
                 'img': image,
@@ -281,3 +255,7 @@ class Event(db.Model):
                 'genres': [(genre.id, genre.name) for genre in self.genres],
                 'link': self.link
                 }
+
+    @hybrid_property
+    def genres(self):
+        return self.direct_genres or self.indirect_genres

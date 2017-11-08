@@ -2,8 +2,16 @@ from unittest import main, TestCase
 from models import db, Game, Family, Genre, Publisher, Artist, Developer, Mechanic, Event
 from main import app
 from datetime import datetime
+import requests
+import json
 
 class TestAPI(TestCase):
+    games_url = 'http://boardgamedb.me/api/game'
+    genres_url = 'http://boardgamedb.me/api/genre'
+    developers_url = 'http://boardgamedb.me/api/developer'
+    events_url = 'http://boardgamedb.me/api/event'
+    headers = {'Content-Type': 'application/json'}
+
     def setUp(self):
         db.create_all()
 
@@ -14,8 +22,8 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             game1 = Game(id=1000000, is_expansion=False, primary_name="game1", alt_names="alt_game1",
-                         image="www.test_image.com", desc="This is a test game.", year=2000, 
-                         min_players=0, max_players=1, rating=4.321)
+                         image="www.test_image.com", desc="This is a test game.", raw_desc="Test game", 
+                         year=2000, min_players=0, max_players=1, rating=4.321)
             db.session.add(game1)
             db.session.commit()
             
@@ -32,14 +40,15 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             game2 = Game(id=1000000, is_expansion=True, primary_name="game2", alt_names="alt_game2",
-                         image="www.test_image2.com", desc="This is a test game 2.", year=1997, 
-                         min_players=2, max_players=4, rating=3.21)
+                         image="www.test_image2.com", desc="This is a test game 2.", raw_desc="Test game 2", 
+                         year=1997, min_players=2, max_players=4, rating=3.21)
             db.session.add(game2)
             db.session.commit()
             
             gamequery = db.session.query(Game).filter_by(id="1000000").first()
             self.assertEqual(gamequery.image, "www.test_image2.com")
             self.assertEqual(gamequery.desc, "This is a test game 2.")
+            self.assertEqual(gamequery.raw_desc, "Test game 2")
             self.assertEqual(gamequery.year, 1997)
             
             db.session.delete(game2)
@@ -49,8 +58,8 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             game3 = Game(id=1000000, is_expansion=False, primary_name="game3", alt_names="alt_game3",
-                         image="www.test_image3.com", desc="This is a test game 3.", year=1980, 
-                         min_players=10, max_players=15, rating=2.5)
+                         image="www.test_image3.com", desc="This is a test game 3.", raw_desc="Test game 3",
+                         year=1980, min_players=10, max_players=15, rating=2.5)
             db.session.add(game3)
             db.session.commit()
             
@@ -77,6 +86,33 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Game.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    def test_get_Game1(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.games_url+"/"+str(57), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Game).get(57)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['is_expansion'], db_res.is_expansion)
+            self.assertEqual(json_res['name'], db_res.primary_name)
+            self.assertEqual(json_res['img'], db_res.image)
+            self.assertEqual(json_res['desc'], db_res.desc)
+            
+    def test_get_Game2(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.games_url+"/"+str(910), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Game).get(910)
+            
+            self.assertEqual(json_res['year'], db_res.year)
+            self.assertEqual(json_res['min_players'], db_res.min_players)
+            self.assertEqual(json_res['max_players'], db_res.max_players)
+            self.assertEqual(json_res['rating'], db_res.rating)
             
     #--------
     # Family
@@ -118,7 +154,7 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             genre1 = Genre(id=1000000, name="genre1", image="www.test_image.com", 
-                           desc="This is a test genre.")
+                           desc="This is a test genre.", raw_desc="Test genre")
             db.session.add(genre1)
             db.session.commit()
             
@@ -127,6 +163,7 @@ class TestAPI(TestCase):
             self.assertEqual(gamequery.name, "genre1")
             self.assertEqual(gamequery.image, "www.test_image.com")
             self.assertEqual(gamequery.desc, "This is a test genre.")
+            self.assertEqual(gamequery.raw_desc, "Test genre")
             
             db.session.delete(genre1)
             db.session.commit()
@@ -146,6 +183,19 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Genre.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    def test_get_Genre1(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.genres_url+"/"+str(1029), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Genre).get(1029)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['img'], db_res.image)
+            self.assertEqual(json_res['name'], db_res.name)
+            self.assertEqual(json_res['desc'], db_res.desc)
             
     #-----------
     # Publisher
@@ -220,7 +270,7 @@ class TestAPI(TestCase):
         
         with app.test_request_context():
             developer1 = Developer(id=1000000, name="developer1", image="www.test_image.com", 
-                           desc="This is a test developer.")
+                           desc="This is a test developer.", raw_desc="Test developer", website="www.developer.com")
             db.session.add(developer1)
             db.session.commit()
             
@@ -228,26 +278,64 @@ class TestAPI(TestCase):
             self.assertEqual(gamequery.id, 1000000)
             self.assertEqual(gamequery.name, "developer1")
             self.assertEqual(gamequery.image, "www.test_image.com")
-            self.assertEqual(gamequery.desc, "This is a test developer.")
             
             db.session.delete(developer1)
             db.session.commit()
             
     def test_add_Developer2(self):
+        
+        with app.test_request_context():
+            developer2 = Developer(id=1000000, name="developer2", image="www.test_image2.com", 
+                           desc="This is a test developer 2.", raw_desc="Test developer 2", website="www.developer2.com")
+            db.session.add(developer2)
+            db.session.commit()
+            
+            gamequery = db.session.query(Developer).filter_by(id="1000000").first()
+            self.assertEqual(gamequery.desc, "This is a test developer 2.")
+            self.assertEqual(gamequery.raw_desc, "Test developer 2")
+            self.assertEqual(gamequery.website, "www.developer2.com")
+            
+            db.session.delete(developer2)
+            db.session.commit()
+            
+    def test_add_Developer3(self):
     
         with app.test_request_context():
-            developer2 = Developer()
+            developer3 = Developer()
             init_len = len(Developer.query.all())
-            db.session.add(developer2)
+            db.session.add(developer3)
             db.session.commit()
             changed_len = len(Developer.query.all())
             self.assertEqual(init_len + 1, changed_len)
             
             init_len = changed_len
-            db.session.delete(developer2)
+            db.session.delete(developer3)
             db.session.commit()
             changed_len = len(Developer.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    def test_get_Developer1(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.developers_url+"/"+str(81), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Developer).get(81)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['img'], db_res.image)
+            
+    def test_get_Developer2(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.developers_url+"/"+str(101), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Developer).get(101)
+            
+            self.assertEqual(json_res['name'], db_res.name)
+            self.assertEqual(json_res['desc'], db_res.desc)
+            self.assertEqual(json_res['website'], db_res.website)
             
     #----------
     # Mechanic
@@ -288,7 +376,7 @@ class TestAPI(TestCase):
     def test_add_Event1(self):
         
         with app.test_request_context():
-            event1 = Event(id=1000000, name="event1", desc="This is a test event.",
+            event1 = Event(id=1000000, name="event1", desc="This is a test event.", raw_desc="Test event",
                            location="event_location", link="www.test_link.com", time=datetime(1864,2,4,0,0))
             db.session.add(event1)
             db.session.commit()
@@ -297,6 +385,7 @@ class TestAPI(TestCase):
             self.assertEqual(gamequery.id, 1000000)
             self.assertEqual(gamequery.name, "event1")
             self.assertEqual(gamequery.desc, "This is a test event.")
+            self.assertEqual(gamequery.raw_desc, "Test event")
             
             db.session.delete(event1)
             db.session.commit()
@@ -304,7 +393,7 @@ class TestAPI(TestCase):
     def test_add_Event2(self):
         
         with app.test_request_context():
-            event2 = Event(id=1000000, name="event2", desc="This is a test event 2.",
+            event2 = Event(id=1000000, name="event2", desc="This is a test event 2.", raw_desc="Test event 2",
                            location="event_location2", link="www.test_link2.com", time=datetime(1980,1,1,5,4))
             db.session.add(event2)
             db.session.commit()
@@ -332,6 +421,29 @@ class TestAPI(TestCase):
             db.session.commit()
             changed_len = len(Event.query.all())
             self.assertEqual(init_len - 1, changed_len)
+            
+    def test_get_Event1(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.events_url+"/"+str(323), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Event).get(323)
+            
+            self.assertEqual(json_res['id'], db_res.id)
+            self.assertEqual(json_res['name'], db_res.name)
+            self.assertEqual(json_res['desc'], db_res.desc)
+            
+    def test_get_Event2(self):
+    
+        with app.test_request_context():
+            res = requests.get(self.events_url+"/"+str(387), headers=self.headers)
+            self.assertEqual(res.status_code, 200)
+            json_res = json.loads(res.text)
+            db_res = db.session.query(Event).get(387)
+            
+            self.assertEqual(json_res['location'], db_res.location)
+            self.assertEqual(json_res['link'], db_res.link)
     
 
 if __name__ == "__main__":
