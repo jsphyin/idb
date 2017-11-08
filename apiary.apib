@@ -14,56 +14,85 @@ These call provide information for the specific games in our database.
 + Response 200 (application/json)
 
     
-        [
+        {
+          "page": 1, 
+          "results": [
             {
-                "alt_names": [], 
-                "artists": [
-                    [
-                        12517, 
-                        "Marcus Gschwendtner"
-                    ]
+              "alt_names": [], 
+              "artists": [
+                [
+                  87934, 
+                  "Anton Khozyaenko"
+                ]
+              ], 
+              "desc": "1% is a deckbuilding game where not only are you building your deck collecting point and/or useful card while also trying to take over sites that give you powerful abilities. Collecting three of these sites instantly wins the game so players must be aware, battle opponent's crew, and interact more than your usual deckbuilder. &#10;A drafting mechanic while setting up allows you to customize your gang members prior to play so you feel like you have actually customized your crew from actual strategy and choice.&#10;&#10;", 
+              "developers": [
+                [
+                  87933, 
+                  "Bryan M. Simmons"
+                ]
+              ], 
+              "families": [
+                [
+                  8374, 
+                  "Crowdfunding: Kickstarter"
                 ], 
-                "desc": "Die Macher is a game ...", 
-                "developers": [
-                    [
-                        1, 
-                        "Karl-Heinz Schmiel"
-                    ]
+                [
+                  22184, 
+                  "Admin: Unreleased Games"
+                ]
+              ], 
+              "genres": [
+                [
+                  1002, 
+                  "Card Game"
+                ]
+              ], 
+              "id": 190608, 
+              "img": "https://cf.geekdo-images.com/images/pic2826605.png", 
+              "is_expansion": false, 
+              "max_players": 8, 
+              "mechanics": [
+                [
+                  2015, 
+                  "Variable Player Powers"
                 ], 
-                "families": [
-                    [
-                        91, 
-                        "Valley Games Classic Line"
-                    ], ...
+                [
+                  2040, 
+                  "Hand Management"
                 ], 
-                "genres": [
-                    [
-                        1001, 
-                        "Political"
-                    ], ...
+                [
+                  2041, 
+                  "Card Drafting"
                 ], 
-                "id": 1, 
-                "img": "https://cf.geekdo-images.com/images/pic159509.jpg", 
-                "is_expansion": false, 
-                "max_players": 5, 
-                "mechanics": [
-                    [
-                        2012, 
-                        "Auction/Bidding"
-                    ], ...
+                [
+                  2072, 
+                  "Dice Rolling"
                 ], 
-                "min_players": 3, 
-                "name": "Die Macher", 
-                "publishers": [
-                    [
-                        2, 
-                        "Moskito Spiele"
-                    ], ...
+                [
+                  2080, 
+                  "Area Control / Area Influence"
                 ], 
-                "rating": 7.65648, 
-                "year": 1986
-            }, ...
-        ]
+                [
+                  2664, 
+                  "Deck / Pool Building"
+                ], 
+                [
+                  2686, 
+                  "Take That"
+                ]
+              ], 
+              "min_players": 1, 
+              "name": "1%", 
+              "publishers": [
+                [
+                  31326, 
+                  "Rolling Outlaw Games"
+                ]
+              ], 
+              "rating": 10.0, 
+              "year": 0
+        }, ...
 
         
 ### Show Data for One Game [GET /api/game/{id}]
@@ -123,36 +152,39 @@ These call provide information for the specific games in our database.
             "year": 1986
         }
 
+### Show All Board Game Names[GET /api/game/names]
+
++ Response 200 (application/json)
+
+        [
+          [
+            1, 
+            "Die Macher"
+          ],...
+        ]
+
 
 ## Developers [/api/developers]
 
-These callsprovide information about the board game developers in our database.
+These calls provide information about the board game developers in our database.
 
 ### List All Developers [GET] 
 
 + Response 200 (application/json)
 
-        [
-            {
-                "desc": "<p><strong>Karl-Heinz Schmiel</strong> (born November 28, 1948) ...", 
-                "games": [
-                    [
-                        1, 
-                        "Die Macher"
-                    ], ...
-                ], 
-                "genres": [
-                    [
-                        1001, 
-                        "Political"
-                    ], ...
-                ], 
-                "id": 1, 
-                "img": "https://cf.geekdo-images.com/images/pic477390_t.jpg", 
-                "name": "Karl-Heinz Schmiel", 
-                "website": "http://..."
-            }, ...
-        ]
+        {
+              "page": 1, 
+              "results": [
+                {
+                  "desc": null, 
+                  "games": [], 
+                  "genres": [], 
+                  "id": 8996, 
+                  "img": "https://cf.geekdo-images.com/images/pic1657690_t.jpg", 
+                  "name": "\"Eclaireur\"", 
+                  "website": null
+                },...
+        }
 
         
 ### Show Data for One Developer [GET /api/developer/{id}]
@@ -183,6 +215,16 @@ These callsprovide information about the board game developers in our database.
             "website": "http://..."
         }  
 
+### Show All Developers Names[GET /api/developers/names]
+
++ Response 200 (application/json)
+
+        [
+          [
+            1, 
+            "Karl-Heinz Schmiel"
+          ],...
+        ]
 
 
 ## Genres [/api/genres]
@@ -193,27 +235,31 @@ These calls provide data of all the genres that our games fall under.
 
 + Response 200 (application/json)
 
-        [
-            {
-                "desc": "<p><em>Political</em> games encourage ...", 
-                "developers": [
-                    [
-                        1, 
-                        "Karl-Heinz Schmiel"
-                    ], ...
-                ], 
-                "events": [], 
-                "games": [
-                    [
-                        1, 
-                        "Die Macher"
-                    ], ..
-                ], 
-                "id": 1001, 
-                "img": "https://cf.geekdo-images.com/images/pic1657689_t.jpg", 
-                "name": "Political"
-            }, ...
-        ]
+        {
+            "page": 1, 
+            "results":
+            [
+                {
+                    "desc": "<p><em>Political</em> games encourage ...", 
+                    "developers": [
+                        [
+                            1, 
+                            "Karl-Heinz Schmiel"
+                        ], ...
+                    ], 
+                    "events": [], 
+                    "games": [
+                        [
+                            1, 
+                            "Die Macher"
+                        ], ..
+                    ], 
+                    "id": 1001, 
+                    "img": "https://cf.geekdo-images.com/images/pic1657689_t.jpg", 
+                    "name": "Political"
+                }, ...
+            ]
+        }
 
 
 ### Show Data for One Genre [GET /api/genre/{id}]
@@ -244,6 +290,16 @@ These calls provide data of all the genres that our games fall under.
             "name": "Political"
         }
 
+### Show All Genres Names[GET /api/genres/names]
+
++ Response 200 (application/json)
+
+        [
+          [
+            1001, 
+            "Political"
+          ],...
+        ]
 
 ## Events [/api/events]
 
@@ -253,7 +309,9 @@ These calls provide information about the board game events in our database.
 
 + Response 200 (application/json)
 
-        [
+        {
+            "page": 1, 
+            "results":[
             {
                 "desc": "<p>Come and join us ...", 
                 "games": [], 
@@ -270,7 +328,8 @@ These calls provide information about the board game events in our database.
                 "name": "SA Board Gamers Thursday night gaming", 
                 "time": "Thu, 26 Oct 2017 18:00:00 GMT"
             }, ...
-        ]
+            ]
+        }
         
         
 ### Show Data for One Event [GET /api/event/{id}]
@@ -297,6 +356,17 @@ These calls provide information about the board game events in our database.
             "name": "SA Board Gamers Thursday night gaming", 
             "time": "Thu, 26 Oct 2017 18:00:00 GMT"
         }
+
+### Show All Events Names[GET /api/events/names]
+
++ Response 200 (application/json)
+
+        [
+          [
+            1, 
+            "SA Board Gamers Thursday night gaming"
+          ],...
+        ]
         
 ## Search [/api/search/{attribute1}={val1}&{attribute2}={val2}...]
 
