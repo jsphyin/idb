@@ -2,7 +2,8 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+	Redirect
 } from 'react-router-dom'
 
 import NavBar    from './components/NavBar';
@@ -15,20 +16,21 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <div id="wrapper" class="container-fluid">
+                <div id="wrapper" className="container-fluid">
                     <NavBar />
                     <Route exact path='/' component={Home}/>
                     <Route path='/about' component={About}/>
-
-                    <Route path='/game/:id' component={(props) => (<Model {...props} name="Games"/>)}/>
-                    <Route path='/genre/:id' component={(props) => (<Model {...props} name="Genres"/>)}/>
-                    <Route path='/developer/:id' component={(props) => (<Model {...props} name="Developers"/>)}/>
-                    <Route path='/event/:id' component={(props) => (<Model {...props} name="Events"/>)}/>
 
                     <Route path='/games' component={(props) => (<ModelGrid {...props} name="Games"/>)}/>
                     <Route path='/genres' component={(props) => (<ModelGrid {...props} name="Genres"/>)}/>
                     <Route path='/developers' component={(props) => (<ModelGrid {...props} name="Developers"/>)}/>
                     <Route path='/events' component={(props) => (<ModelGrid {...props} name="Events"/>)}/>
+
+                    <Route path='/game/:id' component={(props) => (<Model {...props} name="Games"/>)}/>
+                    <Route path='/boardgame/:id/:name' render={( {match} ) => (<Redirect to={"/game/" + match.params.id}/>)}/>
+					<Route path='/genre/:id' component={(props) => (<Model {...props} name="Genres"/>)}/>
+                    <Route path='/developer/:id' component={(props) => (<Model {...props} name="Developers"/>)}/>
+                    <Route path='/event/:id' component={(props) => (<Model {...props} name="Events"/>)}/>
 
                 </div>
             </Router>
@@ -36,7 +38,4 @@ class App extends React.Component {
     }
 }
 
-/*
-    <Route path='/about' component={About}/>
-*/
 export default App;
