@@ -54,6 +54,7 @@ class Model extends React.Component {
         }
 
         var attrib = <div></div>
+        var desc = model.desc == null ? (<div>No Description</div>) : (<p dangerouslySetInnerHTML={{__html: model.desc}} />)
         switch(this.props.name) {
             case "Games":
                 var devs = <div>Unknown Developer</div>;
@@ -74,7 +75,7 @@ class Model extends React.Component {
 
                 var arts = <div>Unknown Artist</div>;
                 if (model.artists.length > 0) {
-                    arts = []
+                    arts = [] 
                     for(var i = 0; i < model.artists.length; i++) {
                         arts.push(<li key={i}>Art done by {model.artists[i][1]}</li>);
                     }
@@ -118,7 +119,9 @@ class Model extends React.Component {
                             {names}
                         </ul>
                         <h3>Description</h3>
-                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <ul className='model-instance-attribute'>
+                            {desc}
+                        </ul>
                         <h3>Release Information</h3>
                         <ul className='model-instance-attribute'>
                             <li>Released in {model.year}</li>
@@ -171,7 +174,9 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <ul className='model-instance-attribute'>
+                            {desc}
+                        </ul>
                         <h3>Notable Developers</h3>
                         <ul className='model-instance-attribute'>
                             <li>{devs}</li>
@@ -212,7 +217,9 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <ul className='model-instance-attribute'>
+                            {desc}
+                        </ul>
                         <h3>Games</h3>
                         <ul className='model-instance-attribute'>
                             {games}
@@ -242,7 +249,9 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <ul className='model-instance-attribute'>
+                            {desc}
+                        </ul>
                         <h3>Meetup Information</h3>
                         <ul className='model-instance-attribute'>
                             <li>Time: {model.time}</li>

@@ -23,8 +23,8 @@ import {
 const badge = {
     'game': 'success',
     'genre': 'danger',
-    'developers': 'dark',
-    'events': 'primary'
+    'developer': 'dark',
+    'event': 'primary'
 };
 
 const grab_radius = 15
@@ -74,19 +74,45 @@ class Search extends React.Component {
         return query;
     }
 
-    grab_words(text, width, offset=0) {
-        var words = text.split(/\s+/)
-        return words.slice(offset, offset + width).join(' ') + (words.length > 30 ? '...' : '')
+    grab_words(words, offset, width=2*grab_radius) {
+        if(words.length == 0) {
+            return ''
+        }
+        width = Math.min(words.length, width)
+        var contains_react = false
+        for(var i = offset; i < offset + width; i++) {
+            if(typeof words[i] !== 'string') {
+                contains_react = true
+                break
+            }
+        }
+        var slice = words.slice(offset, offset + width)
+        if(slice.length == 0 || slice == null) {
+            return ''
+        }
+        if(contains_react) {
+            return (
+                <div>
+                    {slice.map((t, i) => <span key={i}>{t}</span>)
+                        .reduce((accu, elem) => {
+                            return accu === null ? [elem] : [...accu, ' ', elem]
+                        }, null)}
+                </div>
+            )
+        } else {
+            return slice.join(' ')
+        }
     }
 
-    highlight_text(text, word, radius=grab_radius) {
-        var words = text.split(/\s+/)
-        var index = -1;
-        var complete_word = ''
+    highlight_word(words, word) {
+        if(words == null) {
+            return false
+        }
         for(var i = 0; i < words.length; i++) {
-            if(words[i].toLowerCase().indexOf(word.toLowerCase()) != -1) {
+            if(typeof words[i] === 'string'
+                && words[i].toLowerCase().indexOf(word.toLowerCase()) != -1) {
                 var idx = words[i].toLowerCase().indexOf(word.toLowerCase())
-                complete_word = (
+                words[i] = (
                     <span>
                         {words[i].substring(0, idx)}
                         <span style={{backgroundColor: 'yellow'}}>
@@ -95,32 +121,36 @@ class Search extends React.Component {
                         {words[i].substring(idx + word.length, words[i].length)}
                     </span>
                 )
-                index = i;
-                break;
+                return true
             }
         }
-        if(index == -1) {
-            return -1
-        }
-        // Move back at most radius
-        var b     = Math.max(index - radius, 0)
-        // Move forward at most radius
-        var e     = Math.min(index + radius, words.length)
-        // If forward direction didn't move radius, add extra here
-        var begin = Math.max(b - (radius - (e - index)), 0)
-        // If backward direction didn't move radius, add extra here
-        var end   = Math.min(e + (radius - (index - b)), words.length)
+        return false
+    }
 
-        // Grab words from before
-        var before = (begin == 0 ? '' : '...') + words.slice(begin,index).join(' ') + ' '
-        var after = ' ' + words.slice(index + 1, end).join(' ') + (end == words.length ? '' : '...')
-        return (
-            <p>
-                <span>{before}</span>
-                {complete_word}
-                <span>{after}</span>
-            </p>
-        );
+    assemble_words_list(list) {
+        if(list == null) {
+            return {found: false, text: ''}
+        }
+        for(var i = 0; i < list.length; i++) {
+            list[i] = this.assemble_words(list[i]).text
+        }
+        return this.assemble_words(list, 7)
+    }
+
+    assemble_words(words, width=15) {
+        if(words == null) {
+            return {found: false, text: ''}
+        }
+        var idx = -1
+        for(var i = 0; i < words.length; i++) {
+            if(typeof words[i] !== 'string') {
+                idx = i
+                break
+            }
+        }
+
+        var grabbed_words = this.grab_words(words, idx == -1 ? 0 : Math.max(idx - width, 0), 2 * width)
+        return {found: idx != -1, text: idx != -1 ? (<span>{grabbed_words}</span>) : grabbed_words}
     }
 
     fetch_page(page_number, force_fetch = false) {
@@ -150,7 +180,7 @@ class Search extends React.Component {
             // Set URL
             this.props.history.push('/search' + query);
             this.state.loading = true;
-            let words = this.state.query.split(/\s+/)
+            let words = this.state.query.split('+')
 
             // Fetch new grid model data
             fetch('/api/search' + query, {method: 'GET'})
@@ -167,34 +197,47 @@ class Search extends React.Component {
                             .then(j => {
                                 var instance = {
                                     type: json.results[i].type,
-                                    name: j.name,
+                                    name: j.name.split(/\s+/),
                                     img: j.img,
                                     id: json.results[i].id,
-                                    attributes: []
+                                    desc: '',
+                                    alt_names: [],
+                                    link: 'link' in j ? [j.link] : ('website' in j ? [j.website] : '')
                                 }
-                                var raw_desc = j.desc == null ? '' : j.desc.replace(/<[^>]*>/g,' ')
+
+                                instance.desc = j.desc == null ? '' : j.desc.replace(/<[^>]*>/g,' ')
                                 var elem = document.createElement('textarea');
-                                elem.innerHTML = raw_desc;
-                                raw_desc = elem.value;
-                                instance['desc'] = this.grab_words(raw_desc, 0, 2 * grab_radius)
+                                elem.innerHTML = instance.desc;
+                                instance.desc = elem.value.split(/\s+/);
+
+                                if('alt_names' in j) {
+                                    for(var k = 0; k < j.alt_names.length; k++) {
+                                        instance.alt_names[k] = j.alt_names[k].split(/\s+/)
+                                    }
+                                }
+
                                 for(var k = 0; k < words.length; k++) {
                                     let word = words[k];
-                                    let desc_highlight = this.highlight_text(raw_desc, word);
-                                    if(desc_highlight != -1) {
-                                        instance.attributes.push(desc_highlight)
-                                    }
+                                    while(this.highlight_word(instance.name, word));
+                                    while(this.highlight_word(instance.desc, word));
                                     switch(json.results[i].type) {
                                         case "game":
-                                            //alt_names
+                                            for(var l = 0; l < instance.alt_names.length; l++) {
+                                                while(this.highlight_word(instance.alt_names[l], word));
+                                            }
                                             break;
                                         case "developer":
-                                            //website
-                                            break;
                                         case "event":
-                                            //link
+                                            while(this.highlight_word(instance.link, word));
                                             break;
                                     }
                                 }
+
+                                instance.name = this.assemble_words(instance.name)
+                                instance.desc = this.assemble_words(instance.desc)
+                                instance.alt_names = this.assemble_words_list(instance.alt_names)
+                                instance.link = this.assemble_words(instance.link)
+
                                 models[i] = instance
                                 count += 1
                                 if(count == json.results.length) {
@@ -222,12 +265,22 @@ class Search extends React.Component {
         var rows = []
         for(var i = 0; i < this.state.models.length; i++) {
             var model = this.state.models[i];
-            if(model.attributes.length == 0) {
-                rows.push(<p>{model.desc}</p>)
+            if(model.name.found || model.desc.found) {
+                if(model.desc.text === '') {
+                    rows.push(<p>No Description</p>)
+                } else {
+                    rows.push(<p>{model.desc.text}</p>)
+                }
+            } else if (model.alt_names.found) {
+                rows.push(<p>{model.alt_names.text}</p>)
+            } else if (model.link.found) {
+                rows.push(<p>{model.link.text}</p>)
             } else {
-                rows.push(model.attributes.map(function(context, i) {
-                    return <p key={i}>{context}</p>
-                }));
+                if(model.desc.text === '') {
+                    rows.push(<p>No Description</p>)
+                } else {
+                    rows.push(<p>{model.desc.text}</p>)
+                }
             }
         }
 
@@ -271,12 +324,12 @@ class Search extends React.Component {
                                 <Card className='search-model'>
                                     <CardHeader>
                                         <Row>
-                                        <Col>
+                                        <Col sm='10'>
                                             <Link to={'/' + model.type + '/' + model.id}>
-                                                <h4><span className='align-middle'>{model.name}</span></h4>
+                                                <h4><span className='align-middle'>{model.name.text}</span></h4>
                                             </Link>
                                         </Col>
-                                        <Col className='text-right'>
+                                        <Col className='text-right' sm='2'>
                                             <Link to={'/' + model.type + 's'}>
                                                 <Badge style={{textAlign: 'right'}} color={badge[model.type]}><h4>{model.type}</h4></Badge>
                                             </Link>

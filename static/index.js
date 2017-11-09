@@ -40264,6 +40264,11 @@ var Model = function (_React$Component) {
             }
 
             var attrib = _react2.default.createElement('div', null);
+            var desc = model.desc == null ? _react2.default.createElement(
+                'div',
+                null,
+                'No Description'
+            ) : _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: model.desc } });
             switch (this.props.name) {
                 case "Games":
                     var devs = _react2.default.createElement(
@@ -40406,7 +40411,11 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'model-instance-attribute' },
+                            desc
+                        ),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -40541,7 +40550,11 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'model-instance-attribute' },
+                            desc
+                        ),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -40648,7 +40661,11 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'model-instance-attribute' },
+                            desc
+                        ),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -40720,7 +40737,11 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'model-instance-attribute' },
+                            desc
+                        ),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -41782,6 +41803,8 @@ var _reactstrap = require('reactstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -41791,8 +41814,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var badge = {
     'game': 'success',
     'genre': 'danger',
-    'developers': 'dark',
-    'events': 'primary'
+    'developer': 'dark',
+    'event': 'primary'
 };
 
 var grab_radius = 15;
@@ -41855,24 +41878,52 @@ var Search = function (_React$Component) {
         }
     }, {
         key: 'grab_words',
-        value: function grab_words(text, width) {
-            var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        value: function grab_words(words, offset) {
+            var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 2 * grab_radius;
 
-            var words = text.split(/\s+/);
-            return words.slice(offset, offset + width).join(' ') + (words.length > 30 ? '...' : '');
+            if (words.length == 0) {
+                return '';
+            }
+            width = Math.min(words.length, width);
+            var contains_react = false;
+            for (var i = offset; i < offset + width; i++) {
+                if (typeof words[i] !== 'string') {
+                    contains_react = true;
+                    break;
+                }
+            }
+            var slice = words.slice(offset, offset + width);
+            if (slice.length == 0 || slice == null) {
+                return '';
+            }
+            if (contains_react) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    slice.map(function (t, i) {
+                        return _react2.default.createElement(
+                            'span',
+                            { key: i },
+                            t
+                        );
+                    }).reduce(function (accu, elem) {
+                        return accu === null ? [elem] : [].concat(_toConsumableArray(accu), [' ', elem]);
+                    }, null)
+                );
+            } else {
+                return slice.join(' ');
+            }
         }
     }, {
-        key: 'highlight_text',
-        value: function highlight_text(text, word) {
-            var radius = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : grab_radius;
-
-            var words = text.split(/\s+/);
-            var index = -1;
-            var complete_word = '';
+        key: 'highlight_word',
+        value: function highlight_word(words, word) {
+            if (words == null) {
+                return false;
+            }
             for (var i = 0; i < words.length; i++) {
-                if (words[i].toLowerCase().indexOf(word.toLowerCase()) != -1) {
+                if (typeof words[i] === 'string' && words[i].toLowerCase().indexOf(word.toLowerCase()) != -1) {
                     var idx = words[i].toLowerCase().indexOf(word.toLowerCase());
-                    complete_word = _react2.default.createElement(
+                    words[i] = _react2.default.createElement(
                         'span',
                         null,
                         words[i].substring(0, idx),
@@ -41883,34 +41934,44 @@ var Search = function (_React$Component) {
                         ),
                         words[i].substring(idx + word.length, words[i].length)
                     );
-                    index = i;
+                    return true;
+                }
+            }
+            return false;
+        }
+    }, {
+        key: 'assemble_words_list',
+        value: function assemble_words_list(list) {
+            if (list == null) {
+                return { found: false, text: '' };
+            }
+            for (var i = 0; i < list.length; i++) {
+                list[i] = this.assemble_words(list[i]).text;
+            }
+            return this.assemble_words(list, 7);
+        }
+    }, {
+        key: 'assemble_words',
+        value: function assemble_words(words) {
+            var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 15;
+
+            if (words == null) {
+                return { found: false, text: '' };
+            }
+            var idx = -1;
+            for (var i = 0; i < words.length; i++) {
+                if (typeof words[i] !== 'string') {
+                    idx = i;
                     break;
                 }
             }
-            if (index == -1) {
-                return -1;
-            }
-            var b = Math.max(index - radius, 0);
-            var e = Math.min(index + radius, words.length);
-            var begin = Math.max(b - (radius - (e - index)), 0);
-            var end = Math.min(e + (radius - (index - b)), words.length);
-            var before = (begin == 0 ? '' : '...') + words.slice(begin, index).join(' ') + ' ';
-            var after = ' ' + words.slice(index + 1, end).join(' ') + (end == words.length ? '' : '...');
-            return _react2.default.createElement(
-                'p',
-                null,
-                _react2.default.createElement(
+
+            var grabbed_words = this.grab_words(words, idx == -1 ? 0 : Math.max(idx - width, 0), 2 * width);
+            return { found: idx != -1, text: idx != -1 ? _react2.default.createElement(
                     'span',
                     null,
-                    before
-                ),
-                complete_word,
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    after
-                )
-            );
+                    grabbed_words
+                ) : grabbed_words };
         }
     }, {
         key: 'fetch_page',
@@ -41944,7 +42005,7 @@ var Search = function (_React$Component) {
                 // Set URL
                 this.props.history.push('/search' + query);
                 this.state.loading = true;
-                var words = this.state.query.split(/\s+/);
+                var words = this.state.query.split('+');
 
                 // Fetch new grid model data
                 fetch('/api/search' + query, { method: 'GET' }).then(function (response) {
@@ -41962,34 +42023,47 @@ var Search = function (_React$Component) {
                         }).then(function (j) {
                             var instance = {
                                 type: json.results[i].type,
-                                name: j.name,
+                                name: j.name.split(/\s+/),
                                 img: j.img,
                                 id: json.results[i].id,
-                                attributes: []
+                                desc: '',
+                                alt_names: [],
+                                link: 'link' in j ? [j.link] : 'website' in j ? [j.website] : ''
                             };
-                            var raw_desc = j.desc == null ? '' : j.desc.replace(/<[^>]*>/g, ' ');
+
+                            instance.desc = j.desc == null ? '' : j.desc.replace(/<[^>]*>/g, ' ');
                             var elem = document.createElement('textarea');
-                            elem.innerHTML = raw_desc;
-                            raw_desc = elem.value;
-                            instance['desc'] = _this2.grab_words(raw_desc, 0, 2 * grab_radius);
+                            elem.innerHTML = instance.desc;
+                            instance.desc = elem.value.split(/\s+/);
+
+                            if ('alt_names' in j) {
+                                for (var k = 0; k < j.alt_names.length; k++) {
+                                    instance.alt_names[k] = j.alt_names[k].split(/\s+/);
+                                }
+                            }
+
                             for (var k = 0; k < words.length; k++) {
                                 var word = words[k];
-                                var desc_highlight = _this2.highlight_text(raw_desc, word);
-                                if (desc_highlight != -1) {
-                                    instance.attributes.push(desc_highlight);
-                                }
+                                while (_this2.highlight_word(instance.name, word)) {}
+                                while (_this2.highlight_word(instance.desc, word)) {}
                                 switch (json.results[i].type) {
                                     case "game":
-                                        //alt_names
+                                        for (var l = 0; l < instance.alt_names.length; l++) {
+                                            while (_this2.highlight_word(instance.alt_names[l], word)) {}
+                                        }
                                         break;
                                     case "developer":
-                                        //website
-                                        break;
                                     case "event":
-                                        //link
+                                        while (_this2.highlight_word(instance.link, word)) {}
                                         break;
                                 }
                             }
+
+                            instance.name = _this2.assemble_words(instance.name);
+                            instance.desc = _this2.assemble_words(instance.desc);
+                            instance.alt_names = _this2.assemble_words_list(instance.alt_names);
+                            instance.link = _this2.assemble_words(instance.link);
+
                             models[i] = instance;
                             count += 1;
                             if (count == json.results.length) {
@@ -42024,20 +42098,46 @@ var Search = function (_React$Component) {
             var rows = [];
             for (var i = 0; i < this.state.models.length; i++) {
                 var model = this.state.models[i];
-                if (model.attributes.length == 0) {
+                if (model.name.found || model.desc.found) {
+                    if (model.desc.text === '') {
+                        rows.push(_react2.default.createElement(
+                            'p',
+                            null,
+                            'No Description'
+                        ));
+                    } else {
+                        rows.push(_react2.default.createElement(
+                            'p',
+                            null,
+                            model.desc.text
+                        ));
+                    }
+                } else if (model.alt_names.found) {
                     rows.push(_react2.default.createElement(
                         'p',
                         null,
-                        model.desc
+                        model.alt_names.text
+                    ));
+                } else if (model.link.found) {
+                    rows.push(_react2.default.createElement(
+                        'p',
+                        null,
+                        model.link.text
                     ));
                 } else {
-                    rows.push(model.attributes.map(function (context, i) {
-                        return _react2.default.createElement(
+                    if (model.desc.text === '') {
+                        rows.push(_react2.default.createElement(
                             'p',
-                            { key: i },
-                            context
-                        );
-                    }));
+                            null,
+                            'No Description'
+                        ));
+                    } else {
+                        rows.push(_react2.default.createElement(
+                            'p',
+                            null,
+                            model.desc.text
+                        ));
+                    }
                 }
             }
 
@@ -42137,7 +42237,7 @@ var Search = function (_React$Component) {
                                             null,
                                             _react2.default.createElement(
                                                 _reactstrap.Col,
-                                                null,
+                                                { sm: '10' },
                                                 _react2.default.createElement(
                                                     _reactRouterDom.Link,
                                                     { to: '/' + model.type + '/' + model.id },
@@ -42147,14 +42247,14 @@ var Search = function (_React$Component) {
                                                         _react2.default.createElement(
                                                             'span',
                                                             { className: 'align-middle' },
-                                                            model.name
+                                                            model.name.text
                                                         )
                                                     )
                                                 )
                                             ),
                                             _react2.default.createElement(
                                                 _reactstrap.Col,
-                                                { className: 'text-right' },
+                                                { className: 'text-right', sm: '2' },
                                                 _react2.default.createElement(
                                                     _reactRouterDom.Link,
                                                     { to: '/' + model.type + 's' },
