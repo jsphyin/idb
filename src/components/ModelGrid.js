@@ -371,7 +371,7 @@ class ModelGrid extends React.Component {
                             </Row>
                         </CardHeader>
                         <CardBody>
-                            <Row>
+                            <Row className="justify-content-md-center">
                                 <Col sm='auto'>
                                     <Dropdown isOpen={this.state.filterOpen} toggle={this.filter_toggle.bind(this)}>
                                         <DropdownToggle color='primary' caret>

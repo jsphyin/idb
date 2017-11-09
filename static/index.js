@@ -41374,7 +41374,7 @@ var ModelGrid = function (_React$Component) {
                             null,
                             _react2.default.createElement(
                                 _reactstrap.Row,
-                                null,
+                                { className: 'justify-content-md-center' },
                                 _react2.default.createElement(
                                     _reactstrap.Col,
                                     { sm: 'auto' },
