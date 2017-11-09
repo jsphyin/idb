@@ -192,7 +192,9 @@ def api_search():
             ).label(models.SearchResult.score.name)
         )
         for m in (models.Game, models.Genre, models.Developer, models.Event)
-    )).order_by(models.SearchResult.score.desc())
+    )) \
+        .filter(models.SearchResult.score > 0) \
+        .order_by(models.SearchResult.score.desc(), models.SearchResult.type, models.SearchResult.id)
 
     return paginated(q)
 
