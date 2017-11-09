@@ -40856,10 +40856,6 @@ var ModelGrid = function (_React$Component) {
             loading: false,
             sort: { label: 'Name ↓', value: 'name' }
         };
-        _this.host = 'http://boardgamedb.me';
-        if (window.location.hostname === 'localhost') {
-            _this.host = '';
-        }
         _this.params = _this.parse_query(props.location.search);
         _this.params['per_page'] = 18;
         _this.model = props.name.toLowerCase();
@@ -40882,7 +40878,7 @@ var ModelGrid = function (_React$Component) {
 
         var _loop = function _loop(_i) {
             var filter = filters[_this.model][_i];
-            fetch(_this.host + '/api/' + filter.value + '/names', { method: 'GET' }).then(function (response) {
+            fetch('/api/' + filter.value + '/names', { method: 'GET' }).then(function (response) {
                 return response.json();
             }).then(function (json) {
                 var filter_options = [];
@@ -40981,11 +40977,11 @@ var ModelGrid = function (_React$Component) {
                 var query = this.gen_query(this.params);
 
                 // Set URL
-                this.props.history.push(this.host + '/' + this.model + query);
+                this.props.history.push('/' + this.model + query);
                 this.state.loading = true;
 
                 // Fetch new grid model data
-                fetch(this.host + '/api/' + this.model + query, { method: 'GET' }).then(function (response) {
+                fetch('/api/' + this.model + query, { method: 'GET' }).then(function (response) {
                     return response.json();
                 }).then(function (json) {
                     _this2.state.page = json.page;
@@ -41792,10 +41788,6 @@ var Search = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 
-        _this.host = 'http://boardgamedb.me';
-        if (window.location.hostname === 'localhost') {
-            _this.host = '';
-        }
         _this.params = _this.parse_query(props.location.search);
         _this.params['per_page'] = 9;
         _this.state = {
@@ -41874,11 +41866,11 @@ var Search = function (_React$Component) {
                 var query = this.gen_query(this.params);
 
                 // Set URL
-                this.props.history.push(this.host + '/search' + query);
+                this.props.history.push('/search' + query);
                 this.state.loading = true;
 
                 // Fetch new grid model data
-                fetch(this.host + '/api/search' + query, { method: 'GET' }).then(function (response) {
+                fetch('/api/search' + query, { method: 'GET' }).then(function (response) {
                     return response.json();
                 }).then(function (json) {
                     _this2.state.page = json.page;
@@ -41887,7 +41879,7 @@ var Search = function (_React$Component) {
                     var count = 0;
 
                     var _loop = function _loop(i) {
-                        fetch(_this2.host + '/api/' + json.results[i].type + 's/' + json.results[i].id, { method: 'GET' }).then(function (r) {
+                        fetch('/api/' + json.results[i].type + 's/' + json.results[i].id, { method: 'GET' }).then(function (r) {
                             return r.json();
                         }).then(function (j) {
                             j.type = json.results[i].type;
