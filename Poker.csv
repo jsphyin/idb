@@ -1,23 +1,37 @@
 Story Title,Estimate,Vote Started,Voting Duration,Avg Voting Time,Fastest,Slowest,Actual
-A user can view a list of all board games.,2,22/9/2017 03:22:18,0:03:32,0:01:41,anuragbakshi,josephyin,3
-A user can view a single game in more detail.,3,22/9/2017 03:25:52,0:02:28,0:01:59,josephyin,alexlo,3.5
-A user can view a list of all developers.,1,22/9/2017 03:28:20,0:02:50,0:01:01,anuragbakshi,quangduong,1.5
-A user can view a single developer in more detail.,1.5,22/9/2017 03:31:10,0:02:20,0:01:20,anuragbakshi,kledet,2
- A user can view a list of all genres.,1,22/9/2017 03:33:30,0:02:30,0:01:22,alexlo,josephyin,1.5
-A user can view a single genre in more detail.,1.5,22/9/2017 03:36:00,0:02:31,0:01:43,quangduong,josephyin,2
-A user can view a list of all events.,1,22/9/2017 03:38:31,0:02:27,0:01:34,kledet,alexlo,1.5
-A user can view a single event in more detail.,1.5,22/9/2017 03:40:58,0:02:55,0:01:19,alexlo,quangduong,2
-A user can navigate to a game's developer through the game's detail page.,0.5,22/9/2017 03:43:53,0:02:31,0:01:38,kledet,anuragbakshi,0.5
-A user can navigate to a game's genre through the game's detail page.,0.5,15/10/2017 03:05:13,0:03:21,0:02:51,josephyin,alexlo,0.5
-A user can navigate to game's detail page through an event's detail page.,0.5,15/10/2017 03:08:34,0:03:14,0:02:34,anuragbakshi,kledet,0.5
-A user can navigate to a genre's detail page through an event's detail page.,0.5,15/10/2017 03:11:48,0:03:50,0:02:12,quangduong,kledet,0.5
-A user can view new games that have been created.,3,15/10/2017 03:15:38,0:03:51,0:02:38,kledet,josephyin,5
-A developer can call and receive data about games from a RESTful API.,2,15/10/2017 03:19:29,0:03:38,0:02:22,anuragbakshi,alexlo,2.5
-A user can view new game developers that have made games.,2,15/10/2017 03:23:07,0:03:53,0:02:46,anuragbakshi,kledet,3
-A developer can call and receive data about game developers from a RESTful API.,2,15/10/2017 03:27:00,0:03:30,0:02:24,josephyin,quangduong,2.5
-A user can view new genres that have been created.,2,15/10/2017 03:30:30,0:03:54,0:02:59,quangduong,alexlo,3
-A developer can call and receive data about genres from a RESTful API.,2,15/10/2017 03:34:24,0:03:19,0:02:15,kledet,anuragbakshi,2.5
-A user can view new events that have been created.,2,15/10/2017 03:37:43,0:03:15,0:02:26,kledet,josephyin,2
-A developer can call and recieve data about events from a RESTful API.,2,15/10/2017 03:40:58,0:03:34,0:02:25,anuragbakshi,kledet,2.5
-,,,,,,,
-,,,,,,,
+A user can view a list of all board games.,2,22/9/2017 03:22,0:03:32,0:01:41,anuragbakshi,josephyin,3
+A user can view a single game in more detail.,3,22/9/2017 03:25,0:02:28,0:01:59,josephyin,alexlo,3.5
+A user can view a list of all developers.,1,22/9/2017 03:28,0:02:50,0:01:01,anuragbakshi,quangduong,1.5
+A user can view a single developer in more detail.,1.5,22/9/2017 03:31,0:02:20,0:01:20,anuragbakshi,kledet,2
+ A user can view a list of all genres.,1,22/9/2017 03:33,0:02:30,0:01:22,alexlo,josephyin,1.5
+A user can view a single genre in more detail.,1.5,22/9/2017 03:36,0:02:31,0:01:43,quangduong,josephyin,2
+A user can view a list of all events.,1,22/9/2017 03:38,0:02:27,0:01:34,kledet,alexlo,1.5
+A user can view a single event in more detail.,1.5,22/9/2017 03:40,0:02:55,0:01:19,alexlo,quangduong,2
+A user can navigate to a game's developer through the game's detail page.,0.5,22/9/2017 03:43,0:02:31,0:01:38,kledet,anuragbakshi,0.5
+A user can navigate to a game's genre through the game's detail page.,0.5,15/10/2017 03:05,0:03:21,0:02:51,josephyin,alexlo,0.5
+A user can navigate to game's detail page through an event's detail page.,0.5,15/10/2017 03:08,0:03:14,0:02:34,anuragbakshi,kledet,0.5
+A user can navigate to a genre's detail page through an event's detail page.,0.5,15/10/2017 03:11,0:03:50,0:02:12,quangduong,kledet,0.5
+A user can view new games that have been created.,3,15/10/2017 03:15,0:03:51,0:02:38,kledet,josephyin,5
+A developer can call and receive data about games from a RESTful API.,2,15/10/2017 03:19,0:03:38,0:02:22,anuragbakshi,alexlo,2.5
+A user can view new game developers that have made games.,2,15/10/2017 03:23,0:03:53,0:02:46,anuragbakshi,kledet,3
+A developer can call and receive data about game developers from a RESTful API.,2,15/10/2017 03:27,0:03:30,0:02:24,josephyin,quangduong,2.5
+A user can view new genres that have been created.,2,15/10/2017 03:30,0:03:54,0:02:59,quangduong,alexlo,3
+A developer can call and receive data about genres from a RESTful API.,2,15/10/2017 03:34,0:03:19,0:02:15,kledet,anuragbakshi,2.5
+A user can view new events that have been created.,2,15/10/2017 03:37,0:03:15,0:02:26,kledet,josephyin,2
+A developer can call and recieve data about events from a RESTful API.,2,15/10/2017 03:40,0:03:34,0:02:25,anuragbakshi,kledet,2.5
+A user can navigate through paginated games,3,29/10/2017 03:02,0:03:55,0:02:51,josephyin,quangduong,5
+A user can view games in a sorted order,2,29/10/2017 03:06,0:03:23,0:02:33,alexlo,quangduong,2
+A user can filter what games are shown,3,29/10/2017 03:09,0:03:12,0:02:30,kledet,anuragbakshi,2
+A user can search for particular games,5,29/10/2017 03:12,0:03:13,0:02:07,kledet,josephyin,5
+A user can navigate through paginated developers,3,29/10/2017 03:15,0:03:02,0:02:13,anuragbakshi,josephyin,5
+A user can view developers in a sorted order,2,29/10/2017 03:18,0:03:36,0:02:27,quangduong,alexlo,5
+A user can filter what developers are shown,3,29/10/2017 03:22,0:03:45,0:02:47,quangduong,kledet,2
+A user can search for particular developers,5,29/10/2017 03:26,0:03:28,0:02:31,alexlo,josephyin,5
+A user can navigate through paginated genres,3,29/10/2017 03:29,0:03:08,0:02:22,anuragbakshi,quangduong,3
+A user can view genres in a sorted order,2,29/10/2017 03:32,0:03:13,0:02:46,kledet,josephyin,2
+A user can filter what genres are shown,3,29/10/2017 03:35,0:03:25,0:02:41,quangduong,alexlo,3
+A user can search for particular genres,5,29/10/2017 03:39,0:03:46,0:02:57,anuragbakshi,alexlo,5
+A user can navigate through the pages of events,3,29/10/2017 03:43,0:03:44,0:02:04,kledet,alexlo,3
+A user can view events in a sorted order,2,29/10/2017 03:47,0:03:21,0:02:21,alexlo,quangduong,3
+A user can filter what events are shown,3,29/10/2017 03:51,0:03:32,0:02:45,josephyin,anuragbakshi,3
+A user can search for particular events,5,29/10/2017 03:54,0:03:05,0:02:45,josephyin,kledet,5
