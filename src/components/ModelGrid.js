@@ -86,10 +86,6 @@ class ModelGrid extends React.Component {
             loading: false,
             sort: {label: 'Name ↓', value: 'name'}
         };
-        this.host = 'http://boardgamedb.me';
-        if(window.location.hostname === 'localhost') {
-            this.host = '';
-        }
         this.params = this.parse_query(props.location.search)
         this.params['per_page'] = 18;
         this.model = props.name.toLowerCase()
@@ -111,7 +107,7 @@ class ModelGrid extends React.Component {
         this.fetch_page('page' in this.params ? this.params['page'] : 1);
         for(let i = 0; i < filters[this.model].length; i++) {
             let filter = filters[this.model][i]
-            fetch(this.host + '/api/' + filter.value + '/names', {method: 'GET'})
+            fetch('/api/' + filter.value + '/names', {method: 'GET'})
                 .then(response => response.json())
                 .then(json => {
                     var filter_options = []
@@ -193,11 +189,11 @@ class ModelGrid extends React.Component {
             let query = this.gen_query(this.params);
 
             // Set URL
-            this.props.history.push(this.host + '/' + this.model + query);
+            this.props.history.push('/' + this.model + query);
             this.state.loading = true;
 
             // Fetch new grid model data
-            fetch(this.host + '/api/' + this.model + query, {method: 'GET'})
+            fetch('/api/' + this.model + query, {method: 'GET'})
                 .then(response => response.json())
                 .then(json => {
                     this.state.page = json.page;

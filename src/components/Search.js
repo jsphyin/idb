@@ -17,20 +17,12 @@ import {
     CardSubtitle,
     Button,
     ButtonGroup,
-    Dropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
 } from 'reactstrap';
 
 class Search extends React.Component {
 
     constructor(props) {
         super(props)
-        this.host = 'http://boardgamedb.me';
-        if(window.location.hostname === 'localhost') {
-            this.host = '';
-        }
         this.params = this.parse_query(props.location.search)
         this.params['per_page'] = 9;
         this.state = {
@@ -97,11 +89,11 @@ class Search extends React.Component {
             let query = this.gen_query(this.params);
 
             // Set URL
-            this.props.history.push(this.host + '/search' + query);
+            this.props.history.push('/search' + query);
             this.state.loading = true;
 
             // Fetch new grid model data
-            fetch(this.host + '/api/search' + query, {method: 'GET'})
+            fetch('/api/search' + query, {method: 'GET'})
                 .then(response => response.json())
                 .then(json => {
                     this.state.page = json.page;
@@ -109,7 +101,7 @@ class Search extends React.Component {
                     this.models = []
                     var count = 0;
                     for(let i = 0; i < json.results.length; i++) {
-                        fetch(this.host + '/api/' + json.results[i].type + 's/' + json.results[i].id, {method: 'GET'})
+                        fetch('/api/' + json.results[i].type + 's/' + json.results[i].id, {method: 'GET'})
                             .then(r => r.json())
                             .then(j => {
                                 j.type = json.results[i].type
