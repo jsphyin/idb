@@ -3,6 +3,8 @@ from extensions import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.sql.expression import join, union_all
 
+import random
+
 game_family_assoc = db.Table('game_family_assoc',
     db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True),
     db.Column('family_id', db.Integer, db.ForeignKey('family.id'), primary_key=True)
@@ -240,10 +242,11 @@ class Event(db.Model):
 
     def json(self):
         image = 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'
-        if self.games:
-            image = self.games[0].image
-        elif self.genres:
-            image = self.genres[0].image
+        images = []
+        images.extend(game.image for game in self.games if game.image != image)
+        images.extend(genre.image for genre in self.genres if genre.image != image)
+        if images:
+            image = images[random.randrange(len(images))]
 
         return {'id': self.id,
                 'name': self.name,

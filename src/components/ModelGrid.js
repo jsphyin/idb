@@ -19,6 +19,7 @@ import {
     Button,
     ButtonGroup
 } from 'reactstrap';
+import MultiSelect from './MultiSelect'
 
 class ModelGrid extends React.Component {
     
@@ -28,81 +29,83 @@ class ModelGrid extends React.Component {
         document.title = this.props.name + " - BGDB";
         this.state = {
             models: [],
-            page: 1,
-            total_pages: 3
+            page: 0,
+            total_pages: Infinity,
+            filter_options: []
         };
         this.host = 'http://boardgamedb.me';
         if(window.location.hostname === 'localhost') {
             this.host = '';
         }
-        var query = props.location.search
-        var model = props.name.toLowerCase()
-        this.api_url = this.host + '/api/' + model + query;
-        this.url = this.host + '/' + model + query;
-        fetch(this.api_url, {method: 'GET'})
+        this.params = this.parse_query(props.location.search)
+        this.params['per_page'] = 18;
+        this.model = props.name.toLowerCase()
+        this.fetch_page('page' in this.params ? this.params['page'] : 1);
+        fetch(this.host + '/api/' + this.model + '/names', {method: 'GET'})
             .then(response => response.json())
             .then(json => {
-                this.setState({
-                    page: json.page,
-                    total_pages: json.total_pages,
-                    models: json.results
-                });
+                var filter_options = []
+                for(var i = 0; i < json.length; i++) {
+                    filter_options.push({
+                        label: json[i][1],
+                        value: json[i][0]
+                    });
+                }
+                this.state.filter_options = filter_options;
+                this.setState(this.state);
             });
     }
 
+    // Returns object with keys -> values
     parse_query(query) {
-        var params = [];
-        params = query.split('&')
-        for(var i = 0; i < params.length; i++) {
-            params[i] = params[i].split('=');
+        if(query === '') {
+            return [];
+        }
+        var params = {};
+        var query_params = query.slice(1, query.length).split('&')
+        for(var i = 0; i < query_params.length; i++) {
+            var param = query_params[i].split('=');
+            if(param.length > 1) {
+                params[param[0]] = param[1];
+            }
         }
         return params;
     }
 
+    // Generates query string
     gen_query(params) {
-        var query = '';
-        for(var i = 0; i < params.length; i++) {
+        var query = '?';
+        var keys = Object.keys(params);
+        for(var i = 0; i < keys.length; i++) {
             if(i > 0) {
                 query += '&';
             }
-            query += params[i][0] + '=' + params[i][1];
+            query += keys[i] + '=' + params[keys[i]];
         }
         return query;
     }
 
     fetch_page(page_number) {
-        if(this.state.page != page_number && page_number >= 1 && page_number <= this.state.total_pages) {
-            var api_url = this.api_url.split('?')
-            var url = this.url.split('?')
-            if(url.length > 1) {
-                var params = this.parse_query(url[1])
-                var found = false;
-                for(var i = 0; i < params.length; i++) {
-                    if(params[i][0] === 'page') {
-                        params[i][1] = page_number;
-                        found = true;
-                        break;
-                    }
-                }
-                if(!found) {
-                    api_url = this.api_url + '&page=' + page_number;
-                    this.props.history.push(this.url + '&page=' + page_number);
-                } else {
-                    api_url = api_url[0] + '?' + this.gen_query(params);
-                    this.props.history.push(url[0] + '?' + this.gen_query(params));
-                }
-            } else {
-                api_url = api_url[0] + '?page=' + page_number;
-                this.props.history.push(url[0] + '?page=' + page_number);
-            }
-            fetch(api_url, {method: 'GET'})
+        if(this.state.page != page_number && page_number >= 1
+            && page_number <= this.state.total_pages) {
+
+            // Set page number in params
+            this.params['page'] = page_number;
+
+            // Generate query
+            var query = this.gen_query(this.params);
+
+            // Set URL
+            this.props.history.push(this.host + '/' + this.model + query);
+
+            // Fetch new grid model data
+            fetch(this.host + '/api/' + this.model + query, {method: 'GET'})
                 .then(response => response.json())
                 .then(json => {
-                    this.setState({
-                        page: json.page,
-                        total_pages: json.total_pages,
-                        models: json.results
-                    });
+                    this.state.page = json.page;
+                    this.state.total_pages = json.total_pages;
+                    this.state.models = json.results;
+                    this.setState(this.state);
                 });
         }
     }
@@ -112,11 +115,15 @@ class ModelGrid extends React.Component {
             paddingTop: '20px'
         };
 
+        const page_footer = {
+            paddingBottom: '20px'
+        };
+
         const grid_model = {
             textAlign: 'center',
             margin: '20px',
             width: '300px',
-            height: '400px'
+            height: '440px'
         };
 
         const grid_model_img = {
@@ -218,27 +225,35 @@ class ModelGrid extends React.Component {
         }
         var pagination = (
             <ButtonGroup>
-            <Button color="secondary" onClick={() => this.fetch_page(1)}>{"<<"}</Button>
-            <Button color="secondary" onClick={() => this.fetch_page(this.state.page - 1)}>{"<"}</Button>
+            <Button color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(1)}>{"<<"}</Button>
+            <Button color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page - 1)}>{"<"}</Button>
             {pages.map(function(page, i) {
                 return (
-                    <Button key={i} color={this.state.page == page ? "primary" : "secondary"} onClick={() => this.fetch_page(page)}>{page}</Button>
+                    <Button key={i} color={this.state.page == page ? "link" : ""} onClick={() => this.fetch_page(page)}>{page}</Button>
                 );
             }, this)}
-            <Button color="secondary" onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
-            <Button color="secondary" onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
+            <Button color={this.state.page == this.state.total_pages ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
+            <Button color={this.state.page == this.state.total_pages ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
             </ButtonGroup>
         );
         return (
             <div className="container">
                 <div style={page_header}>
-                    <h2>{this.props.name}</h2>
-                    <Row>
-                        {pagination}
-                    </Row>
+                    <Card>
+                        <CardHeader>
+                            <Row className="justify-content-md-center">
+                                <h1>{this.props.name}</h1>
+                            </Row>
+                        </CardHeader>
+                        <Row className="justify-content-md-center">
+                            <Col>
+                                <MultiSelect options={this.state.filter_options} name="Banana" />
+                            </Col>
+                        </Row>
+                    </Card>
                 </div>
                 <section>
-                    <Row>
+                    <Row className="justify-content-md-center">
                     {this.state.models.map(function(model, i) {
                         return (
                                 <Card key={i} style={grid_model}>
@@ -254,6 +269,11 @@ class ModelGrid extends React.Component {
                     }, this)}
                     </Row>
                 </section>
+                <Row className="justify-content-md-center" style={page_footer}>
+                    <Col className="col-md-auto">
+                        {pagination}
+                    </Col>
+                </Row>
             </div>
         );
     }

@@ -224,7 +224,6 @@ class Model extends React.Component {
                     }
                 }
 
-
                 var website = <a href={model.website}>{model.website}</a>;
                 if (model.website === null) {
                     website = <li>No website</li>;
@@ -250,11 +249,15 @@ class Model extends React.Component {
                 );
                 break;
             case "Events":
-                var val = <div>No Games or Genres</div>
-                if (model.games.length > 0) {
-                    val = <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link>;
-                } else if(model.genres.length > 0) {
-                    val = <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
+                var val = []
+                for(var i = 0; i < model.games.length; i++) {
+                    val.push(<li key={i}><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                }
+                for(var i = 0; i < model.genres.length; i++) {
+                    val.push(<li key={i + model.games.length}><Link to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
+                }
+                if(val.length == 0) {
+                    val = <div>No Games or Genres</div>
                 }
                 attrib = (
                     <div>
@@ -268,7 +271,7 @@ class Model extends React.Component {
                         </ul>
                         <h3>Related Games or Genres</h3> 
                         <ul style={grid_model_attribute}>
-                            <li>{val}</li>
+                            {val}
                         </ul>
                     </div>
                 );
