@@ -52,27 +52,7 @@ class Model extends React.Component {
         if (model === null) { 
             return <div></div>;
         }
-        const page_header = {
-            paddingTop: '20px'
-        };
 
-        const grid_model = {
-            textAlign: 'center',
-            margin: '20px',
-        };
-
-        const grid_model_img = {
-            width: '100%',
-            height: '600px'
-        };
-
-        const grid_model_name = {
-            fontWeight: 'bold'
-        };
-
-        const grid_model_attribute = {
-            textAlign: 'left'
-        };
         var attrib = <div></div>
         switch(this.props.name) {
             case "Games":
@@ -134,30 +114,30 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Alternate Names</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             {names}
                         </ul>
                         <h3>Description</h3>
-                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Release Information</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             <li>Released in {model.year}</li>
                             {devs}
                             {pubs}
                             {arts}
                         </ul>
                         <h3>Genres and Mechanics</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             {gens}
                             {mechs}
                         </ul>
                         <h3>Play Information</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             <li>{model.min_players} - {model.max_players} Players</li>
                             <li>Rated {model.rating}/10</li>
                         </ul>
                         <h3>Board Game Families</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             {fams}
                         </ul>
                     </div>
@@ -191,17 +171,17 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Notable Developers</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             <li>{devs}</li>
                         </ul>
                         <h3>Notable Games</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             <li>{games}</li>
                         </ul>
                         <h3>Events</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             <li>{events}</li>
                         </ul>
                     </div>
@@ -232,17 +212,17 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Games</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             {games}
                         </ul>
                         <h3>Genres</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             {gens}
                         </ul>
                         <h3>Website Link</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             {website}
                         </ul>
                     </div>
@@ -262,15 +242,15 @@ class Model extends React.Component {
                 attrib = (
                     <div>
                         <h3>Description</h3>
-                        <p style={grid_model_attribute} dangerouslySetInnerHTML={{__html: model.desc}} />
+                        <p className='model-instance-attribute' dangerouslySetInnerHTML={{__html: model.desc}} />
                         <h3>Meetup Information</h3>
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             <li>Time: {model.time}</li>
                             <li>At {model.location}</li>
                             <li><a href={model.link}>Meetup Link</a></li>
                         </ul>
                         <h3>Related Games or Genres</h3> 
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-instance-attribute'>
                             {val}
                         </ul>
                     </div>
@@ -280,10 +260,10 @@ class Model extends React.Component {
         return (
             <div className="container">
                 <section>
-                    <Card style={grid_model}>
-                        <CardImg style={grid_model_img} src={model.img}/>
+                    <Card className='model-instance'>
+                        <CardImg className='model-instance-img' src={model.img}/>
                         <CardBody>
-                            <strong><h1 style={grid_model_name}>{model.name}</h1></strong>
+                            <strong><h1 className='model-name'>{model.name}</h1></strong>
                             {attrib}
                         </CardBody>
                     </Card>

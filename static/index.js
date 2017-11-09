@@ -36828,27 +36828,7 @@ var Model = function (_React$Component) {
             if (model === null) {
                 return _react2.default.createElement('div', null);
             }
-            var page_header = {
-                paddingTop: '20px'
-            };
 
-            var grid_model = {
-                textAlign: 'center',
-                margin: '20px'
-            };
-
-            var grid_model_img = {
-                width: '100%',
-                height: '600px'
-            };
-
-            var grid_model_name = {
-                fontWeight: 'bold'
-            };
-
-            var grid_model_attribute = {
-                textAlign: 'left'
-            };
             var attrib = _react2.default.createElement('div', null);
             switch (this.props.name) {
                 case "Games":
@@ -36980,7 +36960,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             names
                         ),
                         _react2.default.createElement(
@@ -36988,7 +36968,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -36996,7 +36976,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37014,7 +36994,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             gens,
                             mechs
                         ),
@@ -37025,7 +37005,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37049,7 +37029,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             fams
                         )
                     );
@@ -37123,7 +37103,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -37131,7 +37111,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37145,7 +37125,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37159,7 +37139,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37226,7 +37206,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -37234,7 +37214,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             games
                         ),
                         _react2.default.createElement(
@@ -37244,7 +37224,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             gens
                         ),
                         _react2.default.createElement(
@@ -37254,7 +37234,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             website
                         )
                     );
@@ -37298,7 +37278,7 @@ var Model = function (_React$Component) {
                             null,
                             'Description'
                         ),
-                        _react2.default.createElement('p', { style: grid_model_attribute, dangerouslySetInnerHTML: { __html: model.desc } }),
+                        _react2.default.createElement('p', { className: 'model-instance-attribute', dangerouslySetInnerHTML: { __html: model.desc } }),
                         _react2.default.createElement(
                             'h3',
                             null,
@@ -37306,7 +37286,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37336,7 +37316,7 @@ var Model = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-instance-attribute' },
                             val
                         )
                     );
@@ -37350,8 +37330,8 @@ var Model = function (_React$Component) {
                     null,
                     _react2.default.createElement(
                         _reactstrap.Card,
-                        { style: grid_model },
-                        _react2.default.createElement(_reactstrap.CardImg, { style: grid_model_img, src: model.img }),
+                        { className: 'model-instance' },
+                        _react2.default.createElement(_reactstrap.CardImg, { className: 'model-instance-img', src: model.img }),
                         _react2.default.createElement(
                             _reactstrap.CardBody,
                             null,
@@ -37360,7 +37340,7 @@ var Model = function (_React$Component) {
                                 null,
                                 _react2.default.createElement(
                                     'h1',
-                                    { style: grid_model_name },
+                                    { className: 'model-name' },
                                     model.name
                                 )
                             ),
@@ -37405,6 +37385,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var filters = {
+    'games': ['developers', 'genres'],
+    'genres': ['games', 'developers'],
+    'developers': ['games', 'genres'],
+    'events': ['games', 'genres', 'location']
+};
+
+var sorts = {
+    'games': ['Name Ascending', 'Name Descending', 'Year Ascending', 'Year Descending'],
+    'genres': ['Name Ascending', 'Name Descending'],
+    'developers': ['Name Ascending', 'Name Descending'],
+    'events': ['Name Ascending', 'Name Descending', 'Date Ascending', 'Date Descending']
+};
 
 var ModelGrid = function (_React$Component) {
     _inherits(ModelGrid, _React$Component);
@@ -37513,33 +37507,6 @@ var ModelGrid = function (_React$Component) {
         value: function render() {
             var _this3 = this;
 
-            var page_header = {
-                paddingTop: '20px'
-            };
-
-            var page_footer = {
-                paddingBottom: '20px'
-            };
-
-            var grid_model = {
-                textAlign: 'center',
-                margin: '20px',
-                width: '300px',
-                height: '440px'
-            };
-
-            var grid_model_img = {
-                width: '300px',
-                height: '200px'
-            };
-
-            var grid_model_name = {
-                fontWeight: 'bold'
-            };
-
-            var grid_model_attribute = {
-                textAlign: 'left'
-            };
             var rows = [];
             for (var i = 0; i < this.state.models.length; i++) {
                 var model = this.state.models[i];
@@ -37564,7 +37531,7 @@ var ModelGrid = function (_React$Component) {
                         }
                         rows.push(_react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37647,7 +37614,7 @@ var ModelGrid = function (_React$Component) {
                         }
                         rows.push(_react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37714,7 +37681,7 @@ var ModelGrid = function (_React$Component) {
                         }
                         rows.push(_react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37753,7 +37720,7 @@ var ModelGrid = function (_React$Component) {
                         }
                         rows.push(_react2.default.createElement(
                             'ul',
-                            { style: grid_model_attribute },
+                            { className: 'model-attribute' },
                             _react2.default.createElement(
                                 'li',
                                 null,
@@ -37839,7 +37806,7 @@ var ModelGrid = function (_React$Component) {
                 { className: 'container' },
                 _react2.default.createElement(
                     'div',
-                    { style: page_header },
+                    { className: 'page-header' },
                     _react2.default.createElement(
                         _reactstrap.Card,
                         null,
@@ -37876,11 +37843,11 @@ var ModelGrid = function (_React$Component) {
                         this.state.models.map(function (model, i) {
                             return _react2.default.createElement(
                                 _reactstrap.Card,
-                                { key: i, style: grid_model },
+                                { key: i, className: 'grid-model' },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
                                     { to: '/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id },
-                                    _react2.default.createElement(_reactstrap.CardImg, { style: grid_model_img, src: model.img })
+                                    _react2.default.createElement(_reactstrap.CardImg, { className: 'grid-model-img', src: model.img })
                                 ),
                                 _react2.default.createElement(
                                     _reactstrap.CardBody,
@@ -37890,7 +37857,7 @@ var ModelGrid = function (_React$Component) {
                                         null,
                                         _react2.default.createElement(
                                             'span',
-                                            { style: grid_model_name },
+                                            { className: 'model-name' },
                                             model.name
                                         )
                                     ),
@@ -37902,7 +37869,7 @@ var ModelGrid = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     _reactstrap.Row,
-                    { className: 'justify-content-md-center', style: page_footer },
+                    { className: 'justify-content-md-center page-footer' },
                     _react2.default.createElement(
                         _reactstrap.Col,
                         { className: 'col-md-auto' },

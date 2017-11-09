@@ -21,6 +21,20 @@ import {
 } from 'reactstrap';
 import MultiSelect from './MultiSelect'
 
+const filters = {
+    'games': ['developers', 'genres'],
+    'genres': ['games', 'developers'],
+    'developers': ['games', 'genres'],
+    'events': ['games', 'genres', 'location']
+};
+
+const sorts = {
+    'games': ['Name Ascending', 'Name Descending', 'Year Ascending', 'Year Descending'],
+    'genres': ['Name Ascending', 'Name Descending'],
+    'developers': ['Name Ascending', 'Name Descending'],
+    'events': ['Name Ascending', 'Name Descending', 'Date Ascending', 'Date Descending']
+};
+
 class ModelGrid extends React.Component {
     
     constructor(props) {
@@ -111,33 +125,6 @@ class ModelGrid extends React.Component {
     }
 
     render() {
-        const page_header = {
-            paddingTop: '20px'
-        };
-
-        const page_footer = {
-            paddingBottom: '20px'
-        };
-
-        const grid_model = {
-            textAlign: 'center',
-            margin: '20px',
-            width: '300px',
-            height: '440px'
-        };
-
-        const grid_model_img = {
-            width: '300px',
-            height: '200px'
-        };
-
-        const grid_model_name = {
-            fontWeight: 'bold'
-        };
-
-        const grid_model_attribute = {
-            textAlign: 'left'
-        };
         var rows = []
         for(var i = 0; i < this.state.models.length; i++) {
             var model = this.state.models[i];
@@ -148,7 +135,7 @@ class ModelGrid extends React.Component {
                         devs = <div>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
                     }
                     rows.push(
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-attribute'>
                             <li>{devs}</li>
                             <li>{model.min_players} - {model.max_players} Players</li>
                             <li>Released in {model.year}</li>
@@ -170,7 +157,7 @@ class ModelGrid extends React.Component {
                         events = <div>Events: <Link to={'/event/' + model.events[0][0]}>{model.events[0][1]}</Link></div>;
                     }
                     rows.push(
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-attribute'>
                             <li>{devs}</li>
                             <li>{games}</li>
                             <li>{events}</li>
@@ -191,7 +178,7 @@ class ModelGrid extends React.Component {
                         website = <div>No website</div>;
                     }
                     rows.push(
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-attribute'>
                             <li>{genres}</li>
                             <li>{games}</li>
                             <li>{website}</li>
@@ -206,7 +193,7 @@ class ModelGrid extends React.Component {
                         val = <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
                     }
                     rows.push(
-                        <ul style={grid_model_attribute}>
+                        <ul className='model-attribute'>
                             <li>Time: {model.time}</li>
                             <li>At {model.location}</li>
                             <li>{val}</li>
@@ -238,7 +225,7 @@ class ModelGrid extends React.Component {
         );
         return (
             <div className="container">
-                <div style={page_header}>
+                <div className='page-header'>
                     <Card>
                         <CardHeader>
                             <Row className="justify-content-md-center">
@@ -256,12 +243,12 @@ class ModelGrid extends React.Component {
                     <Row className="justify-content-md-center">
                     {this.state.models.map(function(model, i) {
                         return (
-                                <Card key={i} style={grid_model}>
+                                <Card key={i} className='grid-model'>
                                     <Link to={'/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id}>
-                                    <CardImg style={grid_model_img} src={model.img}/>
+                                    <CardImg className='grid-model-img' src={model.img}/>
                                     </Link>
                                     <CardBody>
-                                        <strong><span style={grid_model_name}>{model.name}</span></strong>
+                                        <strong><span className='model-name'>{model.name}</span></strong>
                                         {rows[i]}
                                     </CardBody>
                                 </Card>
@@ -269,7 +256,7 @@ class ModelGrid extends React.Component {
                     }, this)}
                     </Row>
                 </section>
-                <Row className="justify-content-md-center" style={page_footer}>
+                <Row className="justify-content-md-center page-footer">
                     <Col className="col-md-auto">
                         {pagination}
                     </Col>
