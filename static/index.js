@@ -35768,6 +35768,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = require('react-router-dom');
 
+var _reactstrap = require('reactstrap');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35826,29 +35828,12 @@ var About = function (_React$Component) {
     _createClass(About, [{
         key: 'render',
         value: function render() {
-            var page_header = {
-                paddingTop: '20px'
-            };
-            var about_person = {
-                textAlign: 'center',
-                margin: '20px'
-            };
-            var about_person_img = {
-                width: '200px',
-                height: '200px'
-            };
-            var about_person_name = {
-                fontWeight: 'bold'
-            };
-            var about_person_detail = {
-                textAlign: 'left'
-            };
             return _react2.default.createElement(
                 'div',
                 { 'class': 'container' },
                 _react2.default.createElement(
                     'div',
-                    { id: 'about-site-header', style: page_header },
+                    { id: 'about-site-header', className: 'page-header' },
                     _react2.default.createElement(
                         'h2',
                         null,
@@ -35862,7 +35847,7 @@ var About = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { id: 'about-team-header', style: page_header },
+                    { id: 'about-team-header', className: 'page-header' },
                     _react2.default.createElement(
                         'h2',
                         null,
@@ -35871,465 +35856,332 @@ var About = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'section',
-                    { id: 'about-team-content' },
+                    null,
                     _react2.default.createElement(
-                        'div',
-                        { 'class': 'row' },
+                        _reactstrap.Row,
+                        { className: 'justify-content-md-center' },
                         _react2.default.createElement(
-                            'div',
-                            { 'class': 'col', style: about_person },
+                            _reactstrap.Card,
+                            { className: 'about-person' },
+                            _react2.default.createElement(_reactstrap.CardImg, { className: 'about-person-img', src: 'https://anuragbakshi.github.io/CS-373-Blog/assets/headshot.jpg' }),
                             _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
+                                _reactstrap.CardBody,
+                                null,
+                                _react2.default.createElement(
+                                    _reactstrap.CardTitle,
+                                    { className: 'about-person-name' },
+                                    'Anurag Bakshi'
+                                ),
                                 _react2.default.createElement(
                                     'div',
-                                    { 'class': 'col' },
-                                    _react2.default.createElement('img', { style: about_person_img, src: 'https://anuragbakshi.github.io/CS-373-Blog/assets/headshot.jpg' })
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                    { className: 'about-person-detail' },
                                     _react2.default.createElement(
-                                        'span',
-                                        { style: about_person_name },
-                                        'Anurag Bakshi'
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                        'p',
+                                        null,
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'Bio:'
+                                        ),
+                                        ' Anurag is a junior studying CS and Math at UT Austin. He enjoys traveling, road trips, and barbecue.'
+                                    ),
                                     _react2.default.createElement(
-                                        'ul',
-                                        { style: about_person_detail },
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Bio:'
-                                            ),
-                                            ' Anurag is a junior studying CS and Math at UT Austin. He enjoys traveling, road trips, and barbecue.'
+                                            'Responsibilities:'
                                         ),
+                                        ' Frontend, Backend, GCP and domain management'
+                                    ),
+                                    _react2.default.createElement(
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Responsibilities:'
-                                            ),
-                                            ' Frontend, Backend, GCP and domain management'
+                                            'No. Of Commits:'
                                         ),
+                                        ' ',
+                                        this.state['anuragbakshi'][0],
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Commits:'
-                                            ),
-                                            ' ',
-                                            this.state['anuragbakshi'][0]
+                                            'No. Of Issues:'
                                         ),
+                                        ' ',
+                                        this.state['anuragbakshi'][1],
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Issues:'
-                                            ),
-                                            ' ',
-                                            this.state['anuragbakshi'][1]
+                                            'No. Of Unit Tests:'
                                         ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Unit Tests:'
-                                            ),
-                                            ' ',
-                                            this.state['anuragbakshi'][2]
-                                        )
+                                        ' ',
+                                        this.state['anuragbakshi'][2]
                                     )
                                 )
                             )
                         ),
                         _react2.default.createElement(
-                            'div',
-                            { 'class': 'col', style: about_person },
+                            _reactstrap.Card,
+                            { className: 'about-person' },
+                            _react2.default.createElement(_reactstrap.CardImg, { className: 'about-person-img', src: 'https://quangmire.files.wordpress.com/2017/09/me.png' }),
                             _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
+                                _reactstrap.CardBody,
+                                null,
+                                _react2.default.createElement(
+                                    _reactstrap.CardTitle,
+                                    { className: 'about-person-name' },
+                                    'Quang Duong'
+                                ),
                                 _react2.default.createElement(
                                     'div',
-                                    { 'class': 'col' },
-                                    _react2.default.createElement('img', { style: about_person_img, src: 'https://quangmire.files.wordpress.com/2017/09/me.png' })
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                    { className: 'about-person-detail' },
                                     _react2.default.createElement(
-                                        'span',
-                                        { style: about_person_name },
-                                        'Quang Duong'
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                        'p',
+                                        null,
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'Bio:'
+                                        ),
+                                        ' Quang is a third year CS/Math student with an addiction to reading anything from fantasy to romance.'
+                                    ),
                                     _react2.default.createElement(
-                                        'ul',
-                                        { style: about_person_detail },
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Bio:'
-                                            ),
-                                            ' Quang is a third year CS/Math student with an addiction to reading anything from fantasy to romance.'
+                                            'Responsibilities:'
                                         ),
+                                        ' Frontend, scraping and parsing data, Report'
+                                    ),
+                                    _react2.default.createElement(
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Responsibilities:'
-                                            ),
-                                            ' Frontend, scraping and parsing data, Report'
+                                            'No. Of Commits:'
                                         ),
+                                        ' ',
+                                        this.state['Quangmire'][0],
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Commits:'
-                                            ),
-                                            ' ',
-                                            this.state['Quangmire'][0]
+                                            'No. Of Issues:'
                                         ),
+                                        ' ',
+                                        this.state['Quangmire'][1],
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Issues:'
-                                            ),
-                                            ' ',
-                                            this.state['Quangmire'][1]
+                                            'No. Of Unit Tests:'
                                         ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Unit Tests:'
-                                            ),
-                                            ' ',
-                                            this.state['Quangmire'][2]
-                                        )
+                                        ' ',
+                                        this.state['Quangmire'][2]
                                     )
                                 )
                             )
                         ),
                         _react2.default.createElement(
-                            'div',
-                            { 'class': 'col', style: about_person },
+                            _reactstrap.Card,
+                            { className: 'about-person' },
+                            _react2.default.createElement(_reactstrap.CardImg, { className: 'about-person-img', src: 'https://jsphyinswe.files.wordpress.com/2017/09/headshot.jpg?w=300&h=300' }),
                             _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
+                                _reactstrap.CardBody,
+                                null,
+                                _react2.default.createElement(
+                                    _reactstrap.CardTitle,
+                                    { className: 'about-person-name' },
+                                    'Joseph Yin'
+                                ),
                                 _react2.default.createElement(
                                     'div',
-                                    { 'class': 'col' },
-                                    _react2.default.createElement('img', { style: about_person_img, src: 'https://jsphyinswe.files.wordpress.com/2017/09/headshot.jpg?w=300&h=300' })
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                    { className: 'about-person-detail' },
                                     _react2.default.createElement(
-                                        'span',
-                                        { style: about_person_name },
-                                        'Joseph Yin'
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                        'p',
+                                        null,
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'Bio:'
+                                        ),
+                                        ' Joseph is a third year student pursuing a BS in CS. In his free time he enjoys reading manga, browsing memes, and playing league.'
+                                    ),
                                     _react2.default.createElement(
-                                        'ul',
-                                        { style: about_person_detail },
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Bio:'
-                                            ),
-                                            ' Joseph is a third year student at UT pursuing a BS in computer science. In his free time he enjoys reading manga, browsing memes, and playing league.'
+                                            'Responsibilities:'
                                         ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Responsibilities:'
-                                            ),
-                                            ' Task management, Frontend'
-                                        ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Commits:'
-                                            ),
-                                            ' ',
-                                            this.state['jsphyin'][0]
-                                        ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Issues:'
-                                            ),
-                                            ' ',
-                                            this.state['jsphyin'][1]
-                                        ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Unit Tests:'
-                                            ),
-                                            ' ',
-                                            this.state['jsphyin'][2]
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { 'class': 'row' },
-                        _react2.default.createElement(
-                            'div',
-                            { 'class': 'col', style: about_person },
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
-                                    _react2.default.createElement('img', { style: about_person_img, src: 'https://kamronledet.files.wordpress.com/2017/09/15289202_897036407098184_508436949144464272_o.jpg' })
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                        ' Task management, Frontend'
+                                    ),
                                     _react2.default.createElement(
-                                        'span',
-                                        { style: about_person_name },
-                                        'Kamron Ledet'
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
-                                    _react2.default.createElement(
-                                        'ul',
-                                        { style: about_person_detail },
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Bio:'
-                                            ),
-                                            ' Kamron Ledet is a third-year Computer Science major interested in programming for games and software. He also takes an interest in acting and has been active in theatre since junior high.'
+                                            'No. Of Commits:'
                                         ),
+                                        ' ',
+                                        this.state['jsphyin'][0],
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Responsibilities:'
-                                            ),
-                                            ' Apiary, Domain management'
+                                            'No. Of Issues:'
                                         ),
+                                        ' ',
+                                        this.state['jsphyin'][1],
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Commits:'
-                                            ),
-                                            ' ',
-                                            this.state['KLedet'][0]
+                                            'No. Of Unit Tests:'
                                         ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Issues:'
-                                            ),
-                                            ' ',
-                                            this.state['KLedet'][1]
-                                        ),
-                                        _react2.default.createElement(
-                                            'li',
-                                            null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Unit Tests:'
-                                            ),
-                                            ' ',
-                                            this.state['KLedet'][2]
-                                        )
+                                        ' ',
+                                        this.state['jsphyin'][2]
                                     )
                                 )
                             )
                         ),
                         _react2.default.createElement(
-                            'div',
-                            { 'class': 'col', style: about_person },
+                            _reactstrap.Card,
+                            { className: 'about-person' },
+                            _react2.default.createElement(_reactstrap.CardImg, { className: 'about-person-img', src: 'https://kamronledet.files.wordpress.com/2017/09/15289202_897036407098184_508436949144464272_o.jpg' }),
                             _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
+                                _reactstrap.CardBody,
+                                null,
+                                _react2.default.createElement(
+                                    _reactstrap.CardTitle,
+                                    { className: 'about-person-name' },
+                                    'Kamron Ledet'
+                                ),
                                 _react2.default.createElement(
                                     'div',
-                                    { 'class': 'col' },
-                                    _react2.default.createElement('img', { style: about_person_img, src: 'https://aytiel.files.wordpress.com/2017/01/cropped-img_20160920_19234311.jpg?w=640' })
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { 'class': 'col' },
+                                    { className: 'about-person-detail' },
                                     _react2.default.createElement(
-                                        'span',
-                                        { style: about_person_name },
-                                        'Alexander Lo'
+                                        'p',
+                                        null,
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'Bio:'
+                                        ),
+                                        ' Kamron is a third-year CS major interested in programming games and software as well as acting and has been active in theatre since junior high.'
+                                    ),
+                                    _react2.default.createElement(
+                                        'p',
+                                        null,
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'Responsibilities:'
+                                        ),
+                                        ' Apiary, Domain management'
+                                    ),
+                                    _react2.default.createElement(
+                                        'p',
+                                        null,
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'No. Of Commits:'
+                                        ),
+                                        ' ',
+                                        this.state['KLedet'][0],
+                                        _react2.default.createElement('br', null),
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'No. Of Issues:'
+                                        ),
+                                        ' ',
+                                        this.state['KLedet'][1],
+                                        _react2.default.createElement('br', null),
+                                        _react2.default.createElement(
+                                            'strong',
+                                            null,
+                                            'No. Of Unit Tests:'
+                                        ),
+                                        ' ',
+                                        this.state['KLedet'][2]
                                     )
                                 )
-                            ),
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _reactstrap.Card,
+                            { className: 'about-person' },
+                            _react2.default.createElement(_reactstrap.CardImg, { className: 'about-person-img', src: 'https://aytiel.files.wordpress.com/2017/01/cropped-img_20160920_19234311.jpg?w=640' }),
                             _react2.default.createElement(
-                                'div',
-                                { 'class': 'row' },
+                                _reactstrap.CardBody,
+                                null,
+                                _react2.default.createElement(
+                                    _reactstrap.CardTitle,
+                                    { className: 'about-person-name' },
+                                    'Alexander Lo'
+                                ),
                                 _react2.default.createElement(
                                     'div',
-                                    { 'class': 'col' },
+                                    { className: 'about-person-detail' },
                                     _react2.default.createElement(
-                                        'ul',
-                                        { style: about_person_detail },
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Bio:'
-                                            ),
-                                            ' Alex is a third year computer science major with an interest in pursuing game and graphical development.'
+                                            'Bio:'
                                         ),
+                                        ' Alex is a third year computer science major that is interested in pursuing game development and computer graphics.'
+                                    ),
+                                    _react2.default.createElement(
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'Responsibilities:'
-                                            ),
-                                            ' Apiary, Frontend'
+                                            'Responsibilities:'
                                         ),
+                                        ' Apiary, Frontend, Unit Testing, Postman'
+                                    ),
+                                    _react2.default.createElement(
+                                        'p',
+                                        null,
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Commits:'
-                                            ),
-                                            ' ',
-                                            this.state['aytiel'][0]
+                                            'No. Of Commits:'
                                         ),
+                                        ' ',
+                                        this.state['aytiel'][0],
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Issues:'
-                                            ),
-                                            ' ',
-                                            this.state['aytiel'][1]
+                                            'No. Of Issues:'
                                         ),
+                                        ' ',
+                                        this.state['aytiel'][1],
+                                        ' ',
+                                        _react2.default.createElement('br', null),
                                         _react2.default.createElement(
-                                            'li',
+                                            'strong',
                                             null,
-                                            _react2.default.createElement(
-                                                'strong',
-                                                null,
-                                                'No. Of Unit Tests:'
-                                            ),
-                                            ' ',
-                                            this.state['aytiel'][2]
-                                        )
+                                            'No. Of Unit Tests:'
+                                        ),
+                                        ' ',
+                                        this.state['aytiel'][2]
                                     )
                                 )
                             )
@@ -36622,7 +36474,7 @@ var About = function (_React$Component) {
 
 exports.default = About;
 
-},{"react":88,"react-router-dom":62}],95:[function(require,module,exports){
+},{"react":88,"react-router-dom":62,"reactstrap":89}],95:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

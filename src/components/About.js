@@ -4,6 +4,20 @@ import {
     Route,
     Link
 } from 'react-router-dom'
+import {
+    Row,
+    Col,
+    Card,
+    CardTitle,
+    CardText,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    CardImg,
+    CardSubtitle,
+    Button,
+    ButtonGroup
+} from 'reactstrap';
 
 class About extends React.Component {
 
@@ -48,26 +62,9 @@ class About extends React.Component {
     }
 
     render() {
-        const page_header = {
-            paddingTop: '20px'
-        }
-        const about_person = {
-            textAlign: 'center',
-            margin: '20px'
-        };
-        const about_person_img = {
-            width: '200px',
-            height: '200px',
-        };
-        const about_person_name = {
-            fontWeight: 'bold'
-        };
-        const about_person_detail = {
-            textAlign: 'left'
-        };
         return (
             <div class="container">
-                <div id="about-site-header" style={page_header}>
+                <div id="about-site-header" className='page-header'>
                   <h2>The Site</h2>
                 </div>
                 <section id="about-site-content">
@@ -75,133 +72,81 @@ class About extends React.Component {
                 </section>
 
 
-                <div id="about-team-header" style={page_header}>
+                <div id="about-team-header" className='page-header'>
                     <h2>The Team - Board Gamers</h2>
                 </div>
-                <section id="about-team-content">
-                    <div class="row">
-                        <div class="col" style={about_person}>
-                            <div class="row">
-                                <div class="col">
-                                  <img style={about_person_img} src="https://anuragbakshi.github.io/CS-373-Blog/assets/headshot.jpg"/>
+                <section>
+                    <Row className='justify-content-md-center'>
+                        <Card className="about-person">
+                            <CardImg className='about-person-img' src="https://anuragbakshi.github.io/CS-373-Blog/assets/headshot.jpg"/>
+                            <CardBody>
+                                <CardTitle className='about-person-name'>Anurag Bakshi</CardTitle>
+                                <div className='about-person-detail'>
+                                    <p><strong>Bio:</strong> Anurag is a junior studying CS and Math at UT Austin. He enjoys traveling, road trips, and barbecue.</p>
+                                    <p><strong>Responsibilities:</strong> Frontend, Backend, GCP and domain management</p>
+                                    <p><strong>No. Of Commits:</strong> {this.state['anuragbakshi'][0]}<br />
+                                    <strong>No. Of Issues:</strong> {this.state['anuragbakshi'][1]}<br />
+                                    <strong>No. Of Unit Tests:</strong> {this.state['anuragbakshi'][2]}</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <span style={about_person_name}>Anurag Bakshi</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <ul style={about_person_detail}>
-                                        <li><strong>Bio:</strong> Anurag is a junior studying CS and Math at UT Austin. He enjoys traveling, road trips, and barbecue.</li>
-                                        <li><strong>Responsibilities:</strong> Frontend, Backend, GCP and domain management</li>
-                                        <li><strong>No. Of Commits:</strong> {this.state['anuragbakshi'][0]}</li>
-                                        <li><strong>No. Of Issues:</strong> {this.state['anuragbakshi'][1]}</li>
-                                        <li><strong>No. Of Unit Tests:</strong> {this.state['anuragbakshi'][2]}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                            </CardBody>
+                        </Card>
 
-                        <div class="col" style={about_person}>
-                            <div class="row">
-                                <div class="col">
-                                  <img style={about_person_img} src="https://quangmire.files.wordpress.com/2017/09/me.png"/>
+                        <Card className="about-person">
+                            <CardImg className='about-person-img' src="https://quangmire.files.wordpress.com/2017/09/me.png"/>
+                            <CardBody>
+                                <CardTitle className='about-person-name'>Quang Duong</CardTitle>
+                                <div className='about-person-detail'>
+                                    <p><strong>Bio:</strong> Quang is a third year CS/Math student with an addiction to reading anything from fantasy to romance.</p>
+                                    <p><strong>Responsibilities:</strong> Frontend, scraping and parsing data, Report</p>
+                                    <p><strong>No. Of Commits:</strong> {this.state['Quangmire'][0]}<br />
+                                    <strong>No. Of Issues:</strong> {this.state['Quangmire'][1]}<br />
+                                    <strong>No. Of Unit Tests:</strong> {this.state['Quangmire'][2]}</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <span style={about_person_name}>Quang Duong</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <ul style={about_person_detail}>
-                                        <li><strong>Bio:</strong> Quang is a third year CS/Math student with an addiction to reading anything from fantasy to romance.</li>
-                                        <li><strong>Responsibilities:</strong> Frontend, scraping and parsing data, Report</li>
-                                        <li><strong>No. Of Commits:</strong> {this.state['Quangmire'][0]}</li>
-                                        <li><strong>No. Of Issues:</strong> {this.state['Quangmire'][1]}</li>
-                                        <li><strong>No. Of Unit Tests:</strong> {this.state['Quangmire'][2]}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                            </CardBody>
+                        </Card>
 
-                        <div class="col" style={about_person}>
-                            <div class="row">
-                                <div class="col">
-                                  <img style={about_person_img} src="https://jsphyinswe.files.wordpress.com/2017/09/headshot.jpg?w=300&h=300"/>
+                        <Card className="about-person">
+                            <CardImg className='about-person-img' src="https://jsphyinswe.files.wordpress.com/2017/09/headshot.jpg?w=300&h=300"/>
+                            <CardBody>
+                                <CardTitle className='about-person-name'>Joseph Yin</CardTitle>
+                                <div className='about-person-detail'>
+                                    <p><strong>Bio:</strong> Joseph is a third year student pursuing a BS in CS. In his free time he enjoys reading manga, browsing memes, and playing league.</p>
+                                    <p><strong>Responsibilities:</strong> Task management, Frontend</p>
+                                    <p><strong>No. Of Commits:</strong> {this.state['jsphyin'][0]}<br />
+                                    <strong>No. Of Issues:</strong> {this.state['jsphyin'][1]}<br />
+                                    <strong>No. Of Unit Tests:</strong> {this.state['jsphyin'][2]}</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <span style={about_person_name}>Joseph Yin</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <ul style={about_person_detail}>
-                                        <li><strong>Bio:</strong> Joseph is a third year student at UT pursuing a BS in computer science. In his free time he enjoys reading manga, browsing memes, and playing league.</li>
-                                        <li><strong>Responsibilities:</strong> Task management, Frontend</li>
-                                        <li><strong>No. Of Commits:</strong> {this.state['jsphyin'][0]}</li>
-                                        <li><strong>No. Of Issues:</strong> {this.state['jsphyin'][1]}</li>
-                                        <li><strong>No. Of Unit Tests:</strong> {this.state['jsphyin'][2]}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </CardBody>
+                        </Card>
 
-                    <div class="row">
-                        <div class="col" style={about_person}>
-                            <div class="row">
-                                <div class="col">
-                                  <img style={about_person_img} src="https://kamronledet.files.wordpress.com/2017/09/15289202_897036407098184_508436949144464272_o.jpg"/>
+                        <Card className="about-person">
+                            <CardImg className='about-person-img' src="https://kamronledet.files.wordpress.com/2017/09/15289202_897036407098184_508436949144464272_o.jpg"/>
+                            <CardBody>
+                                <CardTitle className='about-person-name'>Kamron Ledet</CardTitle>
+                                <div className='about-person-detail'>
+                                    <p><strong>Bio:</strong> Kamron is a third-year CS major interested in programming games and software as well as acting and has been active in theatre since junior high.</p>
+                                    <p><strong>Responsibilities:</strong> Apiary, Domain management</p>
+                                    <p><strong>No. Of Commits:</strong> {this.state['KLedet'][0]}<br />
+                                    <strong>No. Of Issues:</strong> {this.state['KLedet'][1]}<br />
+                                    <strong>No. Of Unit Tests:</strong> {this.state['KLedet'][2]}</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <span style={about_person_name}>Kamron Ledet</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <ul style={about_person_detail}>
-                                        <li><strong>Bio:</strong> Kamron Ledet is a third-year Computer Science major interested in programming for games and software. He also takes an interest in acting and has been active in theatre since junior high.</li>
-                                        <li><strong>Responsibilities:</strong> Apiary, Domain management</li>
-                                        <li><strong>No. Of Commits:</strong> {this.state['KLedet'][0]}</li>
-                                        <li><strong>No. Of Issues:</strong> {this.state['KLedet'][1]}</li>
-                                        <li><strong>No. Of Unit Tests:</strong> {this.state['KLedet'][2]}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                            </CardBody>
+                        </Card>
 
-                        <div class="col" style={about_person}>
-                            <div class="row">
-                                <div class="col">
-                                  <img style={about_person_img} src="https://aytiel.files.wordpress.com/2017/01/cropped-img_20160920_19234311.jpg?w=640"/>
+                        <Card className="about-person">
+                            <CardImg className='about-person-img' src="https://aytiel.files.wordpress.com/2017/01/cropped-img_20160920_19234311.jpg?w=640"/>
+                            <CardBody>
+                                <CardTitle className='about-person-name'>Alexander Lo</CardTitle>
+                                <div className='about-person-detail'>
+                                    <p><strong>Bio:</strong> Alex is a third year computer science major that is interested in pursuing game development and computer graphics.</p>
+                                    <p><strong>Responsibilities:</strong> Apiary, Frontend, Unit Testing, Postman</p>
+                                    <p><strong>No. Of Commits:</strong> {this.state['aytiel'][0]}<br />
+                                    <strong>No. Of Issues:</strong> {this.state['aytiel'][1]} <br />
+                                    <strong>No. Of Unit Tests:</strong> {this.state['aytiel'][2]}</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <span style={about_person_name}>Alexander Lo</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <ul style={about_person_detail}>
-                                        <li><strong>Bio:</strong> Alex is a third year computer science major with an interest in pursuing game and graphical development.</li>
-                                        <li><strong>Responsibilities:</strong> Apiary, Frontend</li>
-                                        <li><strong>No. Of Commits:</strong> {this.state['aytiel'][0]}</li>
-                                        <li><strong>No. Of Issues:</strong> {this.state['aytiel'][1]}</li>
-                                        <li><strong>No. Of Unit Tests:</strong> {this.state['aytiel'][2]}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </CardBody>
+                        </Card>
+                    </Row>
                 </section>
 
                 <div id="about-stats-header" class="page-header">

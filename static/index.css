@@ -11,23 +11,24 @@
     padding-bottom: 20px;
 }
 
-/* about */
-
-#main-content-about .about-person {
+.about-person {
 	text-align: center;
 	margin: 20px;
+    width: 302px;
+    height: 680px;
 }
 
-#main-content-about .about-person-img {
-	width: 200px;
-	height: 200px;
+.about-person-img {
+    overflow: hidden;
+	width: 300px;
+	height: 300px;
 }
 
-#main-content-about .about-person-name {
+.about-person-name {
 	font-weight: bold;
 }
 
-#main-content-about .about-person-detail {
+.about-person-detail {
 	text-align: left;
 }
 
@@ -38,7 +39,7 @@
 .grid-model {
     text-align: center;
     margin: 20px;
-    width: 300px;
+    width: 302px;
     height: 440px;
 }
 
