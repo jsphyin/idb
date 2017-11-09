@@ -126,17 +126,16 @@ def api_events(event_id=None):
     if genres:
         q = q.filter(models.Event.direct_genres.any(models.Genre.id.in_(genres)) |
                      models.Event.indirect_genres.any(models.Genre.id.in_(genres)))
-        print(q)
+
+    location = request.args.getlist('location')
+    if location:
+        q = q.filter(models.Event.location.in_(location))
 
     sort = request.args.get('sort', 'name')
     if sort == 'name':
         q = q.order_by(models.Event.name)
     elif sort == '-name':
         q = q.order_by(models.Event.name.desc())
-    elif sort == 'location':
-        q = q.order_by(models.Event.location)
-    elif sort == '-location':
-        q = q.order_by(models.Event.location.desc())
     elif sort == 'time':
         q = q.order_by(models.Event.time)
     elif sort == '-time':

@@ -177,7 +177,7 @@ def populate_db():
     models.db.drop_all()
     models.db.create_all()
 
-    xml_root = load_items(glob.glob('../idb_scrapefiles/*.xml')[:1000])
+    xml_root = load_items(glob.glob('../idb_scrapefiles/*.xml')[:100])
     print('loaded xml')
 
     add_and_commit(json_to_db_objects(augment_raw_desc(load_json('../idb_scrapefiles/categories.json')), models.Genre))
