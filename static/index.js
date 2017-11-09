@@ -169,7 +169,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require('_process'))
-},{"./emptyFunction":9,"_process":126}],5:[function(require,module,exports){
+},{"./emptyFunction":9,"_process":127}],5:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -366,7 +366,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":126}],11:[function(require,module,exports){
+},{"_process":127}],11:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -552,7 +552,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":126}],16:[function(require,module,exports){
+},{"_process":127}],16:[function(require,module,exports){
 'use strict';
 
 /**
@@ -782,7 +782,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":9,"_process":126}],22:[function(require,module,exports){
+},{"./emptyFunction":9,"_process":127}],22:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -2044,7 +2044,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":126}],32:[function(require,module,exports){
+},{"_process":127}],32:[function(require,module,exports){
 /**
  * lodash 3.0.8 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -5361,7 +5361,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":43,"_process":126,"fbjs/lib/invariant":15,"fbjs/lib/warning":21}],40:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":43,"_process":127,"fbjs/lib/invariant":15,"fbjs/lib/warning":21}],40:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -5967,7 +5967,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":39,"./lib/ReactPropTypesSecret":43,"_process":126,"fbjs/lib/emptyFunction":9,"fbjs/lib/invariant":15,"fbjs/lib/warning":21,"object-assign":35}],42:[function(require,module,exports){
+},{"./checkPropTypes":39,"./lib/ReactPropTypesSecret":43,"_process":127,"fbjs/lib/emptyFunction":9,"fbjs/lib/invariant":15,"fbjs/lib/warning":21,"object-assign":35}],42:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -5999,7 +5999,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":40,"./factoryWithTypeCheckers":41,"_process":126}],43:[function(require,module,exports){
+},{"./factoryWithThrowingShims":40,"./factoryWithTypeCheckers":41,"_process":127}],43:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -23238,7 +23238,7 @@ module.exports = ReactDOMFiberEntry;
 }
 
 }).call(this,require('_process'))
-},{"_process":126,"fbjs/lib/EventListener":4,"fbjs/lib/ExecutionEnvironment":5,"fbjs/lib/camelizeStyleName":7,"fbjs/lib/containsNode":8,"fbjs/lib/emptyFunction":9,"fbjs/lib/emptyObject":10,"fbjs/lib/focusNode":11,"fbjs/lib/getActiveElement":12,"fbjs/lib/hyphenateStyleName":14,"fbjs/lib/invariant":15,"fbjs/lib/performanceNow":19,"fbjs/lib/shallowEqual":20,"fbjs/lib/warning":21,"object-assign":35,"prop-types":42,"prop-types/checkPropTypes":39,"react":113}],45:[function(require,module,exports){
+},{"_process":127,"fbjs/lib/EventListener":4,"fbjs/lib/ExecutionEnvironment":5,"fbjs/lib/camelizeStyleName":7,"fbjs/lib/containsNode":8,"fbjs/lib/emptyFunction":9,"fbjs/lib/emptyObject":10,"fbjs/lib/focusNode":11,"fbjs/lib/getActiveElement":12,"fbjs/lib/hyphenateStyleName":14,"fbjs/lib/invariant":15,"fbjs/lib/performanceNow":19,"fbjs/lib/shallowEqual":20,"fbjs/lib/warning":21,"object-assign":35,"prop-types":42,"prop-types/checkPropTypes":39,"react":113}],45:[function(require,module,exports){
 /*
  React v16.0.0
  react-dom.production.min.js
@@ -23538,7 +23538,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":44,"./cjs/react-dom.production.min.js":45,"_process":126}],47:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":44,"./cjs/react-dom.production.min.js":45,"_process":127}],47:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30290,7 +30290,7 @@ function warnAboutMissingStyle(parent, renderedCell) {
   }
 }
 }).call(this,require('_process'))
-},{"./types":99,"_process":126,"prop-types":42}],97:[function(require,module,exports){
+},{"./types":99,"_process":127,"prop-types":42}],97:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -33561,7 +33561,7 @@ module.exports = ReactEntry;
 }
 
 }).call(this,require('_process'))
-},{"_process":126,"fbjs/lib/emptyFunction":9,"fbjs/lib/emptyObject":10,"fbjs/lib/invariant":15,"fbjs/lib/warning":21,"object-assign":35,"prop-types/checkPropTypes":39}],112:[function(require,module,exports){
+},{"_process":127,"fbjs/lib/emptyFunction":9,"fbjs/lib/emptyObject":10,"fbjs/lib/invariant":15,"fbjs/lib/warning":21,"object-assign":35,"prop-types/checkPropTypes":39}],112:[function(require,module,exports){
 /*
  React v16.0.0
  react.production.min.js
@@ -33597,7 +33597,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":111,"./cjs/react.production.min.js":112,"_process":126}],114:[function(require,module,exports){
+},{"./cjs/react.development.js":111,"./cjs/react.production.min.js":112,"_process":127}],114:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -39037,7 +39037,7 @@ exports.UncontrolledTooltip = UncontrolledTooltip;
 
 
 }).call(this,require('_process'))
-},{"_process":126,"classnames":1,"lodash.isfunction":32,"lodash.isobject":33,"lodash.tonumber":34,"prop-types":42,"react":113,"react-dom":46,"react-popper":52}],115:[function(require,module,exports){
+},{"_process":127,"classnames":1,"lodash.isfunction":32,"lodash.isobject":33,"lodash.tonumber":34,"prop-types":42,"react":113,"react-dom":46,"react-popper":52}],115:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -39220,7 +39220,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":126}],118:[function(require,module,exports){
+},{"_process":127}],118:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -39257,6 +39257,10 @@ var _About = require('./components/About');
 
 var _About2 = _interopRequireDefault(_About);
 
+var _Search = require('./components/Search');
+
+var _Search2 = _interopRequireDefault(_Search);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39286,6 +39290,9 @@ var App = function (_React$Component) {
                     _react2.default.createElement(_NavBar2.default, null),
                     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _Home2.default }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/about', component: _About2.default }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/search', component: function component(props) {
+                            return _react2.default.createElement(_Search2.default, props);
+                        } }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/games', component: function component(props) {
                             return _react2.default.createElement(_ModelGrid2.default, _extends({}, props, { name: 'Games' }));
                         } }),
@@ -39304,6 +39311,10 @@ var App = function (_React$Component) {
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/boardgame/:id/:name', render: function render(_ref) {
                             var match = _ref.match;
                             return _react2.default.createElement(_reactRouterDom.Redirect, { to: "/game/" + match.params.id });
+                        } }),
+                    _react2.default.createElement(_reactRouterDom.Route, { path: '/boardgamedesigner/:id/:name', render: function render(_ref2) {
+                            var match = _ref2.match;
+                            return _react2.default.createElement(_reactRouterDom.Redirect, { to: "/developer/" + match.params.id });
                         } }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: '/genre/:id', component: function component(props) {
                             return _react2.default.createElement(_Model2.default, _extends({}, props, { name: 'Genres' }));
@@ -39324,7 +39335,7 @@ var App = function (_React$Component) {
 
 exports.default = App;
 
-},{"./components/About":119,"./components/Home":120,"./components/Model":121,"./components/ModelGrid":122,"./components/NavBar":124,"react":113,"react-router-dom":64}],119:[function(require,module,exports){
+},{"./components/About":119,"./components/Home":120,"./components/Model":121,"./components/ModelGrid":122,"./components/NavBar":124,"./components/Search":125,"react":113,"react-router-dom":64}],119:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -40615,7 +40626,7 @@ var Model = function (_React$Component) {
                     );
                     if (model.website === null) {
                         website = _react2.default.createElement(
-                            'li',
+                            'span',
                             null,
                             'No website'
                         );
@@ -41573,15 +41584,54 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var NavBar = function (_React$Component) {
     _inherits(NavBar, _React$Component);
 
-    function NavBar() {
+    function NavBar(props) {
         _classCallCheck(this, NavBar);
 
-        return _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
+
+        var query = window.location.href.split('?');
+        if (query.length > 1) {
+            _this.params = _this.parse_query('?' + query[1]);
+        } else {
+            _this.params = {};
+        }
+        return _this;
     }
 
+    // Returns object with keys -> values
+
+
     _createClass(NavBar, [{
+        key: 'parse_query',
+        value: function parse_query(query) {
+            if (query === '') {
+                return [];
+            }
+            var params = {};
+            var query_params = query.slice(1, query.length).split('&');
+            for (var i = 0; i < query_params.length; i++) {
+                var param = query_params[i].split('=');
+                if (param.length > 1) {
+                    params[param[0]] = param[1];
+                }
+            }
+            return params;
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var query = window.location.href.split('?');
+            if (query.length > 1) {
+                this.params = this.parse_query('?' + query[1]);
+            } else {
+                this.params = {};
+            }
+            if ('search-input' in this.params && this.params['search-input'] !== '') {
+                return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/search?query=' + this.params['search-input'] });
+            }
+            if ('search-button' in this.params && this.params['search-button'] !== '') {
+                return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/search?query=' + this.params['search-button'] });
+            }
             return _react2.default.createElement(
                 _reactstrap.Navbar,
                 { color: 'faded', light: true, expand: 'lg', className: 'container-fluid bg-light' },
@@ -41680,15 +41730,23 @@ var NavBar = function (_React$Component) {
                     _reactstrap.Col,
                     { className: 'col-md-3 mr-auto' },
                     _react2.default.createElement(
-                        _reactstrap.InputGroup,
-                        null,
-                        _react2.default.createElement(_reactstrap.Input, { placeholder: 'Search' }),
+                        _reactstrap.Form,
+                        { onSubmit: function onSubmit() {
+                                return console.log("Yo");
+                            } },
                         _react2.default.createElement(
-                            _reactstrap.InputGroupAddon,
+                            _reactstrap.FormGroup,
                             null,
-                            ' ',
-                            _react2.default.createElement('span', { className: 'fa fa-search' }),
-                            ' '
+                            _react2.default.createElement(
+                                _reactstrap.InputGroup,
+                                null,
+                                _react2.default.createElement(_reactstrap.Input, { name: 'search-button', placeholder: 'Search' }),
+                                _react2.default.createElement(
+                                    _reactstrap.InputGroupButton,
+                                    null,
+                                    _react2.default.createElement(_reactstrap.Button, { className: 'fa fa-search' })
+                                )
+                            )
                         )
                     )
                 )
@@ -41704,6 +41762,538 @@ exports.default = NavBar;
 },{"react":113,"react-router-dom":64,"reactstrap":114}],125:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = require('react-router-dom');
+
+var _reactstrap = require('reactstrap');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Search = function (_React$Component) {
+    _inherits(Search, _React$Component);
+
+    function Search(props) {
+        _classCallCheck(this, Search);
+
+        var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+
+        _this.host = 'http://boardgamedb.me';
+        if (window.location.hostname === 'localhost') {
+            _this.host = '';
+        }
+        _this.params = _this.parse_query(props.location.search);
+        _this.params['per_page'] = 9;
+        _this.state = {
+            query: '',
+            page: 0,
+            total_pages: Infinity,
+            models: [],
+            loading: false
+        };
+        _this.fetch_page('page' in _this.params ? _this.params['page'] : 1, true);
+        return _this;
+    }
+
+    // Returns object with keys -> values
+
+
+    _createClass(Search, [{
+        key: 'parse_query',
+        value: function parse_query(query) {
+            if (query === '') {
+                return [];
+            }
+            var params = {};
+            var query_params = query.slice(1, query.length).split('&');
+            for (var i = 0; i < query_params.length; i++) {
+                var param = query_params[i].split('=');
+                if (param.length > 1) {
+                    params[param[0]] = param[1];
+                }
+            }
+            return params;
+        }
+
+        // Generates query string
+
+    }, {
+        key: 'gen_query',
+        value: function gen_query(params) {
+            var query = '?';
+            var keys = Object.keys(params);
+            for (var i = 0; i < keys.length; i++) {
+                if (i > 0) {
+                    query += '&';
+                }
+                query += keys[i] + '=' + params[keys[i]];
+            }
+            return query;
+        }
+    }, {
+        key: 'fetch_page',
+        value: function fetch_page(page_number) {
+            var _this2 = this;
+
+            var force_fetch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            if (force_fetch || this.state.page != page_number && page_number >= 1 && page_number <= this.state.total_pages) {
+                // Set page number in params
+                this.params['page'] = page_number;
+                if ('query' in this.params) {
+                    this.state.query = this.params['query'];
+                } else if ('search-input' in this.params) {
+                    this.state.query = this.params['search-input'];
+                    delete this.params['search-input'];
+                    this.params['query'] = this.state.query;
+                } else if ('search-button' in this.params) {
+                    this.state.query = this.params['search-button'];
+                    delete this.params['search-button'];
+                    this.params['query'] = this.state.query;
+                } else {
+                    this.state.query = '';
+                    this.setState(this.state);
+                    return;
+                }
+
+                // Generate query
+                var query = this.gen_query(this.params);
+
+                // Set URL
+                this.props.history.push(this.host + '/search' + query);
+                this.state.loading = true;
+
+                // Fetch new grid model data
+                fetch(this.host + '/api/search' + query, { method: 'GET' }).then(function (response) {
+                    return response.json();
+                }).then(function (json) {
+                    _this2.state.page = json.page;
+                    _this2.state.total_pages = json.total_pages;
+                    _this2.models = [];
+                    var count = 0;
+
+                    var _loop = function _loop(i) {
+                        fetch(_this2.host + '/api/' + json.results[i].type + 's/' + json.results[i].id, { method: 'GET' }).then(function (r) {
+                            return r.json();
+                        }).then(function (j) {
+                            j.type = json.results[i].type;
+                            _this2.state.models.push(j);
+                            count += 1;
+                            if (count == json.results.length) {
+                                _this2.state.loading = false;
+                                _this2.setState(_this2.state);
+                            }
+                        });
+                    };
+
+                    for (var i = 0; i < json.results.length; i++) {
+                        _loop(i);
+                    }
+                });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            var no_results = '';
+            if (this.state.models.length == 0 && !this.state.loading) {
+                no_results = _react2.default.createElement(
+                    'h1',
+                    { style: { textAlign: 'center', margin: '20px' } },
+                    'No Results'
+                );
+            }
+            var rows = [];
+            for (var i = 0; i < this.state.models.length; i++) {
+                var model = this.state.models[i];
+                switch (model.type) {
+                    case "game":
+                        var devs = _react2.default.createElement(
+                            'div',
+                            null,
+                            'Unknown Developer'
+                        );
+                        if (model.developers.length > 0) {
+                            devs = _react2.default.createElement(
+                                'div',
+                                null,
+                                'Developed by ',
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/developer/' + model.developers[0][0] },
+                                    model.developers[0][1]
+                                )
+                            );
+                        }
+                        rows.push(_react2.default.createElement(
+                            'ul',
+                            { className: 'model-attribute' },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                devs
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                model.min_players,
+                                ' - ',
+                                model.max_players,
+                                ' Players'
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'Released in ',
+                                model.year
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'Rated ',
+                                model.rating,
+                                '/10'
+                            )
+                        ));
+                        break;
+                    case "genre":
+                        var devs = _react2.default.createElement(
+                            'div',
+                            null,
+                            'No notable devs'
+                        );
+                        if (model.developers.length > 0) {
+                            devs = _react2.default.createElement(
+                                'div',
+                                null,
+                                'Notable Dev: ',
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/developer/' + model.developers[0][0] },
+                                    model.developers[0][1]
+                                )
+                            );
+                        }
+                        var games = _react2.default.createElement(
+                            'div',
+                            null,
+                            'No notable games'
+                        );
+                        if (model.games.length > 0) {
+                            games = _react2.default.createElement(
+                                'div',
+                                null,
+                                'Notable Games: ',
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/game/' + model.games[0][0] },
+                                    model.games[0][1]
+                                )
+                            );
+                        }
+                        var events = _react2.default.createElement(
+                            'div',
+                            null,
+                            'No events'
+                        );
+                        if (model.events.length > 0) {
+                            events = _react2.default.createElement(
+                                'div',
+                                null,
+                                'Events: ',
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/event/' + model.events[0][0] },
+                                    model.events[0][1]
+                                )
+                            );
+                        }
+                        rows.push(_react2.default.createElement(
+                            'ul',
+                            { className: 'model-attribute' },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                devs
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                games
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                events
+                            )
+                        ));
+                        break;
+                    case "developer":
+                        var genres = _react2.default.createElement(
+                            'div',
+                            null,
+                            'No Genres'
+                        );
+                        if (model.genres.length > 0) {
+                            genres = _react2.default.createElement(
+                                'div',
+                                null,
+                                'Genres: ',
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/genre/' + model.genres[0][0] },
+                                    model.genres[0][1]
+                                )
+                            );
+                        }
+                        var games = _react2.default.createElement(
+                            'div',
+                            null,
+                            'No notable games'
+                        );
+                        if (model.games.length > 0) {
+                            games = _react2.default.createElement(
+                                'div',
+                                null,
+                                'Notable Games: ',
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/game/' + model.games[0][0] },
+                                    model.games[0][1]
+                                )
+                            );
+                        }
+                        var website = _react2.default.createElement(
+                            'a',
+                            { href: model.website },
+                            model.website
+                        );
+                        if (model.website === null) {
+                            website = _react2.default.createElement(
+                                'div',
+                                null,
+                                'No website'
+                            );
+                        }
+                        rows.push(_react2.default.createElement(
+                            'ul',
+                            { className: 'model-attribute' },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                genres
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                games
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                website
+                            )
+                        ));
+                        break;
+                    case "event":
+                        var val = _react2.default.createElement(
+                            'div',
+                            null,
+                            'No Games or Genres'
+                        );
+                        if (model.games.length > 0) {
+                            val = _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/game/' + model.games[0][0] },
+                                model.games[0][1]
+                            );
+                        } else if (model.genres.length > 0) {
+                            val = _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/genre/' + model.genres[0][0] },
+                                model.genres[0][1]
+                            );
+                        }
+                        rows.push(_react2.default.createElement(
+                            'ul',
+                            { className: 'model-attribute' },
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'Time: ',
+                                model.time
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'At ',
+                                model.location
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                val
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: model.link },
+                                    'Meetup Link'
+                                )
+                            )
+                        ));
+                        break;
+                }
+            }
+
+            // Pagination
+            var pages = [];
+            var show_pages = 2;
+            for (var i = -show_pages; i <= show_pages; i++) {
+                if (this.state.page + i >= 1 && this.state.page + i <= this.state.total_pages) {
+                    pages.push(this.state.page + i);
+                }
+            }
+            var pagination = _react2.default.createElement(
+                _reactstrap.ButtonGroup,
+                null,
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
+                            return _this3.fetch_page(1);
+                        } },
+                    "<<"
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
+                            return _this3.fetch_page(_this3.state.page - 1);
+                        } },
+                    "<"
+                ),
+                pages.map(function (page, i) {
+                    var _this4 = this;
+
+                    return _react2.default.createElement(
+                        _reactstrap.Button,
+                        { key: i, color: this.state.page == page ? "link" : "", onClick: function onClick() {
+                                return _this4.fetch_page(page);
+                            } },
+                        page
+                    );
+                }, this),
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
+                            return _this3.fetch_page(_this3.state.page + 1);
+                        } },
+                    ">"
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Button,
+                    { color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
+                            return _this3.fetch_page(_this3.state.total_pages);
+                        } },
+                    ">>"
+                )
+            );
+            return _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'page-header' },
+                    _react2.default.createElement(
+                        _reactstrap.Card,
+                        null,
+                        _react2.default.createElement(
+                            _reactstrap.CardHeader,
+                            null,
+                            _react2.default.createElement(
+                                _reactstrap.Row,
+                                { className: 'justify-content-md-center' },
+                                _react2.default.createElement(
+                                    'h1',
+                                    null,
+                                    this.state.query === '' ? "No Search Query" : "Search Results for: '" + this.state.query + "'"
+                                )
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'section',
+                    null,
+                    _react2.default.createElement(
+                        _reactstrap.Row,
+                        { className: 'justify-content-md-center' },
+                        this.state.models.map(function (model, i) {
+                            return _react2.default.createElement(
+                                _reactstrap.Card,
+                                { key: i, className: 'grid-model' },
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/' + model.type + '/' + model.id },
+                                    _react2.default.createElement(_reactstrap.CardImg, { className: 'grid-model-img', src: model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg' })
+                                ),
+                                _react2.default.createElement(
+                                    _reactstrap.CardBody,
+                                    null,
+                                    _react2.default.createElement(
+                                        'strong',
+                                        null,
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'model-name' },
+                                            model.name
+                                        )
+                                    ),
+                                    rows[i]
+                                )
+                            );
+                        }, this)
+                    ),
+                    no_results
+                ),
+                _react2.default.createElement(
+                    _reactstrap.Row,
+                    { className: 'justify-content-md-center page-footer' },
+                    _react2.default.createElement(
+                        _reactstrap.Col,
+                        { className: 'col-md-auto' },
+                        pagination
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Search;
+}(_react2.default.Component);
+
+exports.default = Search;
+
+},{"react":113,"react-router-dom":64,"reactstrap":114}],126:[function(require,module,exports){
+'use strict';
+
 var _App = require('./App');
 
 var _App2 = _interopRequireDefault(_App);
@@ -41712,7 +42302,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 ReactDOM.render(React.createElement(_App2.default, null), document.getElementById('root'));
 
-},{"./App":118}],126:[function(require,module,exports){
+},{"./App":118}],127:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -41898,4 +42488,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[125]);
+},{}]},{},[126]);

@@ -206,7 +206,7 @@ class Model extends React.Component {
 
                 var website = <a href={model.website}>{model.website}</a>;
                 if (model.website === null) {
-                    website = <li>No website</li>;
+                    website = <span>No website</span>;
                 }
 
                 attrib = (

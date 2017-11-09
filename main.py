@@ -175,7 +175,6 @@ def api_events_names():
 @app.route('/api/events/locations/names')
 def api_events_locations():
     return jsonify([[loc[0],loc[0]] for loc in models.Event.query.with_entities(models.Event.location).distinct().all()])
-    #return jsonify(next(zip(*models.Event.query.with_entities(models.Event.location).distinct().all())))
 
 @app.route('/api/search')
 def api_search():
@@ -199,7 +198,9 @@ def api_search():
 
 @app.route('/')
 @app.route('/about')
+@app.route('/search')
 @app.route('/boardgame/<id>/<model>')
+@app.route('/boardgamedesigner/<id>/<model>')
 @app.route('/<any("game", "genre", "developer", "event"):model>/<id>')
 @app.route('/<any("games", "genres", "developers", "events"):model>')
 @app.route('/<any("games", "genres", "developers", "events"):model>/')

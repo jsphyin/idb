@@ -2,8 +2,7 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Route,
-    Link,
-    Redirect
+    Link
 } from 'react-router-dom'
 import {
     Row,
@@ -23,135 +22,25 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
-import MultiSelect from './MultiSelect'
 
-const filters = {
-    'games': [
-        {label: 'Developer', value: 'developers'},
-        {label: 'Genre', value: 'genres'}
-    ],
-    'genres': [
-        {label: 'Game', value: 'games'},
-        {label: 'Developer', value: 'developers'}
-    ],
-    'developers': [
-        {label: 'Game', value: 'games'},
-        {label: 'Genre', value: 'genres'}
-    ],
-    'events': [
-        {label: 'Game', value: 'games'},
-        {label: 'Genre', value: 'genres'},
-        {label: 'Location', value: 'events/locations'}
-    ]
-};
+class Search extends React.Component {
 
-const sorts = {
-    'games': [
-        {label: 'Name ↑', value: '-name'},
-        {label: 'Name ↓', value: 'name'}, 
-        {label: 'Year ↑', value: '-year'},
-        {label: 'Year ↓', value: 'year'}
-    ],
-    'genres': [
-        {label: 'Name ↑', value: '-name'},
-        {label: 'Name ↓', value: 'name'}, 
-    ],
-    'developers': [
-        {label: 'Name ↑', value: '-name'},
-        {label: 'Name ↓', value: 'name'}, 
-    ],
-    'events': [
-        {label: 'Name ↑', value: '-name'},
-        {label: 'Name ↓', value: 'name'}, 
-        {label: 'Date ↑', value: '-time'},
-        {label: 'Date ↓', value: 'time'}, 
-    ]
-};
-
-class ModelGrid extends React.Component {
-    
     constructor(props) {
-        super(props);
-        this.type = props.match.url;
-        document.title = this.props.name + " - BGDB";
-        this.state = {
-            models: [],
-            page: 0,
-            total_pages: Infinity,
-            filter_options: {},
-            filterOpen: false,
-            sortOpen: false,
-            filter: {label: 'Filter by', value: ''},
-            values: '',
-            loading: false,
-            sort: {label: 'Name ↓', value: 'name'}
-        };
+        super(props)
         this.host = 'http://boardgamedb.me';
         if(window.location.hostname === 'localhost') {
             this.host = '';
         }
         this.params = this.parse_query(props.location.search)
-        this.params['per_page'] = 18;
-        this.model = props.name.toLowerCase()
-        if(!('sort' in this.params)) {
-            this.params['sort'] = this.state.sort.value
-        } else {
-            var found = false;
-            for(var i = 0; i < sorts[this.model].length; i++) {
-                if(this.params['sort'] === sorts[this.model][i].value) {
-                    this.state.sort = sorts[this.model][i];
-                    found = true;
-                    break;
-                }
-            }
-            if(!found) {
-                this.params['sort'] = this.state.sort.value
-            }
+        this.params['per_page'] = 9;
+        this.state = {
+            query: '',
+            page: 0,
+            total_pages: Infinity,
+            models: [],
+            loading: false
         }
-        this.fetch_page('page' in this.params ? this.params['page'] : 1);
-        for(let i = 0; i < filters[this.model].length; i++) {
-            let filter = filters[this.model][i]
-            fetch(this.host + '/api/' + filter.value + '/names', {method: 'GET'})
-                .then(response => response.json())
-                .then(json => {
-                    var filter_options = []
-                    for(var j = 0; j < json.length; j++) {
-                        filter_options.push({
-                            label: json[j][1],
-                            value: json[j][0].toString()
-                        });
-                    }
-                    this.state.filter_options[filter.value] = filter_options;
-                    let filter_param = filter.value.split('/')
-                    filter_param = filter_param[filter_param.length - 1]
-                    if(filter_param in this.params) {
-                        this.state.values = decodeURI(this.params[filter_param])
-                        this.state.filter = filter;
-                    }
-                    this.setState(this.state);
-                });
-        }
-    }
-
-    set_values(values) {
-        this.state.values = values;
-        if(values === '') {
-            var filter = this.state.filter.value.split('/')
-            filter = filter[filter.length-1]
-            delete this.params[filter]
-        } else {
-            for(var i = 0; i < filters[this.model].length; i++) {
-                var filter = filters[this.model][i].value.split('/')
-                filter = filter[filter.length-1]
-                if(filter in this.params && filter !== this.state.filter.value) {
-                    delete this.params[filter]
-                }
-            }
-            var filter = this.state.filter.value.split('/')
-            filter = filter[filter.length-1]
-            this.params[filter] = values;
-        }
-        this.fetch_page(1, true);
+        this.fetch_page('page' in this.params ? this.params['page'] : 1, true)
     }
 
     // Returns object with keys -> values
@@ -188,39 +77,55 @@ class ModelGrid extends React.Component {
             && page_number <= this.state.total_pages)) {
             // Set page number in params
             this.params['page'] = page_number;
+            if('query' in this.params) {
+                this.state.query = this.params['query']
+            } else if('search-input' in this.params) {
+                this.state.query = this.params['search-input']
+                delete this.params['search-input']
+                this.params['query'] = this.state.query
+            } else if('search-button' in this.params) {
+                this.state.query = this.params['search-button']
+                delete this.params['search-button']
+                this.params['query'] = this.state.query
+            } else {
+                this.state.query = ''
+                this.setState(this.state)
+                return;
+            }
 
             // Generate query
             let query = this.gen_query(this.params);
 
             // Set URL
-            this.props.history.push(this.host + '/' + this.model + query);
+            this.props.history.push(this.host + '/search' + query);
             this.state.loading = true;
 
             // Fetch new grid model data
-            fetch(this.host + '/api/' + this.model + query, {method: 'GET'})
+            fetch(this.host + '/api/search' + query, {method: 'GET'})
                 .then(response => response.json())
                 .then(json => {
                     this.state.page = json.page;
                     this.state.total_pages = json.total_pages;
-                    this.state.models = json.results;
-                    this.state.loading = false;
-                    this.setState(this.state);
+                    this.models = []
+                    var count = 0;
+                    for(let i = 0; i < json.results.length; i++) {
+                        fetch(this.host + '/api/' + json.results[i].type + 's/' + json.results[i].id, {method: 'GET'})
+                            .then(r => r.json())
+                            .then(j => {
+                                j.type = json.results[i].type
+                                this.state.models.push(j)
+                                count += 1
+                                if(count == json.results.length) {
+                                    this.state.loading = false
+                                    this.setState(this.state)
+                                }
+                            });
+                    }
                 });
         }
     }
 
-    filter_toggle() {
-        this.state.filterOpen = !this.state.filterOpen;
-        this.setState(this.state);
-    }
-
-    sort_toggle() {
-        this.state.sortOpen = !this.state.sortOpen;
-        this.setState(this.state);
-    }
-
     render() {
-        var rows = []
         var no_results = ''
         if(this.state.models.length == 0 && !this.state.loading) {
             no_results = (
@@ -229,10 +134,11 @@ class ModelGrid extends React.Component {
                 </h1>
             );
         }
+        var rows = []
         for(var i = 0; i < this.state.models.length; i++) {
             var model = this.state.models[i];
-            switch(this.props.name) {
-                case "Games":
+            switch(model.type) {
+                case "game":
                     var devs = <div>Unknown Developer</div>;
                     if (model.developers.length > 0) {
                         devs = <div>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
@@ -246,7 +152,7 @@ class ModelGrid extends React.Component {
                         </ul>
                     );
                     break;
-                case "Genres":
+                case "genre":
                     var devs = <div>No notable devs</div>;
                     if (model.developers.length > 0) {
                         devs = <div>Notable Dev: <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
@@ -267,7 +173,7 @@ class ModelGrid extends React.Component {
                         </ul>
                     );
                     break;
-                case "Developers":
+                case "developer":
                     var genres = <div>No Genres</div>;
                     if (model.genres.length > 0) {
                         genres = <div>Genres: <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link></div>;
@@ -288,7 +194,7 @@ class ModelGrid extends React.Component {
                         </ul>
                     );
                     break;
-                case "Events":
+                case "event":
                     var val = <div>No Games or Genres</div>
                     if (model.games.length > 0) {
                         val = <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link>;
@@ -306,7 +212,7 @@ class ModelGrid extends React.Component {
                     break;
             }
         }
-        
+
         // Pagination
         var pages = [];
         var show_pages = 2;
@@ -328,71 +234,15 @@ class ModelGrid extends React.Component {
             <Button color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
             </ButtonGroup>
         );
-
-        // Filtering
-        var filter_type = (
-            <DropdownMenu>
-                {filters[this.model].map(function(filter, i) {
-                    return (
-                        <DropdownItem key={i} onClick={() => {
-                            if(this.state.filter !== filter) {
-                                this.set_values('');
-                            }
-                            this.state.filter=filter;
-                            this.setState(this.state)
-                        }}>{filter.label}</DropdownItem> 
-                    );
-                }, this)}
-            </DropdownMenu>
-        );
-
-        // Sorting
-        var sort_type = (
-            <DropdownMenu>
-                {sorts[this.model].map(function(sort, i) {
-                    return (
-                        <DropdownItem key={i} onClick={() => {
-                            this.state.sort=sort;
-                            this.setState(this.state)
-                            this.params['sort'] = this.state.sort.value
-                            this.fetch_page(1, true);
-                        }}>{sort.label}</DropdownItem> 
-                    );
-                }, this)}
-            </DropdownMenu>
-        );
         return (
             <div className="container">
                 <div className='page-header'>
                     <Card>
                         <CardHeader>
                             <Row className="justify-content-md-center">
-                                <h1>{this.props.name}</h1>
+                                <h1>{this.state.query === '' ? "No Search Query" : "Search Results for: '" + this.state.query + "'"}</h1>
                             </Row>
                         </CardHeader>
-                        <CardBody>
-                            <Row className="justify-content-md-center">
-                                <Col sm='auto'>
-                                    <Dropdown isOpen={this.state.filterOpen} toggle={this.filter_toggle.bind(this)}>
-                                        <DropdownToggle color='primary' caret>
-                                            {this.state.filter.label}
-                                        </DropdownToggle>
-                                        {filter_type}
-                                    </Dropdown>
-                                </Col>
-                                <Col sm='8'>
-                                    <MultiSelect options={this.state.filter_options[this.state.filter.value]} name='' set_values={this.set_values.bind(this)} values={this.state.values} />
-                                </Col>
-                                <Col sm='auto'>
-                                    <Dropdown isOpen={this.state.sortOpen} toggle={this.sort_toggle.bind(this)}>
-                                        <DropdownToggle color='primary' caret>
-                                            {this.state.sort.label}
-                                        </DropdownToggle>
-                                        {sort_type}
-                                    </Dropdown>
-                                </Col>
-                            </Row>
-                        </CardBody>
                     </Card>
                 </div>
                 <section>
@@ -400,7 +250,7 @@ class ModelGrid extends React.Component {
                     {this.state.models.map(function(model, i) {
                         return (
                                 <Card key={i} className='grid-model'>
-                                    <Link to={'/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id}>
+                                    <Link to={'/' + model.type + '/' + model.id}>
                                     <CardImg className='grid-model-img' src={model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'}/>
                                     </Link>
                                     <CardBody>
@@ -419,8 +269,9 @@ class ModelGrid extends React.Component {
                     </Col>
                 </Row>
             </div>
-        );
+        )
     }
 
 }
-export default ModelGrid;
+
+export default Search;
