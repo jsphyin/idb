@@ -161,6 +161,10 @@ def api_developers_names():
 def api_events_names():
     return jsonify(models.Event.query.with_entities(models.Event.id, models.Event.name).all())
 
+@app.route('/api/events/locations')
+def api_events_locations():
+    return jsonify(next(zip(*models.Event.query.with_entities(models.Event.location).distinct().all())))
+
 @app.route('/api/search')
 def api_search():
     query = request.args.get('query')
