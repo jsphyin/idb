@@ -41856,8 +41856,10 @@ var Search = function (_React$Component) {
     }, {
         key: 'grab_words',
         value: function grab_words(text, width) {
+            var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
             var words = text.split(/\s+/);
-            return words.slice(0, width).join(' ') + (words.length > 30 ? '...' : '');
+            return words.slice(offset, offset + width).join(' ') + (words.length > 30 ? '...' : '');
         }
     }, {
         key: 'highlight_text',
@@ -41892,17 +41894,8 @@ var Search = function (_React$Component) {
             var e = Math.min(index + radius, words.length);
             var begin = Math.max(b - (radius - (e - index)), 0);
             var end = Math.min(e + (radius - (index - b)), words.length);
-            var before = begin == 0 ? '' : '...';
-            var after = '';
-            for (var i = begin; i < end; i++) {
-                if (i < index) {
-                    before += words[i] + ' ';
-                }
-                if (i > index) {
-                    after += ' ' + words[i];
-                }
-            }
-            after += end == words.length ? '' : '...';
+            var before = (begin == 0 ? '' : '...') + words.slice(begin, index).join(' ') + ' ';
+            var after = ' ' + words.slice(index + 1, end).join(' ') + (end == words.length ? '' : '...');
             return _react2.default.createElement(
                 'p',
                 null,
