@@ -2,7 +2,8 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Redirect
 } from 'react-router-dom'
 import {
     Navbar,
@@ -10,15 +11,56 @@ import {
     NavbarBrand,
     Nav,
     NavLink,
-    InputGroup,
+    Form,
+    FormGroup,
     Input,
-    InputGroupAddon,
+    InputGroup,
+    InputGroupButton,
+    Button,
     Col
 } from 'reactstrap';
 
 class NavBar extends React.Component {
 
+    constructor(props) {
+        super(props)
+        var query = window.location.href.split('?')
+        if(query.length > 1) {
+            this.params = this.parse_query('?' + query[1])
+        } else {
+            this.params = {}
+        }
+    }
+
+    // Returns object with keys -> values
+    parse_query(query) {
+        if(query === '') {
+            return [];
+        }
+        var params = {};
+        var query_params = query.slice(1, query.length).split('&')
+        for(var i = 0; i < query_params.length; i++) {
+            var param = query_params[i].split('=');
+            if(param.length > 1) {
+                params[param[0]] = param[1];
+            }
+        }
+        return params;
+    }
+
     render() {
+        var query = window.location.href.split('?')
+        if(query.length > 1) {
+            this.params = this.parse_query('?' + query[1])
+        } else {
+            this.params = {}
+        }
+        if('search-input' in this.params && this.params['search-input'] !== '') {
+            return <Redirect push to={'/search?query=' + this.params['search-input']} />
+        }
+        if('search-button' in this.params && this.params['search-button'] !== '') {
+            return <Redirect push to={'/search?query=' + this.params['search-button']} />
+        }
         return (
             <Navbar color="faded" light expand="lg" className="container-fluid bg-light">
                 <NavbarBrand href="/">BGDB</NavbarBrand>
@@ -45,10 +87,14 @@ class NavBar extends React.Component {
                     </Nav>
                     </Col>
                     <Col className="col-md-3 mr-auto">
-                        <InputGroup>
-                        <Input placeholder="Search" />
-                        <InputGroupAddon> <span className="fa fa-search"></span> </InputGroupAddon>
-                        </InputGroup>
+                        <Form onSubmit={() => console.log("Yo")}>
+                            <FormGroup>
+                                <InputGroup>
+                                    <Input name='search-button' placeholder="Search" />
+                                    <InputGroupButton><Button className="fa fa-search"></Button></InputGroupButton>
+                                </InputGroup>
+                            </FormGroup>
+                        </Form>
                     </Col>
             </Navbar>
         );
