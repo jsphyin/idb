@@ -24,6 +24,17 @@ def paginated(query):
         'results': [i.json() for i in instances]
     })
 
+def get_list(data):
+    if data:
+        return data.split('|')
+    return []
+
+def get_int_list(data):
+    try:
+        return [int(datum) for datum in data.split('|')]
+    except ValueError:
+        return []
+
 @app.route('/api/games/<game_id>')
 @app.route('/api/games/')
 @app.route('/api/games')
@@ -33,11 +44,11 @@ def api_games(game_id=None):
 
     q = models.Game.query
 
-    genres = request.args.getlist('genres', type=int)
+    genres = get_int_list(request.args.get('genres', ''))
     if genres:
         q = q.filter(models.Game.genres.any(models.Genre.id.in_(genres)))
 
-    developers = request.args.getlist('developers', type=int)
+    developers = get_int_list(request.args.get('developers', ''))
     if developers:
         q = q.filter(models.Game.developers.any(models.Developer.id.in_(developers)))
 
@@ -64,11 +75,11 @@ def api_genres(genre_id=None):
 
     q = models.Genre.query
 
-    games = request.args.getlist('games', type=int)
+    games = get_int_list(request.args.get('games', ''))
     if games:
         q = q.filter(models.Genre.games.any(models.Game.id.in_(games)))
 
-    developers = request.args.getlist('developers', type=int)
+    developers = get_int_list(request.args.get('developers', ''))
     if developers:
         q = q.filter(models.Genre.developers.any(models.Developer.id.in_(developers)))
 
@@ -91,11 +102,11 @@ def api_developers(developer_id=None):
 
     q = models.Developer.query
 
-    games = request.args.getlist('games', type=int)
+    games = get_int_list(request.args.get('games', ''))
     if games:
         q = q.filter(models.Developer.games.any(models.Game.id.in_(games)))
 
-    genres = request.args.getlist('genres', type=int)
+    genres = get_int_list(request.args.get('genres', ''))
     if genres:
         q = q.filter(models.Developer.genres.any(models.Genre.id.in_(genres)))
 
@@ -118,18 +129,18 @@ def api_events(event_id=None):
 
     q = models.Event.query
 
-    games = request.args.getlist('games', type=int)
+    games = get_int_list(request.args.get('games', ''))
     if games:
         q = q.filter(models.Event.games.any(models.Game.id.in_(games)))
 
-    genres = request.args.getlist('genres', type=int)
+    genres = get_int_list(request.args.get('genres', ''))
     if genres:
         q = q.filter(models.Event.direct_genres.any(models.Genre.id.in_(genres)) |
                      models.Event.indirect_genres.any(models.Genre.id.in_(genres)))
 
-    location = request.args.getlist('location')
-    if location:
-        q = q.filter(models.Event.location.in_(location))
+    locations = get_list(request.args.get('locations', ''))
+    if locations:
+        q = q.filter(models.Event.location.in_(locations))
 
     sort = request.args.get('sort', 'name')
     if sort == 'name':
@@ -161,9 +172,10 @@ def api_developers_names():
 def api_events_names():
     return jsonify(models.Event.query.with_entities(models.Event.id, models.Event.name).all())
 
-@app.route('/api/events/locations')
+@app.route('/api/events/locations/names')
 def api_events_locations():
-    return jsonify(next(zip(*models.Event.query.with_entities(models.Event.location).distinct().all())))
+    return jsonify([[loc[0],loc[0]] for loc in models.Event.query.with_entities(models.Event.location).distinct().all()])
+    #return jsonify(next(zip(*models.Event.query.with_entities(models.Event.location).distinct().all())))
 
 @app.route('/api/search')
 def api_search():

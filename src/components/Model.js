@@ -261,7 +261,7 @@ class Model extends React.Component {
             <div className="container">
                 <section>
                     <Card className='model-instance'>
-                        <CardImg className='model-instance-img' src={model.img}/>
+                        <CardImg className='model-instance-img' src={model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'}/>
                         <CardBody>
                             <strong><h1 className='model-name'>{model.name}</h1></strong>
                             {attrib}

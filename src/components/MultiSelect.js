@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
+import VirtualizedSelect from 'react-virtualized-select';
 
 class MultiSelect extends React.Component {
     constructor(props) {
@@ -10,36 +10,29 @@ class MultiSelect extends React.Component {
             removeSelected: true,
             disabled: false,
             stayOpen: false,
-            value: [],
             rtl: false
         };
     }
 
-    handleSelectChange (value) {
-        this.state.value = value;
-        this.setState(this.state);
-        console.log(this.state)
+    handleSelectChange (values) {
+        this.props.set_values(values);
     }
 
     render () {
-        var options = [];
-        for(var i = 0; i < this.props.options.length; i++) {
-            options.push({label: this.props.options[i].label, value: this.props.options[i].value.toString()});
-        }
         return (
-            <Select
+            <VirtualizedSelect
                 closeOnSelect={!this.state.stayOpen}
                 disabled={false}
                 multi
                 joinValues
-                delimiter=','
+                delimiter='|'
                 onChange={this.handleSelectChange.bind(this)}
-                options={options}
+                options={this.props.options}
                 placeholder={this.displayName}
                 removeSelected={true}
                 rtl={false}
                 simpleValue
-                value={this.state.value}
+                value={this.props.values}
             />
         );
     }

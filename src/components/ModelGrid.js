@@ -17,22 +17,55 @@ import {
     CardImg,
     CardSubtitle,
     Button,
-    ButtonGroup
+    ButtonGroup,
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
 } from 'reactstrap';
 import MultiSelect from './MultiSelect'
 
 const filters = {
-    'games': ['developers', 'genres'],
-    'genres': ['games', 'developers'],
-    'developers': ['games', 'genres'],
-    'events': ['games', 'genres', 'location']
+    'games': [
+        {label: 'Developer', value: 'developers'},
+        {label: 'Genre', value: 'genres'}
+    ],
+    'genres': [
+        {label: 'Game', value: 'games'},
+        {label: 'Developer', value: 'developers'}
+    ],
+    'developers': [
+        {label: 'Game', value: 'games'},
+        {label: 'Genre', value: 'genres'}
+    ],
+    'events': [
+        {label: 'Game', value: 'games'},
+        {label: 'Genre', value: 'genres'},
+        {label: 'Location', value: 'events/locations'}
+    ]
 };
 
 const sorts = {
-    'games': ['Name Ascending', 'Name Descending', 'Year Ascending', 'Year Descending'],
-    'genres': ['Name Ascending', 'Name Descending'],
-    'developers': ['Name Ascending', 'Name Descending'],
-    'events': ['Name Ascending', 'Name Descending', 'Date Ascending', 'Date Descending']
+    'games': [
+        {label: 'Name ↑', value: '-name'},
+        {label: 'Name ↓', value: 'name'}, 
+        {label: 'Year ↑', value: '-year'},
+        {label: 'Year ↓', value: 'year'}
+    ],
+    'genres': [
+        {label: 'Name ↑', value: '-name'},
+        {label: 'Name ↓', value: 'name'}, 
+    ],
+    'developers': [
+        {label: 'Name ↑', value: '-name'},
+        {label: 'Name ↓', value: 'name'}, 
+    ],
+    'events': [
+        {label: 'Name ↑', value: '-name'},
+        {label: 'Name ↓', value: 'name'}, 
+        {label: 'Date ↑', value: '-time'},
+        {label: 'Date ↓', value: 'time'}, 
+    ]
 };
 
 class ModelGrid extends React.Component {
@@ -45,7 +78,13 @@ class ModelGrid extends React.Component {
             models: [],
             page: 0,
             total_pages: Infinity,
-            filter_options: []
+            filter_options: {},
+            filterOpen: false,
+            sortOpen: false,
+            filter: {label: 'Filter by', value: ''},
+            values: '',
+            loading: false,
+            sort: {label: 'Name ↓', value: 'name'}
         };
         this.host = 'http://boardgamedb.me';
         if(window.location.hostname === 'localhost') {
@@ -54,20 +93,65 @@ class ModelGrid extends React.Component {
         this.params = this.parse_query(props.location.search)
         this.params['per_page'] = 18;
         this.model = props.name.toLowerCase()
-        this.fetch_page('page' in this.params ? this.params['page'] : 1);
-        fetch(this.host + '/api/' + this.model + '/names', {method: 'GET'})
-            .then(response => response.json())
-            .then(json => {
-                var filter_options = []
-                for(var i = 0; i < json.length; i++) {
-                    filter_options.push({
-                        label: json[i][1],
-                        value: json[i][0]
-                    });
+        if(!('sort' in this.params)) {
+            this.params['sort'] = this.state.sort.value
+        } else {
+            var found = false;
+            for(var i = 0; i < sorts[this.model].length; i++) {
+                if(this.params['sort'] === sorts[this.model][i].value) {
+                    this.state.sort = sorts[this.model][i];
+                    found = true;
+                    break;
                 }
-                this.state.filter_options = filter_options;
-                this.setState(this.state);
-            });
+            }
+            if(!found) {
+                this.params['sort'] = this.state.sort.value
+            }
+        }
+        this.fetch_page('page' in this.params ? this.params['page'] : 1);
+        for(let i = 0; i < filters[this.model].length; i++) {
+            let filter = filters[this.model][i]
+            fetch(this.host + '/api/' + filter.value + '/names', {method: 'GET'})
+                .then(response => response.json())
+                .then(json => {
+                    var filter_options = []
+                    for(var j = 0; j < json.length; j++) {
+                        filter_options.push({
+                            label: json[j][1],
+                            value: json[j][0].toString()
+                        });
+                    }
+                    this.state.filter_options[filter.value] = filter_options;
+                    let filter_param = filter.value.split('/')
+                    filter_param = filter_param[filter_param.length - 1]
+                    if(filter_param in this.params) {
+                        this.state.values = decodeURI(this.params[filter_param])
+                        this.state.filter = filter;
+                    }
+                    this.setState(this.state);
+                });
+        }
+    }
+
+    set_values(values) {
+        this.state.values = values;
+        if(values === '') {
+            var filter = this.state.filter.value.split('/')
+            filter = filter[filter.length-1]
+            delete this.params[filter]
+        } else {
+            for(var i = 0; i < filters[this.model].length; i++) {
+                var filter = filters[this.model][i].value.split('/')
+                filter = filter[filter.length-1]
+                if(filter in this.params && filter !== this.state.filter.value) {
+                    delete this.params[filter]
+                }
+            }
+            var filter = this.state.filter.value.split('/')
+            filter = filter[filter.length-1]
+            this.params[filter] = values;
+        }
+        this.fetch_page(1, true);
     }
 
     // Returns object with keys -> values
@@ -99,18 +183,18 @@ class ModelGrid extends React.Component {
         return query;
     }
 
-    fetch_page(page_number) {
-        if(this.state.page != page_number && page_number >= 1
-            && page_number <= this.state.total_pages) {
-
+    fetch_page(page_number, force_fetch = false) {
+        if(force_fetch || (this.state.page != page_number && page_number >= 1
+            && page_number <= this.state.total_pages)) {
             // Set page number in params
             this.params['page'] = page_number;
 
             // Generate query
-            var query = this.gen_query(this.params);
+            let query = this.gen_query(this.params);
 
             // Set URL
             this.props.history.push(this.host + '/' + this.model + query);
+            this.state.loading = true;
 
             // Fetch new grid model data
             fetch(this.host + '/api/' + this.model + query, {method: 'GET'})
@@ -119,13 +203,32 @@ class ModelGrid extends React.Component {
                     this.state.page = json.page;
                     this.state.total_pages = json.total_pages;
                     this.state.models = json.results;
+                    this.state.loading = false;
                     this.setState(this.state);
                 });
         }
     }
 
+    filter_toggle() {
+        this.state.filterOpen = !this.state.filterOpen;
+        this.setState(this.state);
+    }
+
+    sort_toggle() {
+        this.state.sortOpen = !this.state.sortOpen;
+        this.setState(this.state);
+    }
+
     render() {
         var rows = []
+        var no_results = ''
+        if(this.state.models.length == 0 && !this.state.loading) {
+            no_results = (
+                <h1 style={{textAlign: 'center', margin: '20px'}}>
+                    No Results
+                </h1>
+            );
+        }
         for(var i = 0; i < this.state.models.length; i++) {
             var model = this.state.models[i];
             switch(this.props.name) {
@@ -203,6 +306,8 @@ class ModelGrid extends React.Component {
                     break;
             }
         }
+        
+        // Pagination
         var pages = [];
         var show_pages = 2;
         for(var i = -show_pages; i <= show_pages; i++) {
@@ -219,9 +324,42 @@ class ModelGrid extends React.Component {
                     <Button key={i} color={this.state.page == page ? "link" : ""} onClick={() => this.fetch_page(page)}>{page}</Button>
                 );
             }, this)}
-            <Button color={this.state.page == this.state.total_pages ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
-            <Button color={this.state.page == this.state.total_pages ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
+            <Button color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
+            <Button color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
             </ButtonGroup>
+        );
+
+        // Filtering
+        var filter_type = (
+            <DropdownMenu>
+                {filters[this.model].map(function(filter, i) {
+                    return (
+                        <DropdownItem key={i} onClick={() => {
+                            if(this.state.filter !== filter) {
+                                this.set_values('');
+                            }
+                            this.state.filter=filter;
+                            this.setState(this.state)
+                        }}>{filter.label}</DropdownItem> 
+                    );
+                }, this)}
+            </DropdownMenu>
+        );
+
+        // Sorting
+        var sort_type = (
+            <DropdownMenu>
+                {sorts[this.model].map(function(sort, i) {
+                    return (
+                        <DropdownItem key={i} onClick={() => {
+                            this.state.sort=sort;
+                            this.setState(this.state)
+                            this.params['sort'] = this.state.sort.value
+                            this.fetch_page(1, true);
+                        }}>{sort.label}</DropdownItem> 
+                    );
+                }, this)}
+            </DropdownMenu>
         );
         return (
             <div className="container">
@@ -232,11 +370,29 @@ class ModelGrid extends React.Component {
                                 <h1>{this.props.name}</h1>
                             </Row>
                         </CardHeader>
-                        <Row className="justify-content-md-center">
-                            <Col>
-                                <MultiSelect options={this.state.filter_options} name="Banana" />
-                            </Col>
-                        </Row>
+                        <CardBody>
+                            <Row>
+                                <Col sm='auto'>
+                                    <Dropdown isOpen={this.state.filterOpen} toggle={this.filter_toggle.bind(this)}>
+                                        <DropdownToggle color='primary' caret>
+                                            {this.state.filter.label}
+                                        </DropdownToggle>
+                                        {filter_type}
+                                    </Dropdown>
+                                </Col>
+                                <Col sm='8'>
+                                    <MultiSelect options={this.state.filter_options[this.state.filter.value]} name='' set_values={this.set_values.bind(this)} values={this.state.values} />
+                                </Col>
+                                <Col sm='auto'>
+                                <Dropdown isOpen={this.state.sortOpen} toggle={this.sort_toggle.bind(this)}>
+                                    <DropdownToggle color='primary' caret>
+                                        {this.state.sort.label}
+                                    </DropdownToggle>
+                                    {sort_type}
+                                </Dropdown>
+                                </Col>
+                            </Row>
+                        </CardBody>
                     </Card>
                 </div>
                 <section>
@@ -245,7 +401,7 @@ class ModelGrid extends React.Component {
                         return (
                                 <Card key={i} className='grid-model'>
                                     <Link to={'/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id}>
-                                    <CardImg className='grid-model-img' src={model.img}/>
+                                    <CardImg className='grid-model-img' src={model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'}/>
                                     </Link>
                                     <CardBody>
                                         <strong><span className='model-name'>{model.name}</span></strong>
@@ -255,6 +411,7 @@ class ModelGrid extends React.Component {
                         );
                     }, this)}
                     </Row>
+                {no_results}
                 </section>
                 <Row className="justify-content-md-center page-footer">
                     <Col className="col-md-auto">
