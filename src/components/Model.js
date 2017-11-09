@@ -100,7 +100,7 @@ class Model extends React.Component {
                 if (model.genres.length > 0) {
                     gens = []
                     for(var i = 0; i < model.genres.length; i++) {
-                        gens.push(<li key={i}>{model.genres[i][1]}</li>);
+                        gens.push(<li key={i}><Link to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
                     }
                 }
 
@@ -192,7 +192,7 @@ class Model extends React.Component {
                 if (model.genres.length > 0) {
                     gens = []
                     for(var i = 0; i < model.genres.length; i++) {
-                        gens.push(<li key={i}>{model.genres[i][1]}</li>);
+                        gens.push(<li key={i}><Link to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
                     }
                 }
 

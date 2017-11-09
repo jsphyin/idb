@@ -40364,7 +40364,11 @@ var Model = function (_React$Component) {
                             gens.push(_react2.default.createElement(
                                 'li',
                                 { key: i },
-                                model.genres[i][1]
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/genre/' + model.genres[i][0] },
+                                    model.genres[i][1]
+                                )
                             ));
                         }
                     }
@@ -40594,7 +40598,11 @@ var Model = function (_React$Component) {
                             gens.push(_react2.default.createElement(
                                 'li',
                                 { key: i },
-                                model.genres[i][1]
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/genre/' + model.genres[i][0] },
+                                    model.genres[i][1]
+                                )
                             ));
                         }
                     }
@@ -41780,6 +41788,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var badge = {
+    'game': 'success',
+    'genre': 'danger',
+    'developers': 'dark',
+    'events': 'primary'
+};
+
+var grab_radius = 15;
+
 var Search = function (_React$Component) {
     _inherits(Search, _React$Component);
 
@@ -41789,7 +41806,7 @@ var Search = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 
         _this.params = _this.parse_query(props.location.search);
-        _this.params['per_page'] = 9;
+        _this.params['per_page'] = 10;
         _this.state = {
             query: '',
             page: 0,
@@ -41837,6 +41854,72 @@ var Search = function (_React$Component) {
             return query;
         }
     }, {
+        key: 'grab_words',
+        value: function grab_words(text, width) {
+            var words = text.split(/\s+/);
+            return words.slice(0, width).join(' ') + (words.length > 30 ? '...' : '');
+        }
+    }, {
+        key: 'highlight_text',
+        value: function highlight_text(text, word) {
+            var radius = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : grab_radius;
+
+            var words = text.split(/\s+/);
+            var index = -1;
+            var complete_word = '';
+            for (var i = 0; i < words.length; i++) {
+                if (words[i].toLowerCase().indexOf(word.toLowerCase()) != -1) {
+                    var idx = words[i].toLowerCase().indexOf(word.toLowerCase());
+                    complete_word = _react2.default.createElement(
+                        'span',
+                        null,
+                        words[i].substring(0, idx),
+                        _react2.default.createElement(
+                            'span',
+                            { style: { backgroundColor: 'yellow' } },
+                            words[i].substring(idx, idx + word.length)
+                        ),
+                        words[i].substring(idx + word.length, words[i].length)
+                    );
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) {
+                return -1;
+            }
+            var b = Math.max(index - radius, 0);
+            var e = Math.min(index + radius, words.length);
+            var begin = Math.max(b - (radius - (e - index)), 0);
+            var end = Math.min(e + (radius - (index - b)), words.length);
+            var before = begin == 0 ? '' : '...';
+            var after = '';
+            for (var i = begin; i < end; i++) {
+                if (i < index) {
+                    before += words[i] + ' ';
+                }
+                if (i > index) {
+                    after += ' ' + words[i];
+                }
+            }
+            after += end == words.length ? '' : '...';
+            return _react2.default.createElement(
+                'p',
+                null,
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    before
+                ),
+                complete_word,
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    after
+                )
+            );
+        }
+    }, {
         key: 'fetch_page',
         value: function fetch_page(page_number) {
             var _this2 = this;
@@ -41868,24 +41951,58 @@ var Search = function (_React$Component) {
                 // Set URL
                 this.props.history.push('/search' + query);
                 this.state.loading = true;
+                var words = this.state.query.split(/\s+/);
 
                 // Fetch new grid model data
                 fetch('/api/search' + query, { method: 'GET' }).then(function (response) {
                     return response.json();
                 }).then(function (json) {
+                    _this2.state.models = [];
                     _this2.state.page = json.page;
                     _this2.state.total_pages = json.total_pages;
-                    _this2.models = [];
+                    var models = {};
                     var count = 0;
 
                     var _loop = function _loop(i) {
                         fetch('/api/' + json.results[i].type + 's/' + json.results[i].id, { method: 'GET' }).then(function (r) {
                             return r.json();
                         }).then(function (j) {
-                            j.type = json.results[i].type;
-                            _this2.state.models.push(j);
+                            var instance = {
+                                type: json.results[i].type,
+                                name: j.name,
+                                img: j.img,
+                                id: json.results[i].id,
+                                attributes: []
+                            };
+                            var raw_desc = j.desc == null ? '' : j.desc.replace(/<[^>]*>/g, ' ');
+                            var elem = document.createElement('textarea');
+                            elem.innerHTML = raw_desc;
+                            raw_desc = elem.value;
+                            instance['desc'] = _this2.grab_words(raw_desc, 0, 2 * grab_radius);
+                            for (var k = 0; k < words.length; k++) {
+                                var word = words[k];
+                                var desc_highlight = _this2.highlight_text(raw_desc, word);
+                                if (desc_highlight != -1) {
+                                    instance.attributes.push(desc_highlight);
+                                }
+                                switch (json.results[i].type) {
+                                    case "game":
+                                        //alt_names
+                                        break;
+                                    case "developer":
+                                        //website
+                                        break;
+                                    case "event":
+                                        //link
+                                        break;
+                                }
+                            }
+                            models[i] = instance;
                             count += 1;
                             if (count == json.results.length) {
+                                for (var k = 0; k < json.results.length; k++) {
+                                    _this2.state.models.push(models[k]);
+                                }
                                 _this2.state.loading = false;
                                 _this2.setState(_this2.state);
                             }
@@ -41914,245 +42031,20 @@ var Search = function (_React$Component) {
             var rows = [];
             for (var i = 0; i < this.state.models.length; i++) {
                 var model = this.state.models[i];
-                switch (model.type) {
-                    case "game":
-                        var devs = _react2.default.createElement(
-                            'div',
-                            null,
-                            'Unknown Developer'
+                if (model.attributes.length == 0) {
+                    rows.push(_react2.default.createElement(
+                        'p',
+                        null,
+                        model.desc
+                    ));
+                } else {
+                    rows.push(model.attributes.map(function (context, i) {
+                        return _react2.default.createElement(
+                            'p',
+                            { key: i },
+                            context
                         );
-                        if (model.developers.length > 0) {
-                            devs = _react2.default.createElement(
-                                'div',
-                                null,
-                                'Developed by ',
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/developer/' + model.developers[0][0] },
-                                    model.developers[0][1]
-                                )
-                            );
-                        }
-                        rows.push(_react2.default.createElement(
-                            'ul',
-                            { className: 'model-attribute' },
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                devs
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                model.min_players,
-                                ' - ',
-                                model.max_players,
-                                ' Players'
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                'Released in ',
-                                model.year
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                'Rated ',
-                                model.rating,
-                                '/10'
-                            )
-                        ));
-                        break;
-                    case "genre":
-                        var devs = _react2.default.createElement(
-                            'div',
-                            null,
-                            'No notable devs'
-                        );
-                        if (model.developers.length > 0) {
-                            devs = _react2.default.createElement(
-                                'div',
-                                null,
-                                'Notable Dev: ',
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/developer/' + model.developers[0][0] },
-                                    model.developers[0][1]
-                                )
-                            );
-                        }
-                        var games = _react2.default.createElement(
-                            'div',
-                            null,
-                            'No notable games'
-                        );
-                        if (model.games.length > 0) {
-                            games = _react2.default.createElement(
-                                'div',
-                                null,
-                                'Notable Games: ',
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/game/' + model.games[0][0] },
-                                    model.games[0][1]
-                                )
-                            );
-                        }
-                        var events = _react2.default.createElement(
-                            'div',
-                            null,
-                            'No events'
-                        );
-                        if (model.events.length > 0) {
-                            events = _react2.default.createElement(
-                                'div',
-                                null,
-                                'Events: ',
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/event/' + model.events[0][0] },
-                                    model.events[0][1]
-                                )
-                            );
-                        }
-                        rows.push(_react2.default.createElement(
-                            'ul',
-                            { className: 'model-attribute' },
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                devs
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                games
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                events
-                            )
-                        ));
-                        break;
-                    case "developer":
-                        var genres = _react2.default.createElement(
-                            'div',
-                            null,
-                            'No Genres'
-                        );
-                        if (model.genres.length > 0) {
-                            genres = _react2.default.createElement(
-                                'div',
-                                null,
-                                'Genres: ',
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/genre/' + model.genres[0][0] },
-                                    model.genres[0][1]
-                                )
-                            );
-                        }
-                        var games = _react2.default.createElement(
-                            'div',
-                            null,
-                            'No notable games'
-                        );
-                        if (model.games.length > 0) {
-                            games = _react2.default.createElement(
-                                'div',
-                                null,
-                                'Notable Games: ',
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/game/' + model.games[0][0] },
-                                    model.games[0][1]
-                                )
-                            );
-                        }
-                        var website = _react2.default.createElement(
-                            'a',
-                            { href: model.website },
-                            model.website
-                        );
-                        if (model.website === null) {
-                            website = _react2.default.createElement(
-                                'div',
-                                null,
-                                'No website'
-                            );
-                        }
-                        rows.push(_react2.default.createElement(
-                            'ul',
-                            { className: 'model-attribute' },
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                genres
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                games
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                website
-                            )
-                        ));
-                        break;
-                    case "event":
-                        var val = _react2.default.createElement(
-                            'div',
-                            null,
-                            'No Games or Genres'
-                        );
-                        if (model.games.length > 0) {
-                            val = _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/game/' + model.games[0][0] },
-                                model.games[0][1]
-                            );
-                        } else if (model.genres.length > 0) {
-                            val = _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/genre/' + model.genres[0][0] },
-                                model.genres[0][1]
-                            );
-                        }
-                        rows.push(_react2.default.createElement(
-                            'ul',
-                            { className: 'model-attribute' },
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                'Time: ',
-                                model.time
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                'At ',
-                                model.location
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                val
-                            ),
-                            _react2.default.createElement(
-                                'li',
-                                null,
-                                _react2.default.createElement(
-                                    'a',
-                                    { href: model.link },
-                                    'Meetup Link'
-                                )
-                            )
-                        ));
-                        break;
+                    }));
                 }
             }
 
@@ -42239,26 +42131,58 @@ var Search = function (_React$Component) {
                         { className: 'justify-content-md-center' },
                         this.state.models.map(function (model, i) {
                             return _react2.default.createElement(
-                                _reactstrap.Card,
-                                { key: i, className: 'grid-model' },
+                                _reactstrap.Col,
+                                { key: i, sm: '12' },
                                 _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/' + model.type + '/' + model.id },
-                                    _react2.default.createElement(_reactstrap.CardImg, { className: 'grid-model-img', src: model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg' })
-                                ),
-                                _react2.default.createElement(
-                                    _reactstrap.CardBody,
-                                    null,
+                                    _reactstrap.Card,
+                                    { className: 'search-model' },
                                     _react2.default.createElement(
-                                        'strong',
+                                        _reactstrap.CardHeader,
                                         null,
                                         _react2.default.createElement(
-                                            'span',
-                                            { className: 'model-name' },
-                                            model.name
+                                            _reactstrap.Row,
+                                            null,
+                                            _react2.default.createElement(
+                                                _reactstrap.Col,
+                                                null,
+                                                _react2.default.createElement(
+                                                    _reactRouterDom.Link,
+                                                    { to: '/' + model.type + '/' + model.id },
+                                                    _react2.default.createElement(
+                                                        'h4',
+                                                        null,
+                                                        _react2.default.createElement(
+                                                            'span',
+                                                            { className: 'align-middle' },
+                                                            model.name
+                                                        )
+                                                    )
+                                                )
+                                            ),
+                                            _react2.default.createElement(
+                                                _reactstrap.Col,
+                                                { className: 'text-right' },
+                                                _react2.default.createElement(
+                                                    _reactRouterDom.Link,
+                                                    { to: '/' + model.type + 's' },
+                                                    _react2.default.createElement(
+                                                        _reactstrap.Badge,
+                                                        { style: { textAlign: 'right' }, color: badge[model.type] },
+                                                        _react2.default.createElement(
+                                                            'h4',
+                                                            null,
+                                                            model.type
+                                                        )
+                                                    )
+                                                )
+                                            )
                                         )
                                     ),
-                                    rows[i]
+                                    _react2.default.createElement(
+                                        _reactstrap.CardBody,
+                                        { className: 'search-model-text' },
+                                        rows[i]
+                                    )
                                 )
                             );
                         }, this)

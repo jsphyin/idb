@@ -17,14 +17,24 @@ import {
     CardSubtitle,
     Button,
     ButtonGroup,
+    Badge
 } from 'reactstrap';
+
+const badge = {
+    'game': 'success',
+    'genre': 'danger',
+    'developers': 'dark',
+    'events': 'primary'
+};
+
+const grab_radius = 15
 
 class Search extends React.Component {
 
     constructor(props) {
         super(props)
         this.params = this.parse_query(props.location.search)
-        this.params['per_page'] = 9;
+        this.params['per_page'] = 10;
         this.state = {
             query: '',
             page: 0,
@@ -64,6 +74,58 @@ class Search extends React.Component {
         return query;
     }
 
+    grab_words(text, width) {
+        var words = text.split(/\s+/)
+        return words.slice(0, width).join(' ') + (words.length > 30 ? '...' : '')
+    }
+
+    highlight_text(text, word, radius=grab_radius) {
+        var words = text.split(/\s+/)
+        var index = -1;
+        var complete_word = ''
+        for(var i = 0; i < words.length; i++) {
+            if(words[i].toLowerCase().indexOf(word.toLowerCase()) != -1) {
+                var idx = words[i].toLowerCase().indexOf(word.toLowerCase())
+                complete_word = (
+                    <span>
+                        {words[i].substring(0, idx)}
+                        <span style={{backgroundColor: 'yellow'}}>
+                            {words[i].substring(idx, idx + word.length)}
+                        </span>
+                        {words[i].substring(idx + word.length, words[i].length)}
+                    </span>
+                )
+                index = i;
+                break;
+            }
+        }
+        if(index == -1) {
+            return -1
+        }
+        var b     = Math.max(index - radius, 0)
+        var e     = Math.min(index + radius, words.length)
+        var begin = Math.max(b - (radius - (e - index)), 0)
+        var end   = Math.min(e + (radius - (index - b)), words.length)
+        var before = begin == 0 ? '' : '...'
+        var after = ''
+        for(var i = begin; i < end; i++) {
+            if(i < index) {
+                before += words[i] + ' '
+            }
+            if(i > index) {
+                after += ' ' + words[i]
+            }
+        }
+        after += end == words.length ? '' : '...'
+        return (
+            <p>
+                <span>{before}</span>
+                {complete_word}
+                <span>{after}</span>
+            </p>
+        );
+    }
+
     fetch_page(page_number, force_fetch = false) {
         if(force_fetch || (this.state.page != page_number && page_number >= 1
             && page_number <= this.state.total_pages)) {
@@ -91,23 +153,57 @@ class Search extends React.Component {
             // Set URL
             this.props.history.push('/search' + query);
             this.state.loading = true;
+            let words = this.state.query.split(/\s+/)
 
             // Fetch new grid model data
             fetch('/api/search' + query, {method: 'GET'})
                 .then(response => response.json())
                 .then(json => {
+                    this.state.models = []
                     this.state.page = json.page;
                     this.state.total_pages = json.total_pages;
-                    this.models = []
+                    var models = {}
                     var count = 0;
                     for(let i = 0; i < json.results.length; i++) {
                         fetch('/api/' + json.results[i].type + 's/' + json.results[i].id, {method: 'GET'})
                             .then(r => r.json())
                             .then(j => {
-                                j.type = json.results[i].type
-                                this.state.models.push(j)
+                                var instance = {
+                                    type: json.results[i].type,
+                                    name: j.name,
+                                    img: j.img,
+                                    id: json.results[i].id,
+                                    attributes: []
+                                }
+                                var raw_desc = j.desc == null ? '' : j.desc.replace(/<[^>]*>/g,' ')
+                                var elem = document.createElement('textarea');
+                                elem.innerHTML = raw_desc;
+                                raw_desc = elem.value;
+                                instance['desc'] = this.grab_words(raw_desc, 0, 2 * grab_radius)
+                                for(var k = 0; k < words.length; k++) {
+                                    let word = words[k];
+                                    let desc_highlight = this.highlight_text(raw_desc, word);
+                                    if(desc_highlight != -1) {
+                                        instance.attributes.push(desc_highlight)
+                                    }
+                                    switch(json.results[i].type) {
+                                        case "game":
+                                            //alt_names
+                                            break;
+                                        case "developer":
+                                            //website
+                                            break;
+                                        case "event":
+                                            //link
+                                            break;
+                                    }
+                                }
+                                models[i] = instance
                                 count += 1
                                 if(count == json.results.length) {
+                                    for(var k = 0; k < json.results.length; k++) {
+                                        this.state.models.push(models[k])
+                                    }
                                     this.state.loading = false
                                     this.setState(this.state)
                                 }
@@ -129,79 +225,12 @@ class Search extends React.Component {
         var rows = []
         for(var i = 0; i < this.state.models.length; i++) {
             var model = this.state.models[i];
-            switch(model.type) {
-                case "game":
-                    var devs = <div>Unknown Developer</div>;
-                    if (model.developers.length > 0) {
-                        devs = <div>Developed by <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
-                    }
-                    rows.push(
-                        <ul className='model-attribute'>
-                            <li>{devs}</li>
-                            <li>{model.min_players} - {model.max_players} Players</li>
-                            <li>Released in {model.year}</li>
-                            <li>Rated {model.rating}/10</li>
-                        </ul>
-                    );
-                    break;
-                case "genre":
-                    var devs = <div>No notable devs</div>;
-                    if (model.developers.length > 0) {
-                        devs = <div>Notable Dev: <Link to={'/developer/' + model.developers[0][0]}>{model.developers[0][1]}</Link></div>;
-                    }
-                    var games = <div>No notable games</div>;
-                    if (model.games.length > 0) {
-                        games = <div>Notable Games: <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
-                    }
-                    var events = <div>No events</div>;
-                    if (model.events.length > 0) {
-                        events = <div>Events: <Link to={'/event/' + model.events[0][0]}>{model.events[0][1]}</Link></div>;
-                    }
-                    rows.push(
-                        <ul className='model-attribute'>
-                            <li>{devs}</li>
-                            <li>{games}</li>
-                            <li>{events}</li>
-                        </ul>
-                    );
-                    break;
-                case "developer":
-                    var genres = <div>No Genres</div>;
-                    if (model.genres.length > 0) {
-                        genres = <div>Genres: <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link></div>;
-                    }
-                    var games = <div>No notable games</div>;
-                    if (model.games.length > 0) {
-                        games = <div>Notable Games: <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link></div>;
-                    }
-                    var website = <a href={model.website}>{model.website}</a>;
-                    if (model.website === null) {
-                        website = <div>No website</div>;
-                    }
-                    rows.push(
-                        <ul className='model-attribute'>
-                            <li>{genres}</li>
-                            <li>{games}</li>
-                            <li>{website}</li>
-                        </ul>
-                    );
-                    break;
-                case "event":
-                    var val = <div>No Games or Genres</div>
-                    if (model.games.length > 0) {
-                        val = <Link to={'/game/' + model.games[0][0]}>{model.games[0][1]}</Link>;
-                    } else if(model.genres.length > 0) {
-                        val = <Link to={'/genre/' + model.genres[0][0]}>{model.genres[0][1]}</Link>;
-                    }
-                    rows.push(
-                        <ul className='model-attribute'>
-                            <li>Time: {model.time}</li>
-                            <li>At {model.location}</li>
-                            <li>{val}</li>
-                            <li><a href={model.link}>Meetup Link</a></li>
-                        </ul>
-                    );
-                    break;
+            if(model.attributes.length == 0) {
+                rows.push(<p>{model.desc}</p>)
+            } else {
+                rows.push(model.attributes.map(function(context, i) {
+                    return <p key={i}>{context}</p>
+                }));
             }
         }
 
@@ -241,15 +270,27 @@ class Search extends React.Component {
                     <Row className="justify-content-md-center">
                     {this.state.models.map(function(model, i) {
                         return (
-                                <Card key={i} className='grid-model'>
-                                    <Link to={'/' + model.type + '/' + model.id}>
-                                    <CardImg className='grid-model-img' src={model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'}/>
-                                    </Link>
-                                    <CardBody>
-                                        <strong><span className='model-name'>{model.name}</span></strong>
+                            <Col key={i} sm='12'>
+                                <Card className='search-model'>
+                                    <CardHeader>
+                                        <Row>
+                                        <Col>
+                                            <Link to={'/' + model.type + '/' + model.id}>
+                                                <h4><span className='align-middle'>{model.name}</span></h4>
+                                            </Link>
+                                        </Col>
+                                        <Col className='text-right'>
+                                            <Link to={'/' + model.type + 's'}>
+                                                <Badge style={{textAlign: 'right'}} color={badge[model.type]}><h4>{model.type}</h4></Badge>
+                                            </Link>
+                                        </Col>
+                                        </Row>
+                                    </CardHeader>
+                                    <CardBody className='search-model-text'>
                                         {rows[i]}
                                     </CardBody>
                                 </Card>
+                            </Col>
                         );
                     }, this)}
                     </Row>

@@ -1,6 +1,6 @@
 #wrapper {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .page-header {
@@ -12,24 +12,24 @@
 }
 
 .about-person {
-	text-align: center;
-	margin: 20px;
+    text-align: center;
+    margin: 20px;
     width: 302px;
     height: 100%;
 }
 
 .about-person-img {
     overflow: hidden;
-	width: 300px;
-	height: 300px;
+    width: 300px;
+    height: 300px;
 }
 
 .about-person-name {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .about-person-detail {
-	text-align: left;
+    text-align: left;
 }
 
 .grid-header {
@@ -43,13 +43,19 @@
     height: 440px;
 }
 
+.search-model {
+    height: 160px;
+    text-align: left;
+    margin: 20px;
+}
+
 .grid-model-img {
     width: 300px;
     height: 200px;
 }
 
 .model-instance {
-    text-align: center;    
+    text-align: center;
     margin: 20px;
 }
 
