@@ -347,30 +347,24 @@ These calls provide information about the board game events in our database.
           ],...
         ]
         
-## Search [/api/search/{attribute1}={val1}&{attribute2}={val2}...]
+## Search [/api/search?query={string}&page={int}]
 
-This call provides search functionality to our website. (Not yet implemented)
+This call provides search functionality to our website.
 
 ### Search Model Instance by Attribute [GET]
-
-+ Parameters
-    + attribute1 (required, string, `popularity`) ... Attribute to search
-    + val1 (required, string, `1`) ... Value of attribute
-    + attribute2 (required, string, `rating`) ... Attribute to search
-    + val2 (required, string, `5`) ... Value of attribute
     
 + Response 200 (application/json)
 
         {
             “results”: [{
-                    “id”: 1,
-                    “model”: “Board Game”,
-                    “name”: “Catan”
+                    “id”: 13,
+                    “score”: 25.123412634,
+                    “type”: “Game”
                 },
                 {
-                    “id”: 1,
-                    “model”: “Casual Meet-up”,
-                    “name”: “Catan and Ticket to Ride Crew”
+                    “id”: 5,
+                    “score”: 20.12341234,
+                    “type”: “Event”
                 }
                 ...
             ]
