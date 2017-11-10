@@ -39372,10 +39372,10 @@ var About = function (_React$Component) {
         _this.state = {
             'Quangmire': [0, 0, 0],
             'anuragbakshi': [0, 0, 0],
-            'jsphyin': [0, 0, 4],
-            'aytiel': [0, 0, 15],
+            'jsphyin': [0, 0, 0],
+            'aytiel': [0, 0, 79],
             'KLedet': [0, 0, 0],
-            total: [0, 0, 19]
+            total: [0, 0, 79]
         };
         _this.trello = {
             '53e2bdcf2041ed5793869e18': 'Quangmire',
@@ -42016,6 +42016,10 @@ var Search = function (_React$Component) {
                     _this2.state.total_pages = json.total_pages;
                     var models = {};
                     var count = 0;
+                    if (json.results.length == 0) {
+                        _this2.state.loading = false;
+                        _this2.setState(_this2.state);
+                    }
 
                     var _loop = function _loop(i) {
                         fetch('/api/' + json.results[i].type + 's/' + json.results[i].id, { method: 'GET' }).then(function (r) {

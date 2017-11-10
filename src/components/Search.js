@@ -191,6 +191,10 @@ class Search extends React.Component {
                     this.state.total_pages = json.total_pages;
                     var models = {}
                     var count = 0;
+                    if(json.results.length == 0) {
+                        this.state.loading = false;
+                        this.setState(this.state)
+                    }
                     for(let i = 0; i < json.results.length; i++) {
                         fetch('/api/' + json.results[i].type + 's/' + json.results[i].id, {method: 'GET'})
                             .then(r => r.json())
