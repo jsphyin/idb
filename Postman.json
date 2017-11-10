@@ -1,0 +1,1882 @@
+{
+	"info": {
+		"name": "API Test",
+		"_postman_id": "1b88b3db-4bf4-7541-3447-aef07b0871b8",
+		"description": "This collection consists of API tests for http://boardgamedb.me for CS373 at the University of Texas at Austin.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Games",
+			"description": "This folder contains all requests concerning the Game model.",
+			"item": [
+				{
+					"name": "Sort",
+					"description": "This folder contains all requests concerning sorting for the Game model.",
+					"item": [
+						{
+							"name": "Sort by name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Games can be sorted alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(x.toLowerCase() < y.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/games?sort=name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"games"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sort by -name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Games can be sorted reverse alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(y.toLowerCase() < x.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/games?sort=-name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"games"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sort by year",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Games can be sorted by incrementing year\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['year'];",
+											"        var y = jsonData.results[i+1]['year'];",
+											"        if(x != y) {",
+											"            pm.expect(x).to.be.below(y);",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/games?sort=year",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"games"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "year",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sort by -year",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Games can be sorted by decrementing year\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['year'];",
+											"        var y = jsonData.results[i+1]['year'];",
+											"        if(x != y) {",
+											"            pm.expect(y).to.be.below(x);",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/games?sort=-year",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"games"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-year",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Filter",
+					"description": "This folder contains all requests concerning filtering for the Game model.",
+					"item": [
+						{
+							"name": "Filter by Genre",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Games can be filtered by Genre\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['genres'].length; ++j) {",
+											"            if(jsonData.results[i]['genres'][j][1] === \"Card Game\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/games?genres=1002",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"games"
+									],
+									"query": [
+										{
+											"key": "genres",
+											"value": "1002",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Developer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Games can be filtered by Developer\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['developers'].length; ++j) {",
+											"            if(jsonData.results[i]['developers'][j][1] === \"Samuel Strick\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/games?developers=67262",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"games"
+									],
+									"query": [
+										{
+											"key": "developers",
+											"value": "67262",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Games Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Content-Type is application/json\", function() {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"});",
+									"",
+									"pm.sendRequest('http://boardgamedb.me/api/games/190020', function(err, res) {",
+									"    if(err) { console.log(err) }",
+									"    pm.test(\"Single game can be retrieved\", function() {",
+									"        pm.expect(err).to.eql(null);",
+									"        pm.expect(res).to.be.ok;",
+									"        pm.expect(res).to.have.header(\"Content-Type\");",
+									"        pm.expect(res.headers.get(\"Content-Type\")).to.eql(\"application/json\");",
+									"    });",
+									"    ",
+									"    pm.test(\"Correct data is being displayed for single game\", function() {",
+									"        var jsonData = res.json();",
+									"        pm.expect(jsonData['id']).to.eql(190020);",
+									"        pm.expect(jsonData['name']).to.eql(\"100 Swords: The Glowing Plasmapede's Dungeon Builder Set\");",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/games",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"games"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Games Page Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Able to retrieve specified page\", function() {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.page).to.eql(3);",
+									"});",
+									"",
+									"pm.test(\"Displaying correct number of Games per page\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.results.length).to.eql(10);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/games?page=3&per_page=10",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"games"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "3",
+									"equals": true
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Games Names Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Names are successfully retrieved\", function() {",
+									"    var schema = {",
+									"        \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"        \"id\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    };",
+									"    ",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    for(var i = 0; i < jsonData.length; ++i) {",
+									"        pm.expect(tv4.validate(jsonData[i], schema)).to.be.true;",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/games/names",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"games",
+								"names"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genres",
+			"description": "This folder contains all requests concerning the Genre model.",
+			"item": [
+				{
+					"name": "Sort",
+					"description": "This folder contains all requests concerning sorting for the Genre model.",
+					"item": [
+						{
+							"name": "Sort by name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Genres can be sorted alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(x.toLowerCase() < y.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/genres?sort=name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"genres"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sort by -name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Genres can be sorted reverse alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(y.toLowerCase() < x.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/genres?sort=-name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"genres"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Filter",
+					"description": "This folder contains all requests concerning filtering for the Genre model.",
+					"item": [
+						{
+							"name": "Filter by Game",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Genres can be filtered by Game\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['games'].length; ++j) {",
+											"            if(jsonData.results[i]['games'][j][1] === \"Faerie Castles\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/genres?games=190016",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"genres"
+									],
+									"query": [
+										{
+											"key": "games",
+											"value": "190016",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Developer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Genres can be filtered by Developer\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['developers'].length; ++j) {",
+											"            if(jsonData.results[i]['developers'][j][1] === \"Brad Corder\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/genres?developers=87917",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"genres"
+									],
+									"query": [
+										{
+											"key": "developers",
+											"value": "87917",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Genres Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Content-Type is application/json\", function() {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"});",
+									"",
+									"pm.sendRequest('http://boardgamedb.me/api/genres/1002', function(err, res) {",
+									"    if(err) { console.log(err) }",
+									"    pm.test(\"Single genre can be retrieved\", function() {",
+									"        pm.expect(err).to.eql(null);",
+									"        pm.expect(res).to.be.ok;",
+									"        pm.expect(res).to.have.header(\"Content-Type\");",
+									"        pm.expect(res.headers.get(\"Content-Type\")).to.eql(\"application/json\");",
+									"    });",
+									"    ",
+									"    pm.test(\"Correct data is being displayed for single genre\", function() {",
+									"        var jsonData = res.json();",
+									"        pm.expect(jsonData['id']).to.eql(1002);",
+									"        pm.expect(jsonData['name']).to.eql(\"Card Game\");",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/genres",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"genres"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Genres Page Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Able to retrieve specified page\", function() {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.page).to.eql(4);",
+									"});",
+									"",
+									"pm.test(\"Displaying correct number of Genres per page\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.results.length).to.eql(15);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/genres?page=4&per_page=15",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"genres"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "4",
+									"equals": true
+								},
+								{
+									"key": "per_page",
+									"value": "15",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Genres Names Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Names are successfully retrieved\", function() {",
+									"    var schema = {",
+									"        \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"        \"id\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    };",
+									"    ",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    for(var i = 0; i < jsonData.length; ++i) {",
+									"        pm.expect(tv4.validate(jsonData[i], schema)).to.be.true;",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/genres/names",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"genres",
+								"names"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Developers",
+			"description": "This folder contains all requests concerning the Developer model.",
+			"item": [
+				{
+					"name": "Sort",
+					"description": "This folder contains all requests concerning sorting for the Developer model.",
+					"item": [
+						{
+							"name": "Sort by name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Developers can be sorted alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(x.toLowerCase() < y.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/developers?sort=name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"developers"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sort by -name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Developers can be sorted reverse alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(y.toLowerCase() < x.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/developers?sort=-name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"developers"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Filter",
+					"description": "This folder contains all requests concerning filtering for the Developer model.",
+					"item": [
+						{
+							"name": "Filter by Game",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Developers can be filtered by Game\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['games'].length; ++j) {",
+											"            if(jsonData.results[i]['games'][j][1] === \"1861\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/developers?games=10391",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"developers"
+									],
+									"query": [
+										{
+											"key": "games",
+											"value": "10391",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Genre",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Developers can be filtered by Genre\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['genres'].length; ++j) {",
+											"            if(jsonData.results[i]['genres'][j][1] === \"Dice\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/developers?genres=1017",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"developers"
+									],
+									"query": [
+										{
+											"key": "genres",
+											"value": "1017",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Developers Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Content-Type is application/json\", function() {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"});",
+									"",
+									"pm.sendRequest('http://boardgamedb.me/api/developers/16462', function(err, res) {",
+									"    if(err) { console.log(err) }",
+									"    pm.test(\"Single developer can be retrieved\", function() {",
+									"        pm.expect(err).to.eql(null);",
+									"        pm.expect(res).to.be.ok;",
+									"        pm.expect(res).to.have.header(\"Content-Type\");",
+									"        pm.expect(res.headers.get(\"Content-Type\")).to.eql(\"application/json\");",
+									"    });",
+									"    ",
+									"    pm.test(\"Correct data is being displayed for single developer\", function() {",
+									"        var jsonData = res.json();",
+									"        pm.expect(jsonData['id']).to.eql(16462);",
+									"        pm.expect(jsonData['name']).to.eql(\"4G Squared\");",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/developers",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"developers"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Developers Page Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Able to retrieve specified page\", function() {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.page).to.eql(5);",
+									"});",
+									"",
+									"pm.test(\"Displaying correct number of Developers per page\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.results.length).to.eql(20);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/developers?page=5&per_page=20",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"developers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "5",
+									"equals": true
+								},
+								{
+									"key": "per_page",
+									"value": "20",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Developers Names Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Names are successfully retrieved\", function() {",
+									"    var schema = {",
+									"        \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"        \"id\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    };",
+									"    ",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    for(var i = 0; i < jsonData.length; ++i) {",
+									"        pm.expect(tv4.validate(jsonData[i], schema)).to.be.true;",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/developers/names",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"developers",
+								"names"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"description": "This folder contains all requests concerning the Event model.",
+			"item": [
+				{
+					"name": "Sort",
+					"description": "This folder contains all requests concerning sorting for the Game model.",
+					"item": [
+						{
+							"name": "Sort by name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Events can be sorted alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(x.toLowerCase() < y.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/events?sort=name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"events"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Sort by -name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"var assert = require(\"assert\");",
+											"",
+											"pm.test(\"Events can be sorted reverse alphabetically\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+											"        var x = jsonData.results[i]['name'];",
+											"        var y = jsonData.results[i+1]['name'];",
+											"        if(x != y) {",
+											"            assert(y.toLowerCase() < x.toLowerCase());",
+											"        }",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/events?sort=-name",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"events"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-name",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Filter",
+					"description": "This folder contains all requests concerning filtering for the Event model.",
+					"item": [
+						{
+							"name": "Filter by Game",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Events can be filtered by Game\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['games'].length; ++j) {",
+											"            if(jsonData.results[i]['games'][j][1] === \"Great Western Trail\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/events?games=193738",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"events"
+									],
+									"query": [
+										{
+											"key": "games",
+											"value": "193738",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Genre",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Events can be filtered by Genre\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        var exists = false;",
+											"        for(var j = 0; j < jsonData.results[i]['genres'].length; ++j) {",
+											"            if(jsonData.results[i]['genres'][j][1] === \"Transportation\")",
+											"                exists = true;",
+											"        }",
+											"        pm.expect(exists).to.eql(true);",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/events?genres=1011",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"events"
+									],
+									"query": [
+										{
+											"key": "genres",
+											"value": "1011",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Filter by Location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test(\"Events can be filtered by Location\", function() {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+											"    var jsonData = pm.response.json();",
+											"    for(var i = 0; i < jsonData.results.length; ++i) {",
+											"        pm.expect(jsonData.results[i]['location']).to.eql(\"Austin, TX\");",
+											"    }",
+											"});"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "http://boardgamedb.me/api/events?locations=Austin, TX",
+									"protocol": "http",
+									"host": [
+										"boardgamedb",
+										"me"
+									],
+									"path": [
+										"api",
+										"events"
+									],
+									"query": [
+										{
+											"key": "locations",
+											"value": "Austin, TX",
+											"equals": true
+										}
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Events Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Content-Type is application/json\", function() {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"});",
+									"",
+									"pm.sendRequest('http://boardgamedb.me/api/events/520', function(err, res) {",
+									"    if(err) { console.log(err) }",
+									"    pm.test(\"Single event can be retrieved\", function() {",
+									"        pm.expect(err).to.eql(null);",
+									"        pm.expect(res).to.be.ok;",
+									"        pm.expect(res).to.have.header(\"Content-Type\");",
+									"        pm.expect(res.headers.get(\"Content-Type\")).to.eql(\"application/json\");",
+									"    });",
+									"    ",
+									"    pm.test(\"Correct data is being displayed for single event\", function() {",
+									"        var jsonData = res.json();",
+									"        pm.expect(jsonData['id']).to.eql(520);",
+									"        pm.expect(jsonData['name']).to.eql(\"Blitz tournament rated by US Chess Federation\");",
+									"    });",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/events",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Events Page Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Able to retrieve specified page\", function() {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.page).to.eql(2);",
+									"});",
+									"",
+									"pm.test(\"Displaying correct number of Events per page\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.results.length).to.eql(25);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/events?page=2&per_page=25",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"events"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"equals": true
+								},
+								{
+									"key": "per_page",
+									"value": "25",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Events Names Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Names are successfully retrieved\", function() {",
+									"    var schema = {",
+									"        \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+									"        \"id\": {",
+									"            \"type\": \"integer\"",
+									"        },",
+									"        \"name\": {",
+									"            \"type\": \"string\"",
+									"        }",
+									"    };",
+									"    ",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    for(var i = 0; i < jsonData.length; ++i) {",
+									"        pm.expect(tv4.validate(jsonData[i], schema)).to.be.true;",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/events/names",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"events",
+								"names"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"description": "This folder contains all requests concerning search.",
+			"item": [
+				{
+					"name": "Search Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"",
+									"pm.test(\"Content-Type is application/json\", function() {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"});",
+									"",
+									"pm.test(\"Check that search is sorted by decrementing score\", function() {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    for(var i = 0; i < jsonData.results.length-1; ++i) {",
+									"        var x = jsonData.results[i]['score'];",
+									"        var y = jsonData.results[i+1]['score'];",
+									"        if(x != y) {",
+									"            pm.expect(y).to.be.below(x);",
+									"        }",
+									"    }",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/search?query=Clue",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Clue",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Search Page Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Able to retrieve specified page\", function() {",
+									"    pm.response.to.be.ok;",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").has(\"application/json\");",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.page).to.eql(6);",
+									"});",
+									"",
+									"pm.test(\"Displaying correct number of search results per page\", function() {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.results.length).to.eql(30);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://boardgamedb.me/api/search?query=Fight&page=6&per_page=30",
+							"protocol": "http",
+							"host": [
+								"boardgamedb",
+								"me"
+							],
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Fight",
+									"equals": true
+								},
+								{
+									"key": "page",
+									"value": "6",
+									"equals": true
+								},
+								{
+									"key": "per_page",
+									"value": "30",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
