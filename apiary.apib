@@ -5,7 +5,7 @@ HOST: http://boardgamedb.me/
 
 This API will display general info about a collection of board games such as their developer(s), genre, and the mechanics they have as well as events for players to meet up and enjoy board games.
 
-## Games [/api/games?page={int}]
+## Games [/api/games?page={int}&per_page={int}&sort={str}]
 
 These call provide information for the specific games in our database. 
 
@@ -139,7 +139,7 @@ These call provide information for the specific games in our database.
         ]
 
 
-## Developers [/api/developers?page={int}]
+## Developers [/api/developers?page={int}&per_page={int}&sort={str}]
 
 These calls provide information about the board game developers in our database.
 
@@ -204,7 +204,7 @@ These calls provide information about the board game developers in our database.
         ]
 
 
-## Genres [/api/genres?page={int}]
+## Genres [/api/genres?page={int}&per_page={int}&sort={str}]
 
 These calls provide data of all the genres that our games fall under. 
 
@@ -279,7 +279,7 @@ These calls provide data of all the genres that our games fall under.
           ],...
         ]
 
-## Events [/api/events?page={int}]
+## Events [/api/events?page={int}&per_page={int}&sort={str}]
 
 These calls provide information about the board game events in our database.
 
