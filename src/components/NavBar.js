@@ -67,22 +67,22 @@ class NavBar extends React.Component {
                     <Col className="mr-auto">
                     <Nav className="mr-auto">
                         <NavItem>
-                            <NavLink><Link className="text-dark" to="/">Home</Link></NavLink>
+                            <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink><Link className="text-dark" to="/games">Games</Link></NavLink>
+                            <NavLink tag={Link} className="text-dark" to="/games">Games</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink><Link className="text-dark" to="/genres">Genres</Link></NavLink>
+                            <NavLink tag={Link} className="text-dark" to="/genres">Genres</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink><Link className="text-dark" to="/developers">Developers</Link></NavLink>
+                            <NavLink tag={Link} className="text-dark" to="/developers">Developers</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink><Link className="text-dark" to="/events">Events</Link></NavLink>
+                            <NavLink tag={Link} className="text-dark" to="/events">Events</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink><Link className="text-dark" to="/about">About</Link></NavLink>
+                            <NavLink tag={Link} className="text-dark" to="/about">About</NavLink>
                         </NavItem>
                     </Nav>
                     </Col>

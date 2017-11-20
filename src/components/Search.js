@@ -92,12 +92,12 @@ class Search extends React.Component {
         }
         if(contains_react) {
             return (
-                <div>
+                <span>
                     {slice.map((t, i) => <span key={i}>{t}</span>)
                         .reduce((accu, elem) => {
                             return accu === null ? [elem] : [...accu, ' ', elem]
                         }, null)}
-                </div>
+                </span>
             )
         } else {
             return slice.join(' ')
