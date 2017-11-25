@@ -55,7 +55,8 @@ class NavBar extends React.Component {
         } else {
             this.params = {}
         }
-        if('query' in this.params && this.params['query'] !== '') {
+        if(window.location.href.indexOf('search') === -1 && 'query' in this.params && this.params['query'] !== '') {
+            console.log(this.params)
             return <Redirect push to={'/search?query=' + this.params['query']} />
         }
         return (
@@ -84,11 +85,11 @@ class NavBar extends React.Component {
                     </Nav>
                     </Col>
                     <Col className="col-md-3 mr-auto">
-                        <Form onSubmit={() => console.log("Yo")}>
+                        <Form>
                             <FormGroup>
                                 <InputGroup>
                                     <Input id='search-input' name='query' placeholder="Search" />
-                                    <InputGroupButton><Button id='search-button' name='query' className="fa fa-search"></Button></InputGroupButton>
+                                    <InputGroupButton><Button id='search-button' className="fa fa-search"></Button></InputGroupButton>
                                 </InputGroup>
                             </FormGroup>
                         </Form>

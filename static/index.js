@@ -39411,7 +39411,8 @@ var NavBar = function (_React$Component) {
             } else {
                 this.params = {};
             }
-            if ('query' in this.params && this.params['query'] !== '') {
+            if (window.location.href.indexOf('search') === -1 && 'query' in this.params && this.params['query'] !== '') {
+                console.log(this.params);
                 return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/search?query=' + this.params['query'] });
             }
             return _react2.default.createElement(
@@ -39489,9 +39490,7 @@ var NavBar = function (_React$Component) {
                     { className: 'col-md-3 mr-auto' },
                     _react2.default.createElement(
                         _reactstrap.Form,
-                        { onSubmit: function onSubmit() {
-                                return console.log("Yo");
-                            } },
+                        null,
                         _react2.default.createElement(
                             _reactstrap.FormGroup,
                             null,
@@ -39502,7 +39501,7 @@ var NavBar = function (_React$Component) {
                                 _react2.default.createElement(
                                     _reactstrap.InputGroupButton,
                                     null,
-                                    _react2.default.createElement(_reactstrap.Button, { id: 'search-button', name: 'query', className: 'fa fa-search' })
+                                    _react2.default.createElement(_reactstrap.Button, { id: 'search-button', className: 'fa fa-search' })
                                 )
                             )
                         )
