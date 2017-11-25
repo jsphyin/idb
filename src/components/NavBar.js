@@ -55,34 +55,31 @@ class NavBar extends React.Component {
         } else {
             this.params = {}
         }
-        if('search-input' in this.params && this.params['search-input'] !== '') {
-            return <Redirect push to={'/search?query=' + this.params['search-input']} />
-        }
-        if('search-button' in this.params && this.params['search-button'] !== '') {
-            return <Redirect push to={'/search?query=' + this.params['search-button']} />
+        if('query' in this.params && this.params['query'] !== '') {
+            return <Redirect push to={'/search?query=' + this.params['query']} />
         }
         return (
             <Navbar color="faded" light expand="lg" className="container-fluid bg-light">
-                <NavbarBrand href="/">BGDB</NavbarBrand>
+                <NavbarBrand id='nav-logo' href="/">BGDB</NavbarBrand>
                     <Col className="mr-auto">
                     <Nav className="mr-auto">
                         <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                            <NavLink id="nav-home" tag={Link} className="text-dark" to="/">Home</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/games">Games</NavLink>
+                            <NavLink id="nav-games" tag={Link} className="text-dark" to="/games">Games</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/genres">Genres</NavLink>
+                            <NavLink id="nav-genres" tag={Link} className="text-dark" to="/genres">Genres</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/developers">Developers</NavLink>
+                            <NavLink id="nav-developers" tag={Link} className="text-dark" to="/developers">Developers</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/events">Events</NavLink>
+                            <NavLink id="nav-events" tag={Link} className="text-dark" to="/events">Events</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/about">About</NavLink>
+                            <NavLink id="nav-about" tag={Link} className="text-dark" to="/about">About</NavLink>
                         </NavItem>
                     </Nav>
                     </Col>
@@ -90,8 +87,8 @@ class NavBar extends React.Component {
                         <Form onSubmit={() => console.log("Yo")}>
                             <FormGroup>
                                 <InputGroup>
-                                    <Input name='search-button' placeholder="Search" />
-                                    <InputGroupButton><Button className="fa fa-search"></Button></InputGroupButton>
+                                    <Input id='search-input' name='query' placeholder="Search" />
+                                    <InputGroupButton><Button id='search-button' className="fa fa-search"></Button></InputGroupButton>
                                 </InputGroup>
                             </FormGroup>
                         </Form>

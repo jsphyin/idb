@@ -39411,18 +39411,15 @@ var NavBar = function (_React$Component) {
             } else {
                 this.params = {};
             }
-            if ('search-input' in this.params && this.params['search-input'] !== '') {
-                return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/search?query=' + this.params['search-input'] });
-            }
-            if ('search-button' in this.params && this.params['search-button'] !== '') {
-                return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/search?query=' + this.params['search-button'] });
+            if ('query' in this.params && this.params['query'] !== '') {
+                return _react2.default.createElement(_reactRouterDom.Redirect, { push: true, to: '/search?query=' + this.params['query'] });
             }
             return _react2.default.createElement(
                 _reactstrap.Navbar,
                 { color: 'faded', light: true, expand: 'lg', className: 'container-fluid bg-light' },
                 _react2.default.createElement(
                     _reactstrap.NavbarBrand,
-                    { href: '/' },
+                    { id: 'nav-logo', href: '/' },
                     'BGDB'
                 ),
                 _react2.default.createElement(
@@ -39436,7 +39433,7 @@ var NavBar = function (_React$Component) {
                             null,
                             _react2.default.createElement(
                                 _reactstrap.NavLink,
-                                { tag: _reactRouterDom.Link, className: 'text-dark', to: '/' },
+                                { id: 'nav-home', tag: _reactRouterDom.Link, className: 'text-dark', to: '/' },
                                 'Home'
                             )
                         ),
@@ -39445,7 +39442,7 @@ var NavBar = function (_React$Component) {
                             null,
                             _react2.default.createElement(
                                 _reactstrap.NavLink,
-                                { tag: _reactRouterDom.Link, className: 'text-dark', to: '/games' },
+                                { id: 'nav-games', tag: _reactRouterDom.Link, className: 'text-dark', to: '/games' },
                                 'Games'
                             )
                         ),
@@ -39454,7 +39451,7 @@ var NavBar = function (_React$Component) {
                             null,
                             _react2.default.createElement(
                                 _reactstrap.NavLink,
-                                { tag: _reactRouterDom.Link, className: 'text-dark', to: '/genres' },
+                                { id: 'nav-genres', tag: _reactRouterDom.Link, className: 'text-dark', to: '/genres' },
                                 'Genres'
                             )
                         ),
@@ -39463,7 +39460,7 @@ var NavBar = function (_React$Component) {
                             null,
                             _react2.default.createElement(
                                 _reactstrap.NavLink,
-                                { tag: _reactRouterDom.Link, className: 'text-dark', to: '/developers' },
+                                { id: 'nav-developers', tag: _reactRouterDom.Link, className: 'text-dark', to: '/developers' },
                                 'Developers'
                             )
                         ),
@@ -39472,7 +39469,7 @@ var NavBar = function (_React$Component) {
                             null,
                             _react2.default.createElement(
                                 _reactstrap.NavLink,
-                                { tag: _reactRouterDom.Link, className: 'text-dark', to: '/events' },
+                                { id: 'nav-events', tag: _reactRouterDom.Link, className: 'text-dark', to: '/events' },
                                 'Events'
                             )
                         ),
@@ -39481,7 +39478,7 @@ var NavBar = function (_React$Component) {
                             null,
                             _react2.default.createElement(
                                 _reactstrap.NavLink,
-                                { tag: _reactRouterDom.Link, className: 'text-dark', to: '/about' },
+                                { id: 'nav-about', tag: _reactRouterDom.Link, className: 'text-dark', to: '/about' },
                                 'About'
                             )
                         )
@@ -39501,11 +39498,11 @@ var NavBar = function (_React$Component) {
                             _react2.default.createElement(
                                 _reactstrap.InputGroup,
                                 null,
-                                _react2.default.createElement(_reactstrap.Input, { name: 'search-button', placeholder: 'Search' }),
+                                _react2.default.createElement(_reactstrap.Input, { id: 'search-input', name: 'query', placeholder: 'Search' }),
                                 _react2.default.createElement(
                                     _reactstrap.InputGroupButton,
                                     null,
-                                    _react2.default.createElement(_reactstrap.Button, { className: 'fa fa-search' })
+                                    _react2.default.createElement(_reactstrap.Button, { id: 'search-button', className: 'fa fa-search' })
                                 )
                             )
                         )
@@ -39670,10 +39667,8 @@ var Search = function (_React$Component) {
                         ),
                         words[i].substring(idx + word.length, words[i].length)
                     );
-                    return true;
                 }
             }
-            return false;
         }
     }, {
         key: 'assemble_words_list',
@@ -39721,14 +39716,6 @@ var Search = function (_React$Component) {
                 this.params['page'] = page_number;
                 if ('query' in this.params) {
                     this.state.query = this.params['query'];
-                } else if ('search-input' in this.params) {
-                    this.state.query = this.params['search-input'];
-                    delete this.params['search-input'];
-                    this.params['query'] = this.state.query;
-                } else if ('search-button' in this.params) {
-                    this.state.query = this.params['search-button'];
-                    delete this.params['search-button'];
-                    this.params['query'] = this.state.query;
                 } else {
                     this.state.query = '';
                     this.setState(this.state);
@@ -39784,17 +39771,17 @@ var Search = function (_React$Component) {
 
                             for (var k = 0; k < words.length; k++) {
                                 var word = words[k];
-                                while (_this2.highlight_word(instance.name, word)) {}
-                                while (_this2.highlight_word(instance.desc, word)) {}
+                                _this2.highlight_word(instance.name, word);
+                                _this2.highlight_word(instance.desc, word);
                                 switch (json.results[i].type) {
                                     case "game":
                                         for (var l = 0; l < instance.alt_names.length; l++) {
-                                            while (_this2.highlight_word(instance.alt_names[l], word)) {}
+                                            _this2.highlight_word(instance.alt_names[l], word);
                                         }
                                         break;
                                     case "developer":
                                     case "event":
-                                        while (_this2.highlight_word(instance.link, word)) {}
+                                        _this2.highlight_word(instance.link, word);
                                         break;
                                 }
                             }

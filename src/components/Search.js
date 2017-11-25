@@ -121,10 +121,8 @@ class Search extends React.Component {
                         {words[i].substring(idx + word.length, words[i].length)}
                     </span>
                 )
-                return true
             }
         }
-        return false
     }
 
     assemble_words_list(list) {
@@ -160,14 +158,6 @@ class Search extends React.Component {
             this.params['page'] = page_number;
             if('query' in this.params) {
                 this.state.query = this.params['query']
-            } else if('search-input' in this.params) {
-                this.state.query = this.params['search-input']
-                delete this.params['search-input']
-                this.params['query'] = this.state.query
-            } else if('search-button' in this.params) {
-                this.state.query = this.params['search-button']
-                delete this.params['search-button']
-                this.params['query'] = this.state.query
             } else {
                 this.state.query = ''
                 this.setState(this.state)
@@ -222,17 +212,17 @@ class Search extends React.Component {
 
                                 for(var k = 0; k < words.length; k++) {
                                     let word = words[k];
-                                    while(this.highlight_word(instance.name, word));
-                                    while(this.highlight_word(instance.desc, word));
+                                    this.highlight_word(instance.name, word);
+                                    this.highlight_word(instance.desc, word);
                                     switch(json.results[i].type) {
                                         case "game":
                                             for(var l = 0; l < instance.alt_names.length; l++) {
-                                                while(this.highlight_word(instance.alt_names[l], word));
+                                                this.highlight_word(instance.alt_names[l], word);
                                             }
                                             break;
                                         case "developer":
                                         case "event":
-                                            while(this.highlight_word(instance.link, word));
+                                            this.highlight_word(instance.link, word);
                                             break;
                                     }
                                 }
