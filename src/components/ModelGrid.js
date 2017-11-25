@@ -313,15 +313,15 @@ class ModelGrid extends React.Component {
         }
         var pagination = (
             <ButtonGroup>
-            <Button color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(1)}>{"<<"}</Button>
-            <Button color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page - 1)}>{"<"}</Button>
+            <Button id='pagination-first' color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(1)}>{"<<"}</Button>
+            <Button id='pagination-prev' color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page - 1)}>{"<"}</Button>
             {pages.map(function(page, i) {
                 return (
-                    <Button key={i} color={this.state.page == page ? "link" : ""} onClick={() => this.fetch_page(page)}>{page}</Button>
+                    <Button id='pagination-page' key={i} color={this.state.page == page ? "link" : ""} onClick={() => this.fetch_page(page)}>{page}</Button>
                 );
             }, this)}
-            <Button color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
-            <Button color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
+            <Button id='pagination-next' color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
+            <Button id='pagination-last' color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
             </ButtonGroup>
         );
 
@@ -330,7 +330,7 @@ class ModelGrid extends React.Component {
             <DropdownMenu>
                 {filters[this.model].map(function(filter, i) {
                     return (
-                        <DropdownItem key={i} onClick={() => {
+                        <DropdownItem id='filter-type' key={i} onClick={() => {
                             if(this.state.filter !== filter) {
                                 this.set_values('');
                             }
@@ -347,7 +347,7 @@ class ModelGrid extends React.Component {
             <DropdownMenu>
                 {sorts[this.model].map(function(sort, i) {
                     return (
-                        <DropdownItem key={i} onClick={() => {
+                        <DropdownItem id='sort-type' key={i} onClick={() => {
                             this.state.sort=sort;
                             this.setState(this.state)
                             this.params['sort'] = this.state.sort.value
@@ -370,7 +370,7 @@ class ModelGrid extends React.Component {
                             <Row className="justify-content-md-center">
                                 <Col sm='auto'>
                                     <Dropdown isOpen={this.state.filterOpen} toggle={this.filter_toggle.bind(this)}>
-                                        <DropdownToggle color='primary' caret>
+                                        <DropdownToggle id='filter-dropdown' color='primary' caret>
                                             {this.state.filter.label}
                                         </DropdownToggle>
                                         {filter_type}
@@ -381,7 +381,7 @@ class ModelGrid extends React.Component {
                                 </Col>
                                 <Col sm='auto'>
                                     <Dropdown isOpen={this.state.sortOpen} toggle={this.sort_toggle.bind(this)}>
-                                        <DropdownToggle color='primary' caret>
+                                        <DropdownToggle id='sort-dropdown' color='primary' caret>
                                             {this.state.sort.label}
                                         </DropdownToggle>
                                         {sort_type}
@@ -396,7 +396,7 @@ class ModelGrid extends React.Component {
                     {this.state.models.map(function(model, i) {
                         return (
                                 <Card key={i} className='grid-model'>
-                                    <Link to={'/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id}>
+                                    <Link id='model-link' to={'/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id}>
                                     <CardImg className='grid-model-img' src={model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg'}/>
                                     </Link>
                                     <CardBody>

@@ -88,7 +88,7 @@ class NavBar extends React.Component {
                             <FormGroup>
                                 <InputGroup>
                                     <Input id='search-input' name='query' placeholder="Search" />
-                                    <InputGroupButton><Button id='search-button' className="fa fa-search"></Button></InputGroupButton>
+                                    <InputGroupButton><Button id='search-button' name='query' className="fa fa-search"></Button></InputGroupButton>
                                 </InputGroup>
                             </FormGroup>
                         </Form>

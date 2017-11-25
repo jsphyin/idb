@@ -288,15 +288,15 @@ class Search extends React.Component {
         }
         var pagination = (
             <ButtonGroup>
-            <Button color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(1)}>{"<<"}</Button>
-            <Button color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page - 1)}>{"<"}</Button>
+            <Button id='pagination-first' color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(1)}>{"<<"}</Button>
+            <Button id='pagination-prev' color={this.state.page == 1 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page - 1)}>{"<"}</Button>
             {pages.map(function(page, i) {
                 return (
-                    <Button key={i} color={this.state.page == page ? "link" : ""} onClick={() => this.fetch_page(page)}>{page}</Button>
+                    <Button id='pagination-page' key={i} color={this.state.page == page ? "link" : ""} onClick={() => this.fetch_page(page)}>{page}</Button>
                 );
             }, this)}
-            <Button color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
-            <Button color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
+            <Button id='pagination-next' color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.page + 1)}>{">"}</Button>
+            <Button id='pagination-last' color={this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : ""} onClick={() => this.fetch_page(this.state.total_pages)}>{">>"}</Button>
             </ButtonGroup>
         );
         return (
@@ -305,7 +305,7 @@ class Search extends React.Component {
                     <Card>
                         <CardHeader>
                             <Row className="justify-content-md-center">
-                                <h1>{this.state.query === '' ? "No Search Query" : "Search Results for: '" + this.state.query + "'"}</h1>
+                                <h1 id='search-fail'>{this.state.query === '' ? "No Search Query" : "Search Results for: '" + this.state.query + "'"}</h1>
                             </Row>
                         </CardHeader>
                     </Card>
@@ -319,12 +319,12 @@ class Search extends React.Component {
                                     <CardHeader>
                                         <Row>
                                         <Col sm='10'>
-                                            <Link to={'/' + model.type + '/' + model.id}>
+                                            <Link id='search-link' to={'/' + model.type + '/' + model.id}>
                                                 <h4><span className='align-middle'>{model.name.text}</span></h4>
                                             </Link>
                                         </Col>
                                         <Col className='text-right' sm='2'>
-                                            <Link to={'/' + model.type + 's'}>
+                                            <Link id='search-model' to={'/' + model.type + 's'}>
                                                 <Badge style={{textAlign: 'right'}} color={badge[model.type]}><h4>{model.type}</h4></Badge>
                                             </Link>
                                         </Col>

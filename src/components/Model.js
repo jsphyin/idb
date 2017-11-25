@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 
 class Model extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.type = props.match.params.url;
@@ -31,13 +31,13 @@ class Model extends React.Component {
         if(model.charAt(model.length - 1) == '/') {
             model = model.substring(0, model.length - 1);
         }
-		model = model.split('/');
+          model = model.split('/');
         var url = ''
-		if(model.length > 1) {
-			url = model[0] + 's/' + model[1];
-		} else {
-			url = model[0] + query
-		}
+          if(model.length > 1) {
+               url = model[0] + 's/' + model[1];
+          } else {
+               url = model[0] + query
+          }
         fetch(this.host + '/api/' + url, {method: 'GET'})
             .then(response => response.json())
             .then(json => {
@@ -49,7 +49,7 @@ class Model extends React.Component {
 
     render() {
         var model = this.state.model;
-        if (model === null) { 
+        if (model === null) {
             return <div></div>;
         }
 
@@ -61,7 +61,7 @@ class Model extends React.Component {
                 if (model.developers.length > 0) {
                     devs = []
                     for(var i = 0; i < model.developers.length; i++) {
-                        devs.push(<li key={i}>Developed by <Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
+                        devs.push(<li key={i}>Developed by <Link id='model=link' to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
                     }
                 }
 
@@ -75,12 +75,12 @@ class Model extends React.Component {
 
                 var arts = <div>Unknown Artist</div>;
                 if (model.artists.length > 0) {
-                    arts = [] 
+                    arts = []
                     for(var i = 0; i < model.artists.length; i++) {
                         arts.push(<li key={i}>Art done by {model.artists[i][1]}</li>);
                     }
                 }
-                
+
                 var names = <div>No alternate names</div>;
                 if (model.alt_names.length > 0) {
                     names = []
@@ -101,7 +101,7 @@ class Model extends React.Component {
                 if (model.genres.length > 0) {
                     gens = []
                     for(var i = 0; i < model.genres.length; i++) {
-                        gens.push(<li key={i}><Link to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
+                        gens.push(<li key={i}><Link id='model=link' to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
                     }
                 }
 
@@ -151,7 +151,7 @@ class Model extends React.Component {
                 if (model.developers.length > 0) {
                     devs = []
                     for(var i = 0; i < model.developers.length; i++) {
-                        devs.push(<li key={i}><Link to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
+                        devs.push(<li key={i}><Link id='model=link' to={'/developer/' + model.developers[i][0]}>{model.developers[i][1]}</Link></li>);
                     }
                 }
 
@@ -159,7 +159,7 @@ class Model extends React.Component {
                 if (model.games.length > 0) {
                     games = []
                     for(var i = 0; i < model.games.length; i++) {
-                        games.push(<li key={i}><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                        games.push(<li key={i}><Link id='model=link' to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
                     }
                 }
 
@@ -167,7 +167,7 @@ class Model extends React.Component {
                 if (model.events.length > 0) {
                     events = []
                     for(var i = 0; i < model.events.length; i++) {
-                        events.push(<li key={i}><Link to={'/event/' + model.events[i][0]}>{model.events[i][1]}</Link></li>);
+                        events.push(<li key={i}><Link id='model=link' to={'/event/' + model.events[i][0]}>{model.events[i][1]}</Link></li>);
                     }
                 }
 
@@ -197,7 +197,7 @@ class Model extends React.Component {
                 if (model.genres.length > 0) {
                     gens = []
                     for(var i = 0; i < model.genres.length; i++) {
-                        gens.push(<li key={i}><Link to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
+                        gens.push(<li key={i}><Link id='model=link' to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
                     }
                 }
 
@@ -205,7 +205,7 @@ class Model extends React.Component {
                 if (model.games.length > 0) {
                     games = []
                     for(var i = 0; i < model.games.length; i++) {
-                        games.push(<li key={i}><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                        games.push(<li key={i}><Link id='model=link' to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
                     }
                 }
 
@@ -238,10 +238,10 @@ class Model extends React.Component {
             case "Events":
                 var val = []
                 for(var i = 0; i < model.games.length; i++) {
-                    val.push(<li key={i}><Link to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
+                    val.push(<li key={i}><Link id='model=link' to={'/game/' + model.games[i][0]}>{model.games[i][1]}</Link></li>);
                 }
                 for(var i = 0; i < model.genres.length; i++) {
-                    val.push(<li key={i + model.games.length}><Link to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
+                    val.push(<li key={i + model.games.length}><Link id='model=link' to={'/genre/' + model.genres[i][0]}>{model.genres[i][1]}</Link></li>);
                 }
                 if(val.length == 0) {
                     val = <div>No Games or Genres</div>
@@ -258,7 +258,7 @@ class Model extends React.Component {
                             <li>At {model.location}</li>
                             <li><a href={model.link}>Meetup Link</a></li>
                         </ul>
-                        <h3>Related Games or Genres</h3> 
+                        <h3>Related Games or Genres</h3>
                         <ul className='model-instance-attribute'>
                             {val}
                         </ul>

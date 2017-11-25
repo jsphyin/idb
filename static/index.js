@@ -38045,7 +38045,7 @@ var Model = function (_React$Component) {
                                 'Developed by ',
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/developer/' + model.developers[i][0] },
+                                    { id: 'model=link', to: '/developer/' + model.developers[i][0] },
                                     model.developers[i][1]
                                 )
                             ));
@@ -38131,7 +38131,7 @@ var Model = function (_React$Component) {
                                 { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/genre/' + model.genres[i][0] },
+                                    { id: 'model=link', to: '/genre/' + model.genres[i][0] },
                                     model.genres[i][1]
                                 )
                             ));
@@ -38255,7 +38255,7 @@ var Model = function (_React$Component) {
                                 { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/developer/' + model.developers[i][0] },
+                                    { id: 'model=link', to: '/developer/' + model.developers[i][0] },
                                     model.developers[i][1]
                                 )
                             ));
@@ -38275,7 +38275,7 @@ var Model = function (_React$Component) {
                                 { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/game/' + model.games[i][0] },
+                                    { id: 'model=link', to: '/game/' + model.games[i][0] },
                                     model.games[i][1]
                                 )
                             ));
@@ -38295,7 +38295,7 @@ var Model = function (_React$Component) {
                                 { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/event/' + model.events[i][0] },
+                                    { id: 'model=link', to: '/event/' + model.events[i][0] },
                                     model.events[i][1]
                                 )
                             ));
@@ -38373,7 +38373,7 @@ var Model = function (_React$Component) {
                                 { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/genre/' + model.genres[i][0] },
+                                    { id: 'model=link', to: '/genre/' + model.genres[i][0] },
                                     model.genres[i][1]
                                 )
                             ));
@@ -38393,7 +38393,7 @@ var Model = function (_React$Component) {
                                 { key: i },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/game/' + model.games[i][0] },
+                                    { id: 'model=link', to: '/game/' + model.games[i][0] },
                                     model.games[i][1]
                                 )
                             ));
@@ -38466,7 +38466,7 @@ var Model = function (_React$Component) {
                             { key: i },
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
-                                { to: '/game/' + model.games[i][0] },
+                                { id: 'model=link', to: '/game/' + model.games[i][0] },
                                 model.games[i][1]
                             )
                         ));
@@ -38477,7 +38477,7 @@ var Model = function (_React$Component) {
                             { key: i + model.games.length },
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
-                                { to: '/genre/' + model.genres[i][0] },
+                                { id: 'model=link', to: '/genre/' + model.genres[i][0] },
                                 model.genres[i][1]
                             )
                         ));
@@ -39064,14 +39064,14 @@ var ModelGrid = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-first', color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(1);
                         } },
                     "<<"
                 ),
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-prev', color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(_this3.state.page - 1);
                         } },
                     "<"
@@ -39081,7 +39081,7 @@ var ModelGrid = function (_React$Component) {
 
                     return _react2.default.createElement(
                         _reactstrap.Button,
-                        { key: i, color: this.state.page == page ? "link" : "", onClick: function onClick() {
+                        { id: 'pagination-page', key: i, color: this.state.page == page ? "link" : "", onClick: function onClick() {
                                 return _this4.fetch_page(page);
                             } },
                         page
@@ -39089,14 +39089,14 @@ var ModelGrid = function (_React$Component) {
                 }, this),
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-next', color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(_this3.state.page + 1);
                         } },
                     ">"
                 ),
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-last', color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(_this3.state.total_pages);
                         } },
                     ">>"
@@ -39112,7 +39112,7 @@ var ModelGrid = function (_React$Component) {
 
                     return _react2.default.createElement(
                         _reactstrap.DropdownItem,
-                        { key: i, onClick: function onClick() {
+                        { id: 'filter-type', key: i, onClick: function onClick() {
                                 if (_this5.state.filter !== filter) {
                                     _this5.set_values('');
                                 }
@@ -39133,7 +39133,7 @@ var ModelGrid = function (_React$Component) {
 
                     return _react2.default.createElement(
                         _reactstrap.DropdownItem,
-                        { key: i, onClick: function onClick() {
+                        { id: 'sort-type', key: i, onClick: function onClick() {
                                 _this6.state.sort = sort;
                                 _this6.setState(_this6.state);
                                 _this6.params['sort'] = _this6.state.sort.value;
@@ -39179,7 +39179,7 @@ var ModelGrid = function (_React$Component) {
                                         { isOpen: this.state.filterOpen, toggle: this.filter_toggle.bind(this) },
                                         _react2.default.createElement(
                                             _reactstrap.DropdownToggle,
-                                            { color: 'primary', caret: true },
+                                            { id: 'filter-dropdown', color: 'primary', caret: true },
                                             this.state.filter.label
                                         ),
                                         filter_type
@@ -39198,7 +39198,7 @@ var ModelGrid = function (_React$Component) {
                                         { isOpen: this.state.sortOpen, toggle: this.sort_toggle.bind(this) },
                                         _react2.default.createElement(
                                             _reactstrap.DropdownToggle,
-                                            { color: 'primary', caret: true },
+                                            { id: 'sort-dropdown', color: 'primary', caret: true },
                                             this.state.sort.label
                                         ),
                                         sort_type
@@ -39220,7 +39220,7 @@ var ModelGrid = function (_React$Component) {
                                 { key: i, className: 'grid-model' },
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id },
+                                    { id: 'model-link', to: '/' + this.props.name.toLowerCase().slice(0, this.props.name.length - 1) + '/' + model.id },
                                     _react2.default.createElement(_reactstrap.CardImg, { className: 'grid-model-img', src: model.img !== null ? model.img : 'https://cf.geekdo-images.com/images/pic1657689_t.jpg' })
                                 ),
                                 _react2.default.createElement(
@@ -39502,7 +39502,7 @@ var NavBar = function (_React$Component) {
                                 _react2.default.createElement(
                                     _reactstrap.InputGroupButton,
                                     null,
-                                    _react2.default.createElement(_reactstrap.Button, { id: 'search-button', className: 'fa fa-search' })
+                                    _react2.default.createElement(_reactstrap.Button, { id: 'search-button', name: 'query', className: 'fa fa-search' })
                                 )
                             )
                         )
@@ -39881,14 +39881,14 @@ var Search = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-first', color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(1);
                         } },
                     "<<"
                 ),
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-prev', color: this.state.page == 1 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(_this3.state.page - 1);
                         } },
                     "<"
@@ -39898,7 +39898,7 @@ var Search = function (_React$Component) {
 
                     return _react2.default.createElement(
                         _reactstrap.Button,
-                        { key: i, color: this.state.page == page ? "link" : "", onClick: function onClick() {
+                        { id: 'pagination-page', key: i, color: this.state.page == page ? "link" : "", onClick: function onClick() {
                                 return _this4.fetch_page(page);
                             } },
                         page
@@ -39906,14 +39906,14 @@ var Search = function (_React$Component) {
                 }, this),
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-next', color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(_this3.state.page + 1);
                         } },
                     ">"
                 ),
                 _react2.default.createElement(
                     _reactstrap.Button,
-                    { color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
+                    { id: 'pagination-last', color: this.state.page == this.state.total_pages || this.state.total_pages == 0 ? "secondary" : "", onClick: function onClick() {
                             return _this3.fetch_page(_this3.state.total_pages);
                         } },
                     ">>"
@@ -39936,7 +39936,7 @@ var Search = function (_React$Component) {
                                 { className: 'justify-content-md-center' },
                                 _react2.default.createElement(
                                     'h1',
-                                    null,
+                                    { id: 'search-fail' },
                                     this.state.query === '' ? "No Search Query" : "Search Results for: '" + this.state.query + "'"
                                 )
                             )
@@ -39967,7 +39967,7 @@ var Search = function (_React$Component) {
                                                 { sm: '10' },
                                                 _react2.default.createElement(
                                                     _reactRouterDom.Link,
-                                                    { to: '/' + model.type + '/' + model.id },
+                                                    { id: 'search-link', to: '/' + model.type + '/' + model.id },
                                                     _react2.default.createElement(
                                                         'h4',
                                                         null,
@@ -39984,7 +39984,7 @@ var Search = function (_React$Component) {
                                                 { className: 'text-right', sm: '2' },
                                                 _react2.default.createElement(
                                                     _reactRouterDom.Link,
-                                                    { to: '/' + model.type + 's' },
+                                                    { id: 'search-model', to: '/' + model.type + 's' },
                                                     _react2.default.createElement(
                                                         _reactstrap.Badge,
                                                         { style: { textAlign: 'right' }, color: badge[model.type] },
