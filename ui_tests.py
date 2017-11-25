@@ -13,6 +13,9 @@ class TestFrontEnd(TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
 
+    def tearDown(self):
+        self.driver.quit()
+
     ##########################
     # SEARCH FRONT-END TESTS #
     ##########################
@@ -73,8 +76,93 @@ class TestFrontEnd(TestCase):
 
         assert 'No Results' in driver.page_source
 
-    def tearDown(self):
-        self.driver.quit()
+    ################
+    # NAVBAR TESTS #
+    ################
+
+    # Note: Search functionality of the navbar is tested in the search section
+
+    # Click Logo
+    def testNavLogo(self):
+        driver = self.driver
+        driver.get('https://boardgamedb.me/search?query=zzz123zzz')
+
+        element = driver.find_element_by_class_name('navbar-brand')
+        element.click()
+
+        assert 'https://boardgamedb.me/' == driver.current_url
+
+    # Click Home
+    def testNavHome(self):
+        driver = self.driver
+        driver.get('https://boardgamedb.me/search?query=zzz123zzz')
+
+        elements = driver.find_elements_by_class_name('nav-link')
+        for elem in elements:
+            if elem.text == 'Home':
+                elem.click()
+
+        assert 'https://boardgamedb.me/' == driver.current_url
+
+    # Click Games
+    def testNavGames(self):
+        driver = self.driver
+        driver.get('https://boardgamedb.me/search?query=zzz123zzz')
+
+        elements = driver.find_elements_by_class_name('nav-link')
+        for elem in elements:
+            if elem.text == 'Games':
+                elem.click()
+
+        assert 'https://boardgamedb.me/games' in driver.current_url
+
+    # Click Genres
+    def testNavGenres(self):
+        driver = self.driver
+        driver.get('https://boardgamedb.me/search?query=zzz123zzz')
+
+        elements = driver.find_elements_by_class_name('nav-link')
+        for elem in elements:
+            if elem.text == 'Genres':
+                elem.click()
+
+        assert 'https://boardgamedb.me/genres' in driver.current_url
+
+    # Click Developers
+    def testNavDevelopers(self):
+        driver = self.driver
+        driver.get('https://boardgamedb.me/search?query=zzz123zzz')
+
+        elements = driver.find_elements_by_class_name('nav-link')
+        for elem in elements:
+            if elem.text == 'Developers':
+                elem.click()
+
+        assert 'https://boardgamedb.me/developers' in driver.current_url
+
+    # Click Events
+    def testNavEvents(self):
+        driver = self.driver
+        driver.get('https://boardgamedb.me/search?query=zzz123zzz')
+
+        elements = driver.find_elements_by_class_name('nav-link')
+        for elem in elements:
+            if elem.text == 'Events':
+                elem.click()
+
+        assert 'https://boardgamedb.me/events' in driver.current_url
+
+    # Click About
+    def testNavAbout(self):
+        driver = self.driver
+        driver.get('https://boardgamedb.me/search?query=zzz123zzz')
+
+        elements = driver.find_elements_by_class_name('nav-link')
+        for elem in elements:
+            if elem.text == 'About':
+                elem.click()
+
+        assert 'https://boardgamedb.me/about' == driver.current_url
 
 if __name__ == "__main__":
     main()
