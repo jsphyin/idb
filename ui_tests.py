@@ -57,8 +57,8 @@ class TestFrontEnd(TestCase):
 
         result = driver.find_element_by_class_name('search-model')
 
-        assert 'No Results' not in driver.page_source
-        assert 'Apples to Apples' in result.text
+        self.assertTrue('No Results' not in driver.page_source)
+        self.assertTrue('Apples to Apples' in result.text)
 
     # Search with Text Input + Press Button
     def testSearchInputButton(self):
@@ -72,8 +72,8 @@ class TestFrontEnd(TestCase):
 
         result = driver.find_element_by_class_name('search-model')
 
-        assert 'No Results' not in driver.page_source
-        assert 'Apples to Apples' in result.text
+        self.assertTrue('No Results' not in driver.page_source)
+        self.assertTrue('Apples to Apples' in result.text)
 
     # Search with URL Query
     def testSearchQuery(self):
@@ -82,8 +82,8 @@ class TestFrontEnd(TestCase):
 
         result = driver.find_element_by_class_name('search-model')
 
-        assert 'No Results' not in driver.page_source
-        assert 'Apples to Apples' in result.text
+        self.assertTrue('No Results' not in driver.page_source)
+        self.assertTrue('Apples to Apples' in result.text)
 
     # No Results Search
     def testFailedSearchQuery(self):
@@ -94,7 +94,7 @@ class TestFrontEnd(TestCase):
             lambda driver: any(elem.text == 'No Results' for elem in driver.find_elements_by_tag_name('h1'))
         )
 
-        assert 'No Results' in driver.page_source
+        self.assertTrue('No Results' in driver.page_source)
 
     ################
     # NAVBAR TESTS #
@@ -114,7 +114,7 @@ class TestFrontEnd(TestCase):
 
         driver.find_element_by_id('nav-logo').click()
 
-        assert 'https://boardgamedb.me/' == driver.current_url
+        self.assertTrue('https://boardgamedb.me/' == driver.current_url)
 
     # Click Home
     def testNavHome(self):
@@ -123,7 +123,7 @@ class TestFrontEnd(TestCase):
 
         driver.find_element_by_id('nav-home').click()
 
-        assert 'https://boardgamedb.me/' == driver.current_url
+        self.assertTrue('https://boardgamedb.me/' == driver.current_url)
 
     # Click Games
     def testNavGames(self):
@@ -132,7 +132,7 @@ class TestFrontEnd(TestCase):
 
         driver.find_element_by_id('nav-games').click()
 
-        assert 'https://boardgamedb.me/games' in driver.current_url
+        self.assertTrue('https://boardgamedb.me/games' in driver.current_url)
 
     # Click Genres
     def testNavGenres(self):
@@ -141,7 +141,7 @@ class TestFrontEnd(TestCase):
 
         driver.find_element_by_id('nav-genres').click()
 
-        assert 'https://boardgamedb.me/genres' in driver.current_url
+        self.assertTrue('https://boardgamedb.me/genres' in driver.current_url)
 
     # Click Developers
     def testNavDevelopers(self):
@@ -150,7 +150,7 @@ class TestFrontEnd(TestCase):
 
         driver.find_element_by_id('nav-developers').click()
 
-        assert 'https://boardgamedb.me/developers' in driver.current_url
+        self.assertTrue('https://boardgamedb.me/developers' in driver.current_url)
 
     # Click Events
     def testNavEvents(self):
@@ -159,7 +159,7 @@ class TestFrontEnd(TestCase):
 
         driver.find_element_by_id('nav-events').click()
 
-        assert 'https://boardgamedb.me/events' in driver.current_url
+        self.assertTrue('https://boardgamedb.me/events' in driver.current_url)
 
     # Click About
     def testNavAbout(self):
@@ -168,7 +168,7 @@ class TestFrontEnd(TestCase):
 
         driver.find_element_by_id('nav-about').click()
 
-        assert 'https://boardgamedb.me/about' == driver.current_url
+        self.assertTrue('https://boardgamedb.me/about' == driver.current_url)
 
     ####################
     # Model Grid Pages #
@@ -189,7 +189,7 @@ class TestFrontEnd(TestCase):
 
         queries = {query.split('=')[0]: query.split('=')[1]
                 for query in driver.current_url.split('?')[1].split('&')}
-        assert int(queries['page']) == 1
+        self.assertTrue(int(queries['page']) == 1)
 
     # Test >> button
     def testPaginationLast(self):
@@ -204,7 +204,7 @@ class TestFrontEnd(TestCase):
 
         queries = {query.split('=')[0]: query.split('=')[1]
                 for query in driver.current_url.split('?')[1].split('&')}
-        assert int(queries['page']) == 1417
+        self.assertTrue(int(queries['page']) == 1417)
 
     # Test < button
     def testPaginationPrev(self):
@@ -219,7 +219,7 @@ class TestFrontEnd(TestCase):
 
         queries = {query.split('=')[0]: query.split('=')[1]
                 for query in driver.current_url.split('?')[1].split('&')}
-        assert int(queries['page']) == 1
+        self.assertTrue(int(queries['page']) == 1)
 
     # Test > button
     def testPaginationNext(self):
@@ -234,7 +234,7 @@ class TestFrontEnd(TestCase):
 
         queries = {query.split('=')[0]: query.split('=')[1]
                 for query in driver.current_url.split('?')[1].split('&')}
-        assert int(queries['page']) == 3
+        self.assertTrue(int(queries['page']) == 3)
 
     # Test numerical page button
     def testPaginationPage(self):
@@ -250,7 +250,7 @@ class TestFrontEnd(TestCase):
                 page.click()
                 queries = {query.split('=')[0]: query.split('=')[1]
                         for query in driver.current_url.split('?')[1].split('&')}
-                assert int(queries['page']) == 3
+                self.assertTrue(int(queries['page']) == 3)
 
     # Filtering is written once for all model grid pages, so we test only once
     def testFilterUI(self):
@@ -275,7 +275,7 @@ class TestFrontEnd(TestCase):
             if card.text == 'Aaron Brosman':
                 found = True
 
-        assert found
+        self.assertTrue(found)
 
     # Sorting UI is written once for all grid pages, so we test only once
     def testSortUI(self):
@@ -295,19 +295,137 @@ class TestFrontEnd(TestCase):
             if card.text == '황소망':
                 found = True
 
-        assert found
+        self.assertTrue(found)
 
-    def testGameModels(self):
-        pass
+    # Check game image link to model page
+    def testGameModelsImg(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/games')
 
-    def testGenreModels(self):
-        pass
+        game_name = driver.find_element_by_class_name('model-name').text
 
-    def testDeveloperModels(self):
-        pass
+        driver.find_element_by_id('model-link').click()
 
-    def testEventModels(self):
-        pass
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
+
+    # Check game -> developer link
+    def testGameModelsDev(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/games')
+
+        dev = driver.find_element_by_link_text('Bryan M. Simmons')
+        dev_name = dev.text
+        dev.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == dev_name)
+
+    # Check genre -> model page
+    def testGenreModelsImg(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/genres')
+
+        genre_name = driver.find_element_by_class_name('model-name').text
+
+        driver.find_element_by_id('model-link').click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == genre_name)
+
+    # Check genre -> dev page
+    def testGenreModelsDev(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/genres')
+
+        dev = driver.find_element_by_link_text('Dr. Reiner Knizia')
+        dev_name = dev.text
+        dev.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == dev_name)
+
+    # Check genre -> game page
+    def testGenreModelsGame(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/genres')
+
+        game = driver.find_element_by_link_text('Samurai')
+        game_name = game.text
+        game.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
+
+    # Check developer -> model page
+    def testDeveloperModelsImg(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/developers')
+
+        developer_name = driver.find_element_by_class_name('model-name').text
+
+        driver.find_element_by_id('model-link').click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == developer_name)
+
+    # Check developer -> game page
+    def testDeveloperModelsGame(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/developers')
+
+        game = driver.find_element_by_link_text("Liar's Dice")
+        game_name = game.text
+        game.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
+
+    # Check developer -> genre page
+    def testDeveloperModelsGenre(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/developers')
+
+        genre = driver.find_element_by_link_text("Dice")
+        genre_name = genre.text
+        genre.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == genre_name)
+
+    # Check event -> model page
+    def testEventModelsImg(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/events')
+
+        event_name = driver.find_element_by_class_name('model-name').text
+
+        driver.find_element_by_id('model-link').click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == event_name)
+
+    # Check event -> game page
+    def testEventModelsGame(self):
+        driver = TestFrontEnd.driver
+        driver.get('https://boardgamedb.me/events')
+
+        game = driver.find_element_by_link_text("Via Nebula")
+        game_name = game.text
+        game.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
 
     def testGameModel(self):
         pass
