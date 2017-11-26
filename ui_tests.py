@@ -11,15 +11,6 @@ from time import sleep
 
 class TestFrontEnd(TestCase):
 
-    """
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(10)
-
-    def tearDown(self):
-        self.driver.quit()
-    """
-
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Firefox()
@@ -30,7 +21,7 @@ class TestFrontEnd(TestCase):
         # More often than not, the correct version gets loaded
         while True:
             try:
-                cls.driver.get('https://boardgamedb.me/developers')
+                cls.driver.get('http://boardgamedb.me/developers')
                 cls.driver.find_element_by_id('filter-dropdown')
                 break
             except:
@@ -78,7 +69,7 @@ class TestFrontEnd(TestCase):
     # Search with URL Query
     def testSearchQuery(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/search?query=apple')
+        driver.get('http://boardgamedb.me/search?query=apple')
 
         result = driver.find_element_by_class_name('search-model')
 
@@ -179,7 +170,7 @@ class TestFrontEnd(TestCase):
     # Test << button
     def testPaginationFirst(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers?page=2')
+        driver.get('http://boardgamedb.me/developers?page=2')
 
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, 'model-link'))
@@ -194,7 +185,7 @@ class TestFrontEnd(TestCase):
     # Test >> button
     def testPaginationLast(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers?page=2')
+        driver.get('http://boardgamedb.me/developers?page=2')
 
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, 'model-link'))
@@ -209,7 +200,7 @@ class TestFrontEnd(TestCase):
     # Test < button
     def testPaginationPrev(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers?page=2')
+        driver.get('http://boardgamedb.me/developers?page=2')
 
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, 'model-link'))
@@ -224,7 +215,7 @@ class TestFrontEnd(TestCase):
     # Test > button
     def testPaginationNext(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers?page=2')
+        driver.get('http://boardgamedb.me/developers?page=2')
 
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, 'model-link'))
@@ -239,7 +230,7 @@ class TestFrontEnd(TestCase):
     # Test numerical page button
     def testPaginationPage(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers?page=2')
+        driver.get('http://boardgamedb.me/developers?page=2')
 
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, 'model-link'))
@@ -255,7 +246,7 @@ class TestFrontEnd(TestCase):
     # Filtering is written once for all model grid pages, so we test only once
     def testFilterUI(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers')
+        driver.get('http://boardgamedb.me/developers')
 
         driver.find_element_by_id('filter-dropdown').click()
 
@@ -280,7 +271,7 @@ class TestFrontEnd(TestCase):
     # Sorting UI is written once for all grid pages, so we test only once
     def testSortUI(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers')
+        driver.get('http://boardgamedb.me/developers')
 
         driver.find_element_by_id('sort-dropdown').click()
         for item in driver.find_elements_by_id('sort-type'):
@@ -297,10 +288,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(found)
 
-    # Check game image link to model page
+    # Check games page -> game page
     def testGameModelsImg(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/games')
+        driver.get('http://boardgamedb.me/games')
 
         game_name = driver.find_element_by_class_name('model-name').text
 
@@ -310,10 +301,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
 
-    # Check game -> developer link
+    # Check games page -> dev page
     def testGameModelsDev(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/games')
+        driver.get('http://boardgamedb.me/games')
 
         dev = driver.find_element_by_link_text('Bryan M. Simmons')
         dev_name = dev.text
@@ -323,10 +314,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == dev_name)
 
-    # Check genre -> model page
+    # Check genres page -> genre page
     def testGenreModelsImg(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/genres')
+        driver.get('http://boardgamedb.me/genres')
 
         genre_name = driver.find_element_by_class_name('model-name').text
 
@@ -336,10 +327,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == genre_name)
 
-    # Check genre -> dev page
+    # Check genres page -> dev page
     def testGenreModelsDev(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/genres')
+        driver.get('http://boardgamedb.me/genres')
 
         dev = driver.find_element_by_link_text('Dr. Reiner Knizia')
         dev_name = dev.text
@@ -349,10 +340,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == dev_name)
 
-    # Check genre -> game page
+    # Check genres page -> game page
     def testGenreModelsGame(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/genres')
+        driver.get('http://boardgamedb.me/genres')
 
         game = driver.find_element_by_link_text('Samurai')
         game_name = game.text
@@ -362,10 +353,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
 
-    # Check developer -> model page
+    # Check developers page -> dev page
     def testDeveloperModelsImg(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers')
+        driver.get('http://boardgamedb.me/developers')
 
         developer_name = driver.find_element_by_class_name('model-name').text
 
@@ -375,10 +366,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == developer_name)
 
-    # Check developer -> game page
+    # Check developers page -> game page
     def testDeveloperModelsGame(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers')
+        driver.get('http://boardgamedb.me/developers')
 
         game = driver.find_element_by_link_text("Liar's Dice")
         game_name = game.text
@@ -388,10 +379,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
 
-    # Check developer -> genre page
+    # Check developers page -> genre page
     def testDeveloperModelsGenre(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/developers')
+        driver.get('http://boardgamedb.me/developers')
 
         genre = driver.find_element_by_link_text("Dice")
         genre_name = genre.text
@@ -401,10 +392,10 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == genre_name)
 
-    # Check event -> model page
+    # Check events page -> event page
     def testEventModelsImg(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/events')
+        driver.get('http://boardgamedb.me/events')
 
         event_name = driver.find_element_by_class_name('model-name').text
 
@@ -414,11 +405,11 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == event_name)
 
-    # Check event -> game page
+    # Check events page -> game page
     def testEventModelsGame(self):
         driver = TestFrontEnd.driver
-        driver.get('https://boardgamedb.me/events')
 
+        driver.get('http://boardgamedb.me/events')
         game = driver.find_element_by_link_text("Via Nebula")
         game_name = game.text
         game.click()
@@ -427,17 +418,100 @@ class TestFrontEnd(TestCase):
 
         self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
 
-    def testGameModel(self):
-        pass
+    ##############################
+    # MODEL PAGE FRONT-END TESTS #
+    ##############################
 
-    def testGenreModel(self):
-        pass
+    # Check game page -> dev page
+    def testGameModelDev(self):
+        driver = TestFrontEnd.driver
 
-    def testDeveloperModel(self):
-        pass
+        driver.get('http://boardgamedb.me/game/190608')
+        dev = driver.find_element_by_link_text("Bryan M. Simmons")
+        dev_name = dev.text
+        dev.click()
 
-    def testEventModel(self):
-        pass
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == dev_name)
+
+    # Check game page -> genre page
+    def testGameModelGenre(self):
+        driver = TestFrontEnd.driver
+
+        driver.get('http://boardgamedb.me/game/190608')
+        genre = driver.find_element_by_link_text("Card Game")
+        genre_name = genre.text
+        genre.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == genre_name)
+
+    # Check genre page -> dev page
+    def testGenreModelDev(self):
+        driver = TestFrontEnd.driver
+
+        driver.get('http://boardgamedb.me/genre/1009')
+        dev = driver.find_element_by_link_text("Dr. Reiner Knizia")
+        dev_name = dev.text
+        dev.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == dev_name)
+
+    # Check genre page -> game page
+    def testGenreModelGame(self):
+        driver = TestFrontEnd.driver
+
+        driver.get('http://boardgamedb.me/genre/1009')
+        game = driver.find_element_by_link_text("Samurai")
+        game_name = game.text
+        game.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
+
+    # Check developer page -> game page
+    def testDeveloperModelGame(self):
+        driver = TestFrontEnd.driver
+
+        driver.get('http://boardgamedb.me/developer/3')
+        game = driver.find_element_by_link_text("Liar's Dice")
+        game_name = game.text
+        game.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
+
+    # Check developer page -> genre page
+    def testDeveloperModelGenre(self):
+        driver = TestFrontEnd.driver
+
+        driver.get('http://boardgamedb.me/developer/3')
+        genre = driver.find_element_by_link_text("Dice")
+        genre_name = genre.text
+        genre.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == genre_name)
+
+    # Check event page -> game page
+    def testEventModelGame(self):
+        driver = TestFrontEnd.driver
+
+        driver.get('http://boardgamedb.me/event/765')
+        game = driver.find_element_by_link_text("Via Nebula")
+        game_name = game.text
+        game.click()
+
+        sleep(2)
+
+        self.assertTrue(driver.find_element_by_class_name('model-name').text == game_name)
 
 if __name__ == "__main__":
     main()
