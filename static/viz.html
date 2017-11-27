@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SWE Data Visualization</title>
+
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+
+        <style>
+
+        .node {
+            font: 300 8px "Helvetica Neue", Helvetica, Arial, sans-serif;
+            fill: #888;
+        }
+
+        .node:hover {
+            fill: #000;
+        }
+
+        .link {
+            stroke: steelblue;
+            stroke-width: 0.2px;
+            stroke-opacity: 0.4;
+            fill: none;
+            pointer-events: none;
+        }
+
+        .node:hover,
+        .node--source,
+        .node--target {
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .node--source {
+            fill: #2ca02c;
+        }
+
+        .node--target {
+            fill: #d62728;
+        }
+
+        .link--source,
+        .link--target {
+            stroke-opacity: 1;
+            stroke-width: 2px;
+        }
+
+        .link--source {
+            stroke: #d62728;
+        }
+
+        .link--target {
+            stroke: #2ca02c;
+        }
+
+        </style>
+    </head>
+
+    <body>
+    </body>
+
+    <script src="viz.js"></script>
+</html>
