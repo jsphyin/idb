@@ -147,6 +147,6 @@ Internet database showcasing all things board games
 
 ---
 
-# What puzzled us about their site?
+# What puzzles us about their site?
 
 
