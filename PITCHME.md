@@ -165,5 +165,5 @@ Internet database showcasing all things board games
 
 ---
 
-# [Data Visualization](http://boardgamedb.me/viz)
+# Data Visualization
 
