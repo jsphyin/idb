@@ -18,7 +18,7 @@ Internet database showcasing all things board games
 
 ---
 
-# [Our Project](boardgamedb.me)
+# [Our Project](http://boardgamedb.me)
 
 ---
 
@@ -165,5 +165,5 @@ Internet database showcasing all things board games
 
 ---
 
-# [Data Visualization](boardgame.me/viz)
+# [Data Visualization](http://boardgamedb.me/viz)
 
