@@ -6,30 +6,15 @@ Internet database showcasing all things board games
 
 # Meet the Team
 
-+++
-
 ## Anurag Bakshi
-![alt text](https://anuragbakshi.github.io/CS-373-Blog/assets/headshot.jpg "")
-
-+++
 
 ## Quang Duong
-![alt text](https://quangmire.files.wordpress.com/2017/09/me.png "")
-
-+++
 
 ## Joseph Yin
-![alt text](https://jsphyinswe.files.wordpress.com/2017/09/headshot.jpg?w=300&h=300 "")
-
-+++
 
 ## Kamron Ledet
-![alt text](https://kamronledet.files.wordpress.com/2017/09/15289202_897036407098184_508436949144464272_o.jpg "")
-
-+++
 
 ## Alex Lo
-![alt text](https://aytiel.files.wordpress.com/2017/01/cropped-img_20160920_19234311.jpg?w=640 "")
 
 ---
 
