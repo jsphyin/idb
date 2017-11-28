@@ -206,6 +206,7 @@ def api_search():
 @app.route('/<any("game", "genre", "developer", "event"):model>/<id>')
 @app.route('/<any("games", "genres", "developers", "events"):model>')
 @app.route('/<any("games", "genres", "developers", "events"):model>/')
+@app.route('/viz')
 def grid(model=None, id=None):
     return render_template('index.html')
 

@@ -6,6 +6,9 @@ import {
 } from 'react-router-dom'
 import * as d3 from 'd3'
 
+var node = []
+var link = []
+
 function mouseovered(d) {
   node
       .each(function(n) { n.target = n.source = false; });
@@ -138,8 +141,8 @@ class Visualization extends React.Component {
             .append("g")
             .attr("transform", "translate(" + radius + "," + radius + ")");
 
-        var link = svg.append("g").selectAll(".link"),
-            node = svg.append("g").selectAll(".node");
+        link = svg.append("g").selectAll(".link");
+        node = svg.append("g").selectAll(".node");
 
         d3.queue()
             .defer(d3.json, "http://api.esportguru.com/games")

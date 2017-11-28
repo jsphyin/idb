@@ -63,7 +63,7 @@ class About extends React.Component {
 
     render() {
         return (
-            <div class="container">
+            <div className="container">
                 <div id="about-site-header" className='page-header'>
                   <h2>The Site</h2>
                 </div>
@@ -149,7 +149,7 @@ class About extends React.Component {
                     </Row>
                 </section>
 
-                <div id="about-stats-header" class="page-header">
+                <div id="about-stats-header" className="page-header">
                   <h2>Stats</h2>
                 </div>
                 <section id="about-stats-content">
@@ -163,7 +163,7 @@ class About extends React.Component {
                     </ul>
                 </section>
 
-                <div id="about-data-header" class="page-header">
+                <div id="about-data-header" className="page-header">
                   <h2>Data</h2>
                 </div>
                 <section id="about-data-content">
@@ -176,7 +176,7 @@ class About extends React.Component {
                     Using the Python <a href="http://docs.python-requests.org/en/master/">requests</a> library, we grabbed all the XML by iterating through all possible ids and filtering out all the non-board game items.
                 </section>
 
-                <div id="about-tools-header" class="page-header">
+                <div id="about-tools-header" className="page-header">
                   <h2>Tools</h2>
                 </div>
                 <section id="about-tools-content">
@@ -191,8 +191,10 @@ class About extends React.Component {
                     </ul>
                 </section>
 
-                <div id="about-report-header" class="page-header">
-                  <h2><a href="https://utexas.app.box.com/v/boardgamedbreport">Report</a></h2>
+                <div id="about-report-header" className="page-header">
+                    <h2><a href="https://jsphyin.gitbooks.io/board-game-db/content/">Report GitBook</a></h2>
+                    <h2><a href="https://gitpitch.com/jsphyin/idb">Presentation GitPitch</a></h2>
+                    <h2><Link to='/viz'>Data Visualization</Link></h2>
                 </div>
             </div>
         );

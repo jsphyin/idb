@@ -6,12 +6,13 @@ import {
 	Redirect
 } from 'react-router-dom'
 
-import NavBar    from './components/NavBar';
-import ModelGrid from './components/ModelGrid';
-import Model     from './components/Model';
-import Home      from './components/Home';
-import About     from './components/About';
-import Search    from './components/Search';
+import NavBar        from './components/NavBar';
+import ModelGrid     from './components/ModelGrid';
+import Model         from './components/Model';
+import Home          from './components/Home';
+import About         from './components/About';
+import Search        from './components/Search';
+import Visualization from './components/Visualization';
 
 class App extends React.Component {
     render() {
@@ -27,6 +28,7 @@ class App extends React.Component {
                     <Route path='/genres' component={(props) => (<ModelGrid {...props} name="Genres"/>)}/>
                     <Route path='/developers' component={(props) => (<ModelGrid {...props} name="Developers"/>)}/>
                     <Route path='/events' component={(props) => (<ModelGrid {...props} name="Events"/>)}/>
+                    <Route path='/viz' component={Visualization}/>
 
                     <Route path='/game/:id' component={(props) => (<Model {...props} name="Games"/>)}/>
                     <Route path='/boardgame/:id/:name' render={( {match} ) => (<Redirect to={"/game/" + match.params.id}/>)}/>
