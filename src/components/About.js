@@ -194,7 +194,6 @@ class About extends React.Component {
                 <div id="about-report-header" className="page-header">
                     <h2><a href="https://jsphyin.gitbooks.io/board-game-db/content/">Report GitBook</a></h2>
                     <h2><a href="https://gitpitch.com/jsphyin/idb">Presentation GitPitch</a></h2>
-                    <h2><Link to='/viz'>Data Visualization</Link></h2>
                 </div>
             </div>
         );
