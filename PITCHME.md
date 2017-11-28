@@ -6,34 +6,19 @@ Internet database showcasing all things board games
 
 # Meet the Team
 
-+++
-
 ## Anurag Bakshi
-
-
-+++
 
 ## Quang Duong
 
-
-+++
-
 ## Joseph Yin
-
-
-+++
 
 ## Kamron Ledet
 
-
-+++
-
 ## Alex Lo
-
 
 ---
 
-# Our Project
+# [Our Project](http://boardgamedb.me)
 
 ---
 
@@ -177,4 +162,8 @@ Internet database showcasing all things board games
 
 +++
 ## Handling of missing attributes
+
+---
+
+# Data Visualization
 
