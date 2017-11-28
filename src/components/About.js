@@ -25,12 +25,12 @@ class About extends React.Component {
         super(props);
         document.title = "About - BGDB";
         this.state = {
-            'Quangmire': [0,0,0],
+            'Quangmire': [0,0,35],
             'anuragbakshi': [0,0,0],
             'jsphyin': [0,0,0],
             'aytiel': [0,0,79],
             'KLedet': [0,0,0],
-            total: [0,0,79]
+            total: [0,0,114]
         };
         this.trello = {
             '53e2bdcf2041ed5793869e18': 'Quangmire',
@@ -169,8 +169,8 @@ class About extends React.Component {
                 <section id="about-data-content">
                     <ul>
                         <li><a href="http://www.boardgamegeek.com/xmlapi">http://www.boardgamegeek.com/xmlapi</a></li>
-                        <li><a href="http://www.mediawiki.org/wiki/API ">http://www.mediawiki.org/wiki/API </a></li>
-                        <li><a href="http://www.reddit.com/dev/api">http://www.reddit.com/dev/api</a></li>
+                        <li><a href="http://api.github.com">http://api.github.com</a></li>
+                        <li><a href="http://api.trello.com">http://api.trello.com</a></li>
                         <li><a href="http://api.meetup.com">http://api.meetup.com</a></li>
                     </ul>
                     Using the Python <a href="http://docs.python-requests.org/en/master/">requests</a> library, we grabbed all the XML by iterating through all possible ids and filtering out all the non-board game items.

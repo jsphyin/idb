@@ -9,6 +9,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 from time import sleep
 
+"""
+NOTE:
+- Requirements to run:
+    - Selenium for Python
+    - Geckodriver
+    - Firefox
+"""
+
 class TestFrontEnd(TestCase):
 
     @classmethod
