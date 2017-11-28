@@ -129,26 +129,23 @@ Internet database showcasing all things board games
 
 +++
 
-## 
+## Clearly defined UI
 +++
 
-## 
-
-+++
-
-## 
+## Nice design scheme
 
 +++
 
-## 
+## Informative model instances
 
 +++
 
-## 
+## Well-immplemented search
 
 +++
 
-## 
+## Good info on eSports
+
 
 ---
 
@@ -156,14 +153,28 @@ Internet database showcasing all things board games
 
 +++
 
+## Scope of eSports
+
++++
+## Varied fonts and colors
+
 ---
 
 # What can they do better?
 
 +++
 
+## Missing information
+
++++
+
+## Lack of well-defined margins in model pages
+- Discerning between walls of text
+
 ---
 
 # What puzzles us about their site?
 
++++
+## Handling of missing attributes
 
