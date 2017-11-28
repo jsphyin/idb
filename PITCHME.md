@@ -41,19 +41,27 @@ Internet database showcasing all things board games
 
 +++
 
-## 
+## Navigation of website
+- Well-designed flow of website
+    - Intuitively placed buttons
+    - Uniform sizing across instances
+
 
 +++
 
-##
+## Data
+- Many instances for the models we have
 
 +++
 
-##
+## Search results
+- Results are tagged with their respective model
+    - Color coding based on model 
 
 +++
 
-# 
+## Pagination
+- Navigation through pages is robust
 
 ---
 
@@ -61,18 +69,18 @@ Internet database showcasing all things board games
 
 +++
 
-## 
+## Communication is important
 
 +++
 
-## 
+## Frontend is weird
 
 +++
 
-## 
+## mySQL has nice builtin functions
 +++
 
-## 
+## GCP flex is expensive
 
 ---
 
@@ -80,19 +88,20 @@ Internet database showcasing all things board games
 
 +++
 
-##
+## Images across all instances
+- Missing attributes
 
 +++
 
-## 
+## Stretched images
 
 +++
 
-## 
+## Walls of text
 
 +++
 
-## 
+## Ordered filter options
 
 ---
 
@@ -100,7 +109,15 @@ Internet database showcasing all things board games
 
 +++
 
-### 
+## Striking a balance between simple and showy design
+
++++
+
+## JavaScript
+
++++
+
+## GCP
 
 ---
 
