@@ -58295,6 +58295,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = require('react-router-dom');
 
+var _reactstrap = require('reactstrap');
+
 var _d = require('d3');
 
 var d3 = _interopRequireWildcard(_d);
@@ -58435,9 +58437,9 @@ var Visualization = function (_React$Component) {
     _createClass(Visualization, [{
         key: 'render',
         value: function render() {
-            var diameter = 1000,
+            var diameter = 1400,
                 radius = diameter / 2,
-                innerRadius = radius - 120;
+                innerRadius = radius - 240;
 
             var cluster = d3.cluster().size([360, innerRadius]);
 
@@ -58488,7 +58490,38 @@ var Visualization = function (_React$Component) {
                     return d.data.key;
                 }).on("mouseover", mouseovered).on("mouseout", mouseouted);
             });
-            return _react2.default.createElement('div', null);
+            this.svg = svg;
+            return _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'page-header' },
+                    _react2.default.createElement(
+                        _reactstrap.Card,
+                        null,
+                        _react2.default.createElement(
+                            _reactstrap.CardHeader,
+                            null,
+                            'Data Visualization for Group 18'
+                        ),
+                        _react2.default.createElement(
+                            _reactstrap.CardBody,
+                            null,
+                            _react2.default.createElement(
+                                'a',
+                                { href: 'http://esportguru.com/' },
+                                'Link'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            d3.select("svg").remove();
         }
     }]);
 
@@ -58497,7 +58530,7 @@ var Visualization = function (_React$Component) {
 
 exports.default = Visualization;
 
-},{"d3":32,"react":142,"react-router-dom":93}],157:[function(require,module,exports){
+},{"d3":32,"react":142,"react-router-dom":93,"reactstrap":143}],157:[function(require,module,exports){
 'use strict';
 
 var _App = require('./App');

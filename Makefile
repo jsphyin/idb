@@ -8,4 +8,4 @@ minify:
 	browserify src/index.js -t [ babelify --presets [ es2015 react ] ] -i reactstrap-tether | uglifyjs static/index.js
 
 test:
-	python tests.py
+	(export SQLALCHEMY_DATABASE_URI=mysql+pymysql://root:boardgamers@127.0.0.1:3306/proddata; python tests.py)

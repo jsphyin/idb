@@ -4,6 +4,24 @@ import {
     Route,
     Link
 } from 'react-router-dom'
+import {
+    Row,
+    Col,
+    Card,
+    CardTitle,
+    CardText,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    CardImg,
+    CardSubtitle,
+    Button,
+    ButtonGroup,
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
+} from 'reactstrap';
 import * as d3 from 'd3'
 
 var node = []
@@ -123,9 +141,9 @@ class Visualization extends React.Component {
     }
 
     render() {
-        var diameter = 1000,
+        var diameter = 1400,
             radius = diameter / 2,
-            innerRadius = radius - 120;
+            innerRadius = radius - 240;
 
         var cluster = d3.cluster()
             .size([360, innerRadius]);
@@ -190,9 +208,24 @@ class Visualization extends React.Component {
                     .on("mouseover", mouseovered)
                     .on("mouseout", mouseouted);
             });
-        return <div></div>
+        this.svg = svg
+        return (
+            <div className="container">
+                <div className="page-header">
+                    <Card>
+                        <CardHeader>Data Visualization for Group 18</CardHeader>
+                        <CardBody>
+                            <a href="http://esportguru.com/">Link</a>
+                        </CardBody>
+                    </Card>
+                </div>
+            </div>
+        )
     }
 
+    componentWillUnmount() {
+        d3.select("svg").remove()
+    }
 
 }
 
