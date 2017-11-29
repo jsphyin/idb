@@ -2,10 +2,25 @@
 <html>
     <head>
         <title>SWE Data Visualization</title>
-
         <script src="https://d3js.org/d3.v4.min.js"></script>
 
         <style>
+
+        .column {
+            float: left;
+        }
+
+        .left {
+            width: 75%;
+        }
+
+        .right {
+            width: 25%;
+            position: fixed;
+            padding: 10px;
+            padding-right: 50px;
+            left: 70%;
+        }
 
         .node {
             font: 300 8px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -57,7 +72,17 @@
     </head>
 
     <body>
+        <div class="column left"><center></center></div>
+        <div class="column right">
+            <h2>Data Visualization for ESportsGuru</h2>
+            <p>All the tournaments are displayed on the upper left side of the
+            circle, with all the teams competing displayed around the remainder
+            of the circle. Each line between a team and tournament represents a
+            certain team competing in a particular tournament. By hovering on any
+            team or tournament, the connected names are highlighted. </p> 
+            <h3>Currently Highlighting:</h3>
+            <p id="text"></p>
+        </div>
     </body>
 
-    <script src="viz.js"></script>
-</html>
+    <script src="viz.js"></script> </html>

@@ -1,6 +1,6 @@
-var diameter = 1000,
+var diameter = 1400,
     radius = diameter / 2,
-    innerRadius = radius - 120;
+    innerRadius = radius - 320;
 
 var cluster = d3.cluster()
     .size([360, innerRadius]);
@@ -10,14 +10,17 @@ var line = d3.radialLine()
     .radius(function(d) { return d.y; })
     .angle(function(d) { return d.x / 180 * Math.PI; });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("center").append("svg")
     .attr("width", diameter)
-    .attr("height", diameter)
+    .attr("height", diameter - 510)
   .append("g")
-    .attr("transform", "translate(" + radius + "," + radius + ")");
+    .attr("transform", "matrix(0.75 0 0 0.75 " + radius + " " + (radius - 240) + ")")
 
 var link = svg.append("g").selectAll(".link"),
     node = svg.append("g").selectAll(".node");
+window.onload = function() {
+    document.getElementById("text").innerHTML = "Nothing Highlighted. Mouse over something!"
+}
 
 d3.queue()
     .defer(d3.json, "http://api.esportguru.com/games")
@@ -70,11 +73,16 @@ function mouseovered(d) {
   node
       .each(function(n) { n.target = n.source = false; });
 
+  mouse_over = d.data.name.split(':')[1];
+  connected = [];
+
   link
       .classed("link--target", function(l) { if (l.target === d) return l.source.source = true; })
       .classed("link--source", function(l) { if (l.source === d) return l.target.target = true; })
-    .filter(function(l) { return l.target === d || l.source === d; })
+    .filter(function(l) { if(l.target === d) {connected.push(l.source.data.name.split(':')[1]);} if(l.source === d) {connected.push(l.target.data.name.split(':')[1]);} return l.target === d || l.source === d; })
       .raise();
+  
+  document.getElementById("text").innerHTML = "<p><strong>" + mouse_over + "</strong> is connected to:</p><p>" + connected.join(", ") + "</p>"
 
   node
       .classed("node--target", function(n) { return n.target; })
@@ -85,6 +93,7 @@ function mouseouted(d) {
   link
       .classed("link--target", false)
       .classed("link--source", false);
+  document.getElementById("text").innerHTML = "Nothing Highlighted. Mouse over something!"
 
   node
       .classed("node--target", false)
