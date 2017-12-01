@@ -88,6 +88,21 @@ Internet database showcasing all things board games
 
 ## Ordered filter options
 
++++
+
+## URL error checking
+
++++
+
+## Speed of website
+
++++
+
+## Mobile site (or lack thereof)
+
++++
+
+## Default bootstrap theme
 ---
 
 # What puzzles us?
@@ -104,6 +119,10 @@ Internet database showcasing all things board games
 
 ## GCP
 
++++
+
+## Scaling up to all games
+
 ---
 
 # Critiquing eSport Guru
@@ -115,10 +134,7 @@ Internet database showcasing all things board games
 +++
 
 ## Clearly defined UI
-+++
-
-## Nice design scheme
-
+- Nice design scheme
 +++
 
 ## Informative model instances
@@ -162,6 +178,10 @@ Internet database showcasing all things board games
 
 +++
 ## Handling of missing attributes
+
++++
+
+## Inconsistent data results
 
 ---
 
