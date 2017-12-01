@@ -45,6 +45,7 @@ Internet database showcasing all things board games
 - Walls of text
 - Ordered filter options
 
+---
 # What can we do better? (cont.)
 - URL error checking
 - Speed of website
