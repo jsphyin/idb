@@ -55,7 +55,7 @@ Internet database showcasing all things board games
 ---
 
 # What puzzles us?
-- Striking a balance between simple and showy design
+- Design
 - JavaScript
 - GCP
 - Scaling up to all games
